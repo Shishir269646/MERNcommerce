@@ -1,0 +1,67 @@
+frontend/
+│
+├── app/                      # App Router structure (Next.js)
+│   ├── layout.js             # Root layout (Navbar, Toasts, etc.)
+│   ├── page.js               # Home page
+│   ├── login/                # Login page
+│   │   └── page.jsx
+│   ├── register/             # Register page
+│   │   └── page.jsx
+│   ├── products/             # All products listing
+│   │   └── page.jsx
+│   ├── product/              # Dynamic product page
+│   │   └── [id]/page.jsx
+│   ├── cart/                 # Cart page
+│   │   └── page.jsx
+│   ├── checkout/             # Checkout with Stripe/PayPal
+│   │   └── page.jsx
+│   ├── orders/               # Order history page
+│   │   └── page.jsx
+│   ├── profile/              # User profile (protected)
+│   │   └── page.jsx
+│   └── admin/                # Admin Dashboard section
+│       ├── layout.js         # Optional layout for admin
+│       ├── page.jsx          # Admin Dashboard home
+│       ├── products/         
+│       │   └── page.jsx      # Manage Products
+│       ├── users/            
+│       │   └── page.jsx      # Manage Users
+│       └── orders/           
+│           └── page.jsx      # Manage Orders
+│
+├── components/               # Reusable components
+│   ├── Header.jsx
+│   ├── Footer.jsx
+│   ├── ProductCard.jsx
+│   ├── ProtectedRoute.jsx
+│   └── AdminSidebar.jsx
+│
+├── redux/                    # Redux Toolkit setup
+│   ├── store.js
+│   ├── slices/
+│   │   ├── userSlice.js
+│   │   ├── productSlice.js
+│   │   ├── cartSlice.js
+│   │   └── orderSlice.js
+│
+├── services/                 # Axios & API calls
+│   ├── api.js                # Axios instance
+│   ├── authService.js
+│   ├── productService.js
+│   ├── orderService.js
+│
+├── utils/                    # Utility functions (formatters, guards)
+│   ├── authGuard.js
+│   └── helpers.js
+│
+├── public/                   # Static assets (images, icons)
+│
+├── styles/                   # Tailwind CSS setup
+│   └── globals.css
+│
+├── .env.local                # Frontend environment variables
+├── tailwind.config.js
+├── postcss.config.js
+├── next.config.js
+├── package.json
+└── README.md
