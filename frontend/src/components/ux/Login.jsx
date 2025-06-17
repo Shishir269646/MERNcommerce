@@ -1,9 +1,35 @@
 "use client";
-import { useState } from "react";
-import "remixicon/fonts/remixicon.css";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUserAsync, clearUserError } from "@/redux/userSlice";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
     const [isHovered, setIsHovered] = useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    const dispatch = useDispatch();
+    const router = useRouter();
+
+    const { authUser, loading, error } = useSelector((state) => state.user);
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        dispatch(loginUserAsync({ username, password }));
+    };
+
+    useEffect(() => {
+        if (authUser) {
+            router.push("/dashboard"); // Redirect after login
+        }
+    }, [authUser]);
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearUserError());
+        };
+    }, [dispatch]);
 
     return (
         <div
@@ -14,30 +40,34 @@ const Login = () => {
             <div className="relative h-[400px] w-[600px] bg-white rounded-[20px] overflow-hidden">
                 {/* Login Form */}
                 <div
-                    className={`absolute h-[300px] w-[250px] m-auto top-0 ${isHovered ? "left-[250px]" : "left-[-300px]"
-                        } right-0 bottom-0 transition-all duration-1000 z-10`}
+                    className={`absolute h-[300px] w-[250px] m-auto top-0 ${isHovered ? "left-[250px]" : "left-[-300px]"} right-0 bottom-0 transition-all duration-1000 z-10`}
                 >
-                    <form className="flex flex-col items-center">
+                    <form className="flex flex-col items-center" onSubmit={handleLogin}>
                         <h1 className="text-black text-xl text-center">LOGIN</h1>
                         <input
                             type="text"
                             placeholder="Username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             required
                             className="h-10 w-[280px] rounded-md mt-2 pl-2 bg-gray-300 text-pink-700 outline-none border-none"
                         />
                         <input
                             type="password"
                             placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
                             className="h-10 w-[280px] rounded-md mt-2 pl-2 bg-gray-300 text-pink-700 outline-none border-none"
                         />
                         <button
                             type="submit"
-                            className={`h-10 w-[280px] rounded-md mt-5 ${isHovered ? "border-4 border-white" : ""
-                                } bg-pink-700 text-white text-base font-medium transition-all duration-1000`}
+                            className={`h-10 w-[280px] rounded-md mt-5 ${isHovered ? "border-4 border-white" : ""} bg-pink-700 text-white text-base font-medium transition-all duration-1000`}
+                            disabled={loading}
                         >
-                            LOGIN
+                            {loading ? "Logging in..." : "LOGIN"}
                         </button>
+                        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
                         <p className="text-gray-500 text-sm text-center mt-2">
                             Forget Username or Password?
                         </p>
@@ -53,7 +83,7 @@ const Login = () => {
                 >
                     <a
                         href="#"
-                        className="absolute block left-[-55px] top-[15px]  bg-white text-pink-700 text-center transform -rotate-[25deg] text-lg h-[25px] w-[200px] no-underline"
+                        className="absolute block left-[-55px] top-[15px] bg-white text-pink-700 text-center transform -rotate-[25deg] text-lg h-[25px] w-[200px] no-underline"
                     >
                         Subscribe
                     </a>
@@ -74,8 +104,6 @@ const Login = () => {
                     <span className="design-mini-2a"></span>
                 </span>
             </div>
-
-
         </div>
     );
 };

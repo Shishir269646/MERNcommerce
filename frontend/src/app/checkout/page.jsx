@@ -9,10 +9,7 @@ export default function CheckoutPage() {
     const { user } = useSelector((state) => state.user);
     const router = useRouter();
 
-    const total = cartItems.reduce(
-        (acc, item) => acc + item.price * item.qty,
-        0
-    );
+    const total = cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
 
     useEffect(() => {
         if (!user) {
@@ -22,7 +19,6 @@ export default function CheckoutPage() {
 
     const handlePayment = async () => {
         try {
-            // You would normally call your backend to create a Stripe/PayPal session here.
             alert("Redirecting to payment gateway...");
         } catch (error) {
             console.error("Checkout failed:", error);
@@ -32,9 +28,7 @@ export default function CheckoutPage() {
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
             <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                    Checkout
-                </h1>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Checkout</h1>
 
                 {cartItems.length === 0 ? (
                     <p className="text-gray-600 dark:text-gray-300">Your cart is empty.</p>
@@ -44,15 +38,22 @@ export default function CheckoutPage() {
                             {cartItems.map((item) => (
                                 <div
                                     key={item._id}
-                                    className="flex justify-between items-center border-b pb-2"
+                                    className="flex justify-between items-center border-b pb-2 gap-4"
                                 >
-                                    <div>
-                                        <h2 className="text-lg text-gray-800 dark:text-white">
-                                            {item.name}
-                                        </h2>
-                                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                                            Quantity: {item.qty}
-                                        </p>
+                                    <div className="flex items-center gap-4">
+                                        <img
+                                            src={item.image}
+                                            alt={item.name}
+                                            className="w-16 h-16 object-cover rounded"
+                                        />
+                                        <div>
+                                            <h2 className="text-lg text-gray-800 dark:text-white">
+                                                {item.name}
+                                            </h2>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                                                Quantity: {item.qty}
+                                            </p>
+                                        </div>
                                     </div>
                                     <p className="text-lg font-medium text-gray-900 dark:text-white">
                                         ${(item.price * item.qty).toFixed(2)}

@@ -1,6 +1,6 @@
 "use client";
 
-import {  useState } from "react";
+import { useState } from "react";
 import { FiTruck, FiDollarSign, FiAward, FiEye, FiHeart } from "react-icons/fi";
 import StarRating from "./StarRating";
 import AddToCartButton from "./AddToCartButton";
@@ -65,17 +65,21 @@ const ProductCard = ({ item }) => {
     return (
         <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
             {/* Product Image */}
-            <div className="h-full w-full">
+            <div className="relative w-full aspect-[4/3] rounded overflow-hidden">
                 <a href="#">
                     <Image
                         src={item.imageLight}
                         alt={item.name}
-                        className="mx-auto h-full dark:hidden"
+                        fill
+                        className="object-cover dark:hidden"
+                        sizes="(min-width: 1024px) 300px, 100vw"
                     />
-                    <img
+                    <Image
                         src={item.imageDark}
                         alt={item.name}
-                        className="mx-auto hidden h-full dark:block"
+                        fill
+                        className="object-cover hidden dark:block"
+                        sizes="(min-width: 1024px) 300px, 100vw"
                     />
                 </a>
             </div>
@@ -83,24 +87,20 @@ const ProductCard = ({ item }) => {
             {/* Product Name */}
             <a
                 href="#"
-                className="mt-2 block text-lg font-semibold text-gray-900 hover:underline dark:text-white"
+                className="mt-2 block text-base font-semibold text-gray-900 hover:underline dark:text-white truncate max-w-full"
+                title={item.name} // shows full title on hover
             >
                 {item.name}
             </a>
 
+
             {/* Ratings */}
-            <div className="mt-2 flex items-center gap-2">
-                <StarRating rating={item.rating} />
-                <p className="text-sm font-medium text-gray-900 dark:text-white">
-                    {item.rating.toFixed(1)}
-                </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                    ({item.reviewCount.toLocaleString()})
-                </p>
+            <div>
+                <StarRating rating={item.rating} review={item.reviewCount.toLocaleString()} />
             </div>
 
             {/* Features */}
-            <ul className="mt-2 flex flex-wrap gap-4 text-sm text-gray-500 dark:text-gray-400">
+            {/* <ul className="mt-2 flex flex-wrap gap-4 text-sm text-gray-500 dark:text-gray-400">
                 {item.features.map((feature, i) => (
                     <li key={i} className="flex items-center gap-2">
                         {feature.includes("Delivery") ? (
@@ -113,17 +113,13 @@ const ProductCard = ({ item }) => {
                         {feature}
                     </li>
                 ))}
-            </ul>
+            </ul> */}
 
             {/* Price and Cart */}
             <div className="mt-4 flex items-center justify-between">
-                <div className="flex items-baseline space-x-2">
-                    <span className="text-blue-700 text-xl font-semibold">
-                        {item.price}
-                    </span>
-                    <span className="text-gray-400 text-sm line-through">
-                        {item.price}
-                    </span>
+                <div className="flex items-baseline space-x-2 mt-4">
+                    <span className="text-blue-700 text-xl font-semibold">${item.price}</span>
+                    <span className="text-gray-400 text-sm line-through">${item.price}</span>
                 </div>
                 <AddToCartButton />
             </div>

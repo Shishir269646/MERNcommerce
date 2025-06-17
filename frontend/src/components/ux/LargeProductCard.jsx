@@ -1,6 +1,6 @@
 "use client";
 
-import {  useState } from "react";
+import { useState } from "react";
 import NextPrivBTN from "./NextPrivBTN";
 import StarRating from "./StarRating";
 import AddToCartButton from "./AddToCartButton";
@@ -72,7 +72,8 @@ function LargeProductSlider() {
     };
 
     return (
-        <div className="max-w-6xl mx-auto my-4 px-2 relative">
+        <div className="max-w-6xl mx-auto relative">
+            <h1 className="font-bold text-4xl mb-3 text-center">Deals of the days</h1>
             <div className="rounded-lg shadow-2xl overflow-hidden flex flex-col md:flex-row bg-white transition-all duration-500">
                 <div className="w-full md:w-2/5 p-8 flex flex-col justify-between">
                     <div>
@@ -129,7 +130,7 @@ function LargeProductSlider() {
             {/* Reusable Navigation Buttons */}
             <div className="absolute top-1/2 left-0 w-full flex justify-between px-4 -translate-y-1/2 z-10">
                 <NextPrivBTN onPrev={handlePrev} onNext={handleNext} />
-                
+
             </div>
         </div>
     );

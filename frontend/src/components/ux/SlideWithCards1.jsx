@@ -25,7 +25,7 @@ const SlideWithCards1 = ({ items = [], CardComponent, cardsPerView = 4,SectionNa
 
     return (
         <div className="relative w-full">
-            <h1 className="font-medium text-3xl text-center">{SectionName}</h1>
+            <h1 className="font-bold text-4xl mb-3 text-center">{SectionName}</h1>
             <div
                 ref={scrollRef}
                 className="flex gap-4 overflow-x-hidden scrollbar-hide px-2 scroll-smooth snap-x snap-mandatory"

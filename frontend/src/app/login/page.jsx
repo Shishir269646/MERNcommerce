@@ -1,73 +1,111 @@
-"use client"; 
-
-import { useState } from "react";
+"use client";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUserAsync, clearUserError } from "@/redux/userSlice";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { setUser } from "@/redux/slices/user";
-import { loginUser } from "@/services/auth.service";
-import toast from "react-hot-toast";
 
-export default function LoginPage() {
-    const [form, setForm] = useState({ email: "", password: "" });
-    const router = useRouter();
+const Login = () => {
+    const [isHovered, setIsHovered] = useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
     const dispatch = useDispatch();
+    const router = useRouter();
 
-    const handleChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    };
+    const { authUser, loading, error } = useSelector((state) => state.user);
 
-    const handleSubmit = async (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
-        try {
-            const res = await loginUser(form);
-            dispatch(setUser(res.user));
-            toast.success("Logged in successfully!");
-            router.push("/"); // Redirect to home or dashboard
-        } catch (err) {
-            toast.error(err?.response?.data?.message || "Login failed!");
-        }
+        dispatch(loginUserAsync({ username, password }));
     };
+
+    useEffect(() => {
+        if (authUser) {
+            router.push("/dashboard"); // Redirect after login
+        }
+    }, [authUser]);
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearUserError());
+        };
+    }, [dispatch]);
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
-            <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-md p-8">
-                <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white text-center">
-                    Login to Your Account
-                </h2>
-                <form onSubmit={handleSubmit} className="space-y-5">
-                    <div>
-                        <label className="block mb-1 text-gray-600 dark:text-gray-300">Email</label>
+        <div
+            className="h-full w-full bg-pink-500 flex items-center justify-center"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            <div className="relative h-[400px] w-[600px] bg-white rounded-[20px] overflow-hidden">
+                {/* Login Form */}
+                <div
+                    className={`absolute h-[300px] w-[250px] m-auto top-0 ${isHovered ? "left-[250px]" : "left-[-300px]"} right-0 bottom-0 transition-all duration-1000 z-10`}
+                >
+                    <form className="flex flex-col items-center" onSubmit={handleLogin}>
+                        <h1 className="text-black text-xl text-center">LOGIN</h1>
                         <input
-                            type="email"
-                            name="email"
-                            value={form.email}
-                            onChange={handleChange}
-                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            type="text"
+                            placeholder="Username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             required
+                            className="h-10 w-[280px] rounded-md mt-2 pl-2 bg-gray-300 text-pink-700 outline-none border-none"
                         />
-                    </div>
-                    <div>
-                        <label className="block mb-1 text-gray-600 dark:text-gray-300">Password</label>
                         <input
                             type="password"
-                            name="password"
-                            value={form.password}
-                            onChange={handleChange}
-                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
+                            className="h-10 w-[280px] rounded-md mt-2 pl-2 bg-gray-300 text-pink-700 outline-none border-none"
                         />
-                    </div>
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+                        <button
+                            type="submit"
+                            className={`h-10 w-[280px] rounded-md mt-5 ${isHovered ? "border-4 border-white" : ""} bg-pink-700 text-white text-base font-medium transition-all duration-1000`}
+                            disabled={loading}
+                        >
+                            {loading ? "Logging in..." : "LOGIN"}
+                        </button>
+                        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                        <p className="text-gray-500 text-sm text-center mt-2">
+                            Forget Username or Password?
+                        </p>
+                    </form>
+                </div>
+
+                {/* Subscribe Section */}
+                <div
+                    className={`absolute bg-pink-700 h-[300px] w-[250px] m-auto top-0 ${isHovered
+                        ? "left-[-300px] scale-100 opacity-100"
+                        : "left-[-900px] scale-0 opacity-0"
+                        } right-0 bottom-0 rounded-[20px] transition-all duration-1000`}
+                >
+                    <a
+                        href="#"
+                        className="absolute block left-[-55px] top-[15px] bg-white text-pink-700 text-center transform -rotate-[25deg] text-lg h-[25px] w-[200px] no-underline"
                     >
-                        Login
+                        Subscribe
+                    </a>
+                    <button className="absolute m-auto left-0 top-0 right-0 bottom-0 h-10 w-full border-none outline-none text-pink-700 text-base bg-white transition-all duration-1000 text-center overflow-hidden">
+                        <p className="p1 transition-all duration-1000">THE INVINCIBLE KREATOR</p>
+                        <p>Code by KybroTIK</p>
                     </button>
-                </form>
-                <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
-                    Don't have an account? <a href="/register" className="text-blue-600 dark:text-blue-400 hover:underline">Register</a>
-                </p>
+                </div>
+
+                {/* Decorative Elements */}
+                <span className="design-1">
+                    <span className="design-1a"></span>
+                </span>
+                <span className="design-mini-1">
+                    <span className="design-mini-1a"></span>
+                </span>
+                <span className="design-mini-2">
+                    <span className="design-mini-2a"></span>
+                </span>
             </div>
         </div>
     );
-}
+};
+
+export default Login;

@@ -67,7 +67,7 @@ const CreateProductPage = () => {
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)} className="max-w-3xl mx-auto p-4 space-y-6">
-                <input type="text" placeholder="Title" {...register("title", { required: true })} className="input" />
+                <input type="text" placeholder="Title" maxLength={50} minLength={5} {...register("title", { required: true })} className="input" />
                 <textarea placeholder="Description" {...register("description", { required: true })} className="input" rows={3} />
                 <input type="number" step="0.01" placeholder="Price" {...register("price", { required: true })} className="input" />
                 <input type="number" step="0.01" placeholder="Discount Price" {...register("discountPrice")} className="input" />
