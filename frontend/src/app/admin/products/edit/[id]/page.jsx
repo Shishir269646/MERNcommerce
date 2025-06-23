@@ -1,149 +1,150 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { getProductById, updateProduct } from "@/services/product.service"; // adjust path
-import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { getProduct, editProduct } from "@/redux/productSlice";
+import { useParams } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ImageInputer from "@/components/ui/ImageInputer";
 
-
-export default function EditProductPage() {
+const EditProductPage = () => {
   const { id } = useParams();
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { register, handleSubmit, setValue } = useForm();
+  const [previewThumbPairs, setPreviewThumbPairs] = useState([{ preview: null, thumb: null }]);
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm();
+  // ✅ FIXED: Correct selector for selectedProduct
+  const { selectedProduct: product, loading, error } = useSelector((state) => state.product);
 
+  // Fetch product data on mount
   useEffect(() => {
-    async function fetchProduct() {
-      try {
-        const product = await getProductById(id);
-        if (product) {
-          setValue("name", product.name);
-          setValue("description", product.description);
-          setValue("price", product.price);
-          setValue("countInStock", product.countInStock);
-          setValue("image", product.image);
-          setValue("category", product.category);
-          setValue("brand", product.brand);
-        }
-      } catch (err) {
-        toast.error("Failed to load product");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    }
+    if (id) dispatch(getProduct(id));
+  }, [id, dispatch]);
 
-    if (id) {
-      fetchProduct();
+  // Populate form fields when product is available
+  useEffect(() => {
+    if (!loading && product && product._id === id) {
+      setValue("title", product.title);
+      setValue("description", product.description);
+      setValue("price", product.price);
+      setValue("discountPrice", product.discountPrice || "");
+      setValue("stock", product.stock);
+      setValue("brand", product.brand);
+      setValue("category", product.category);
+      setValue("sku", product.sku);
+      setValue("material", product.material || "");
+      setValue("dimensions", product.dimensions || "");
+      setValue("weight", product.weight || "");
+      setValue("warranty", product.warranty || "");
+      setValue("returnPolicy", product.returnPolicy || "");
     }
-  }, [id, setValue]);
+  }, [product, loading, id, setValue]);
+
+  const handleFileChange = (index, field, files) => {
+    const updatedPairs = [...previewThumbPairs];
+    updatedPairs[index][field] = files[0];
+    setPreviewThumbPairs(updatedPairs);
+  };
+
+  const addPair = () => {
+    setPreviewThumbPairs([...previewThumbPairs, { preview: null, thumb: null }]);
+  };
 
   const onSubmit = async (data) => {
     try {
-      await updateProduct(id, data);
-      toast.success("Product  updated successfully!");
-      router.push("/admin/products");
+      const formData = new FormData();
+
+      Object.entries(data).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      previewThumbPairs.forEach(({ preview, thumb }) => {
+        if (preview) formData.append("previews", preview);
+        if (thumb) formData.append("thumbs", thumb);
+      });
+
+      await dispatch(editProduct({ id, payload: formData })).unwrap();
+      toast.success("Product updated successfully!");
     } catch (err) {
-      toast.error("Update failed");
       console.error(err);
+      toast.error("Failed to update product.");
     }
   };
 
-  if (loading) return <p>Loading product...</p>;
+  if (loading) return <p className="text-center mt-10">Loading product data...</p>;
+  if (error) return <p className="text-center mt-10 text-red-600">Error: {error}</p>;
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 bg-white p-6 rounded-xl shadow">
-      <h1 className="text-2xl font-bold mb-6">Edit Product</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* Name */}
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-3xl mx-auto p-4 space-y-6">
+        <input type="text" placeholder="Title" {...register("title", { required: true })} className="input" />
+        <textarea placeholder="Description" {...register("description", { required: true })} className="input" rows={3} />
+        <input type="number" step="0.01" placeholder="Price" {...register("price", { required: true })} className="input" />
+        <input type="number" step="0.01" placeholder="Discount Price" {...register("discountPrice")} className="input" />
+        <input type="number" placeholder="Stock" {...register("stock", { required: true })} className="input" />
+        <input type="text" placeholder="Brand" {...register("brand", { required: true })} className="input" />
+        <input type="text" placeholder="Category" {...register("category", { required: true })} className="input" />
+        <input type="text" placeholder="SKU" {...register("sku", { required: true })} className="input" />
+        <input type="text" placeholder="Material" {...register("material")} className="input" />
+        <input type="text" placeholder="Dimensions" {...register("dimensions")} className="input" />
+        <input type="text" placeholder="Weight" {...register("weight")} className="input" />
+        <input type="text" placeholder="Warranty" {...register("warranty")} className="input" />
+        <input type="text" placeholder="Return Policy" {...register("returnPolicy")} className="input" />
+
+        {/* Image uploader */}
         <div>
-          <label className="block mb-1 font-medium">Name</label>
-          <input
-            type="text"
-            {...register("name", { required: "Name is required" })}
-            className="w-full border px-3 py-2 rounded"
-          />
-          {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+          <h3 className="font-semibold mb-2">Update Preview & Thumbnail Images</h3>
+          {previewThumbPairs.map((pair, index) => (
+            <div key={index} className="flex items-center gap-6 mb-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">Preview Image</label>
+                <ImageInputer onChange={(e) => handleFileChange(index, "preview", e.target.files)} />
+                {pair.preview && (
+                  typeof pair.preview === "string" ? (
+                    <img src={pair.preview} alt="Preview" className="w-20 mt-2" />
+                  ) : (
+                    <p className="text-xs mt-1">{pair.preview.name}</p>
+                  )
+                )}
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Thumbnail Image</label>
+                <ImageInputer onChange={(e) => handleFileChange(index, "thumb", e.target.files)} />
+                {pair.thumb && (
+                  typeof pair.thumb === "string" ? (
+                    <img src={pair.thumb} alt="Thumb" className="w-20 mt-2" />
+                  ) : (
+                    <p className="text-xs mt-1">{pair.thumb.name}</p>
+                  )
+                )}
+              </div>
+            </div>
+          ))}
+
+          <button type="button" onClick={addPair} className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700">
+            Add More Preview + Thumb
+          </button>
         </div>
 
-        {/* Description */}
-        <div>
-          <label className="block mb-1 font-medium">Description</label>
-          <textarea
-            {...register("description", { required: "Description is required" })}
-            className="w-full border px-3 py-2 rounded"
-            rows={3}
-          />
-          {errors.description && <p className="text-red-500">{errors.description.message}</p>}
-        </div>
-
-        {/* Price */}
-        <div>
-          <label className="block mb-1 font-medium">Price</label>
-          <input
-            type="number"
-            step="0.01"
-            {...register("price", { required: "Price is required", valueAsNumber: true })}
-            className="w-full border px-3 py-2 rounded"
-          />
-          {errors.price && <p className="text-red-500">{errors.price.message}</p>}
-        </div>
-
-        {/* Stock */}
-        <div>
-          <label className="block mb-1 font-medium">Count in Stock</label>
-          <input
-            type="number"
-            {...register("countInStock", { required: "Stock count is required", valueAsNumber: true })}
-            className="w-full border px-3 py-2 rounded"
-          />
-          {errors.countInStock && <p className="text-red-500">{errors.countInStock.message}</p>}
-        </div>
-
-        {/* Image */}
-        <div>
-          <label className="block mb-1 font-medium">Image URL</label>
-          <input
-            type="text"
-            {...register("image", { required: "Image URL is required" })}
-            className="w-full border px-3 py-2 rounded"
-          />
-          {errors.image && <p className="text-red-500">{errors.image.message}</p>}
-        </div>
-
-        {/* Category */}
-        <div>
-          <label className="block mb-1 font-medium">Category</label>
-          <input
-            type="text"
-            {...register("category", { required: "Category is required" })}
-            className="w-full border px-3 py-2 rounded"
-          />
-          {errors.category && <p className="text-red-500">{errors.category.message}</p>}
-        </div>
-
-        {/* Brand */}
-        <div>
-          <label className="block mb-1 font-medium">Brand</label>
-          <input
-            type="text"
-            {...register("brand")}
-            className="w-full border px-3 py-2 rounded"
-          />
-        </div>
-
-        {/* Submit */}
         <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
           Update Product
         </button>
       </form>
-    </div>
+
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+      <style jsx>{`
+        .input {
+          width: 100%;
+          padding: 0.5rem;
+          border: 1px solid #ccc;
+          border-radius: 0.375rem;
+          margin-bottom: 0.75rem;
+        }
+      `}</style>
+    </>
   );
-}
+};
+
+export default EditProductPage;

@@ -2,10 +2,7 @@
 
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    fetchUsersAsync,
-    deleteUserAsync,
-} from '@/redux/slices/user';
+import { fetchUsers, deleteUser } from '@/redux/userSlice';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,14 +13,16 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { toast } from 'react-hot-toast';
+
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UsersPage = () => {
     const dispatch = useDispatch();
     const { users, loading, error } = useSelector((state) => state.user);
 
     useEffect(() => {
-        dispatch(fetchUsersAsync());
+        dispatch(fetchUsers());
     }, [dispatch]);
 
     const handleDelete = async (id) => {
@@ -31,16 +30,17 @@ const UsersPage = () => {
         if (!confirmed) return;
 
         try {
-            await dispatch(deleteUserAsync(id)).unwrap();
+            await dispatch(deleteUser(id)).unwrap();
             toast.success('User deleted successfully');
         } catch (err) {
-            toast.error(err.message || 'Error deleting user');
+            toast.error(err || 'Error deleting user');
         }
     };
 
     return (
         <div className="p-4 md:p-6 text-gray-800 dark:text-gray-100">
             <h2 className="text-2xl font-semibold mb-4">Users</h2>
+
             {loading ? (
                 <p>Loading users...</p>
             ) : error ? (
@@ -70,7 +70,7 @@ const UsersPage = () => {
                                 return (
                                     <TableRow key={user._id}>
                                         <TableCell>{user._id}</TableCell>
-                                        <TableCell>{user.name}</TableCell>
+                                        <TableCell>{user.username}</TableCell>
                                         <TableCell>{user.email}</TableCell>
                                         <TableCell>
                                             {user.isAdmin ? (
@@ -98,6 +98,9 @@ const UsersPage = () => {
                     </Table>
                 </div>
             )}
+
+            {/* Toast Container */}
+            <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
         </div>
     );
 };

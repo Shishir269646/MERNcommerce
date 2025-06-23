@@ -2,7 +2,6 @@ const express = require("express");
 
 const {
     getAllCategories,
-    getCategoryByName,
     createCategory,
     updateCategory,
     deleteCategory,
@@ -19,11 +18,11 @@ const router = express.Router();
 
 
 
-// Admin Routes (Protected)
-router.get("/", getAllCategories);             // GET all Category         // GET single Category
-router.post("/", uploadFields, createCategory);         // CREATE new Category
-router.put("/:id", uploadFields, updateCategory);       // UPDATE Category
-router.delete("/:id", deleteCategory);    // DELETE Category
+
+router.get("/", getAllCategories);
+router.post("/", uploadFields, createCategory);
+router.put("/:id", uploadFields, updateCategory);
+router.delete("/:id", deleteCategory);
 
 
 

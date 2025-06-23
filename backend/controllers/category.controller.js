@@ -18,6 +18,7 @@ const upload = multer({ storage });
 // Upload image field
 const uploadFields = upload.fields([{ name: "Image", maxCount: 1 }]);
 
+
 // GET all categories
 const getAllCategories = async (req, res, next) => {
     try {
@@ -36,7 +37,7 @@ const createCategory = async (req, res, next) => {
         const categoryData = { name };
 
         if (req.files?.Image && req.files.Image[0]) {
-            categoryData.image = req.files.Image[0].filename; // save filename to DB
+            categoryData.image = req.files.Image[0].filename;
         }
 
         const newCategory = new Category(categoryData);

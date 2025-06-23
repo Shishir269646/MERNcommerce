@@ -1,30 +1,35 @@
-"use client";
+'use client';
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUserAsync, clearUserError } from "@/redux/userSlice";
-import toast from "react-hot-toast";
+import { registerUser, clearUserError } from "@/redux/userSlice";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function RegisterPage() {
     const [form, setForm] = useState({
-        name: "",
+        username: "", // ✅ match backend field
         email: "",
         password: "",
+        isAdmin: false,
     });
 
     const router = useRouter();
     const dispatch = useDispatch();
-
     const { authUser, loading, error, success } = useSelector((state) => state.user);
 
     const handleChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
+        const { name, value, type, checked } = e.target;
+        setForm((prev) => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value,
+        }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(registerUserAsync(form));
+        dispatch(registerUser(form));
     };
 
     useEffect(() => {
@@ -32,7 +37,7 @@ export default function RegisterPage() {
             toast.success("Registered successfully!");
             router.push("/");
         }
-    }, [success, authUser]);
+    }, [success, authUser, router]);
 
     useEffect(() => {
         if (error) {
@@ -41,7 +46,7 @@ export default function RegisterPage() {
         return () => {
             dispatch(clearUserError());
         };
-    }, [error]);
+    }, [error, dispatch]);
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -54,8 +59,8 @@ export default function RegisterPage() {
                         <label className="block mb-1 text-gray-600 dark:text-gray-300">Name</label>
                         <input
                             type="text"
-                            name="name"
-                            value={form.name}
+                            name="username"
+                            value={form.username}
                             onChange={handleChange}
                             required
                             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -83,6 +88,16 @@ export default function RegisterPage() {
                             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
+                    <div className="flex items-center gap-2">
+                        <input
+                            type="checkbox"
+                            name="isAdmin"
+                            checked={form.isAdmin}
+                            onChange={handleChange}
+                            className="checkbox"
+                        />
+                        <label className="text-gray-600 dark:text-gray-300">Are you Admin?</label>
+                    </div>
                     <button
                         type="submit"
                         disabled={loading}
@@ -98,6 +113,9 @@ export default function RegisterPage() {
                     </a>
                 </p>
             </div>
+
+            {/* Toast container */}
+            <ToastContainer position="top-right" autoClose={3000} />
         </div>
     );
 }

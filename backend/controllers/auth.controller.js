@@ -61,7 +61,7 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Only allow admin login here
+
     if (!user.isAdmin) {
       return res.status(403).json({ message: 'Access denied. Admins only.' });
     }
@@ -82,11 +82,10 @@ const loginUser = async (req, res) => {
 
 
 
-// Get logged-in user's profile
+// Get all user profile
 const getAllUsers = async (req, res) => {
   try {
-    // Only return name and email of all users
-    const users = await User.find({}, 'name email'); // same as .select('name email')
+    const users = await User.find({}, 'username email isAdmin'); // same as .select('name email')
 
     res.status(200).json(users);
   } catch (error) {
@@ -96,4 +95,20 @@ const getAllUsers = async (req, res) => {
 };
 
 
-module.exports = { registerUser, loginUser, getAllUsers };
+
+const deleteUser = async (req, res) => {
+  try {
+    const users = await User.findById(req.params.id);
+    if (!users) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    await users.deleteOne();
+    res.status(200).json({ _id: req.params.id, message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Delete user error:', error.message);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+module.exports = { registerUser, loginUser, getAllUsers, deleteUser };

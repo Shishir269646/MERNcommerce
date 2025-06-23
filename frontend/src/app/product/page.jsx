@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { getProductById } from "@/redux/productSlice"; // ✅ Ensure this is a function, not an action creator
+import { getProduct } from "@/redux/productSlice"; // ✅ Ensure this is a function, not an action creator
 import Loader from "@/components/ux/Loader";
 import toast from "react-hot-toast";
 import ProductDetail from "@/components/ux/ProductDetail";
@@ -15,7 +15,7 @@ export default function ProductDetailPage() {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const res = await getProductById(id);
+                const res = await getProduct(id);
                 setProduct(res.product);
             } catch (error) {
                 toast.error("Product not found.");
@@ -39,7 +39,7 @@ export default function ProductDetailPage() {
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 px-4 py-10">
-           <ProductDetail product={product} />
+            <ProductDetail product={product} />
         </div>
     );
 }

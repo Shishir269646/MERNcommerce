@@ -10,7 +10,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import LargeProductCard from "@/components/ux/LargeProductCard";
 import ProductListing from "@/components/ux/ProductListing";
-import Login from "@/components/ux/Login";
 import DemoProduct from "@/components/ux/DemoProduct";
 import ProductCard1 from "@/components/ux/ProductCard1";
 import img1 from "../images/headphones.jpg"
@@ -224,7 +223,7 @@ export default function Home() {
         </div>
         <ProductListing />
 
-        <Login />
+        
 
         <BreadcrumbSection
           items={['Products', 'Electronics']}

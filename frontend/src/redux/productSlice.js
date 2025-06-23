@@ -1,10 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-// Axios instance
-const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000/api",
-});
+import api from '@/utils/api';
 
 
 // Thunks
@@ -29,7 +24,7 @@ export const getProduct = createAsyncThunk("product/getById", async (id, thunkAP
 });
 
 
-// ✅ Create Product (FormData)
+//Create Product
 export const addProduct = createAsyncThunk("product/create", async (formData, thunkAPI) => {
   try {
     const { data } = await api.post("/product", formData, {
@@ -44,21 +39,23 @@ export const addProduct = createAsyncThunk("product/create", async (formData, th
 });
 
 
-// Optional: Update Product (could be JSON or FormData)
-export const editProduct = createAsyncThunk("product/update", async ({ id, payload }, thunkAPI) => {
+export const editProduct = createAsyncThunk("product/update", async ({ id, formData }, thunkAPI) => {
   try {
-    const { data } = await api.put(`/product/${id}`, payload, {
-      headers: payload instanceof FormData ? {
-        "Content-Type": "multipart/form-data",
-      } : {},
+    const { data } = await api.put(`/product/${id}`, formData, {
+      headers: formData instanceof FormData
+        ? { "Content-Type": "multipart/form-data" }
+        : {},
     });
     return data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response?.data?.message || "Failed to update product");
+    return thunkAPI.rejectWithValue(
+      error.response?.data?.message || "Failed to update product"
+    );
   }
 });
 
-// ✅ Delete product (return id for filtering)
+
+//Delete product
 export const removeProduct = createAsyncThunk("product/delete", async (id, thunkAPI) => {
   try {
     await api.delete(`/product/${id}`);

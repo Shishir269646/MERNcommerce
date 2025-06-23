@@ -12,7 +12,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Pencil, Trash2 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
-import img from '../../../../../backend/uploads/1748504835559-975085364.jpg';
+
+
 
 export default function AdminProductsPage() {
     const dispatch = useDispatch();
@@ -33,7 +34,7 @@ export default function AdminProductsPage() {
         try {
             if (confirm('Are you sure you want to delete this product?')) {
                 await dispatch(removeProduct(id));
-                toast.success('Product deleted successfully!');
+                toast.success('Product deleted successfully!'); 
             }
         } catch (error) {
             toast.error(`Failed to delete product: ${error}`);
@@ -76,13 +77,13 @@ export default function AdminProductsPage() {
                             <Card key={product._id} className="rounded-2xl shadow-md">
                                 <CardContent className="p-4">
                                     <Image
-                                        src={`${img}`}
-                                        alt={product.name}
+                                        src="https://plus.unsplash.com/premium_photo-1664392147011-2a720f214e01?q=80&w=878&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                        alt={product.title || "Product Image"}
                                         width={250}
                                         height={160}
                                         className="w-full object-cover rounded-lg mb-2"
                                     />
-                                    <h2 className="text-lg font-semibold">{product.name}</h2>
+                                    <h2 className="text-lg font-semibold">{product.title}</h2>
                                     <p className="text-sm text-muted-foreground mb-2">${product.price}</p>
                                     <div className="flex justify-between">
                                         <Button

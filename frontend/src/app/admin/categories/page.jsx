@@ -14,24 +14,21 @@ import {
     TableBody,
     TableRow,
     TableHead,
-    TableCell,
+    TableCell
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { toast } from 'react-toastify';
 import ImageInputer from '@/components/ui/ImageInputer';
+import Image from 'next/image';
 
 const CategoriesPage = () => {
     const dispatch = useDispatch();
-
-    const {
-        categories = [],
-        loading = false,
-        error = null,
-    } = useSelector((state) => state.category || {});
+    const { categories = [], loading = false, error = null } = useSelector((state) => state.category || {});
 
     const [categoryName, setCategoryName] = useState('');
     const [editId, setEditId] = useState(null);
     const [categoryImg, setCategoryImg] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         dispatch(fetchCategories());
@@ -50,7 +47,7 @@ const CategoriesPage = () => {
         const formData = new FormData();
         formData.append('name', categoryName);
         if (categoryImg) {
-            formData.append('image', categoryImg);
+            formData.append('Image', categoryImg);
         }
 
         try {
@@ -61,8 +58,7 @@ const CategoriesPage = () => {
                 await dispatch(createCategory(formData)).unwrap();
                 toast.success('Category created successfully');
             }
-
-            await dispatch(fetchCategories());
+            dispatch(fetchCategories());
             resetForm();
         } catch (err) {
             toast.error(err?.message || 'An error occurred');
@@ -78,8 +74,8 @@ const CategoriesPage = () => {
     const handleDelete = async (id) => {
         try {
             await dispatch(deleteCategory(id)).unwrap();
-            resetForm();
             toast.success('Category deleted');
+            resetForm();
         } catch (err) {
             toast.error(err?.message || 'Failed to delete category');
         }
@@ -88,6 +84,10 @@ const CategoriesPage = () => {
     const handleFileChange = (e) => {
         setCategoryImg(e.target.files[0]);
     };
+
+    const filteredCategories = categories.filter(cat =>
+        cat.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <div className="p-4 md:p-6 text-gray-800 dark:text-gray-100">
@@ -99,59 +99,74 @@ const CategoriesPage = () => {
                     placeholder="Category name"
                     value={categoryName}
                     onChange={(e) => setCategoryName(e.target.value)}
-                    className="input input-primary"
+                    className="input input-bordered mb-4 w-full max-w-sm"
                 />
 
-                <div>
+                <div className="mb-4">
                     <label className="block text-sm font-medium mb-1">Category Image</label>
-
                     <ImageInputer onChange={handleFileChange} />
                 </div>
-                <Button type="submit">{editId ? 'Update' : 'Create'}</Button>
-                {editId && (
-                    <Button type="button" variant="ghost" onClick={resetForm}>
-                        Cancel
-                    </Button>
-                )}
+
+                <div className="flex gap-3 mb-6">
+                    <Button type="submit">{editId ? 'Update' : 'Create'}</Button>
+                    {editId && (
+                        <Button type="button" variant="ghost" onClick={resetForm}>
+                            Cancel
+                        </Button>
+                    )}
+                </div>
             </form>
+
+            <div className="mb-4">
+                <input
+                    type="text"
+                    placeholder="Search categories..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="input input-bordered w-full max-w-sm"
+                />
+            </div>
 
             {loading ? (
                 <span className="loading loading-dots loading-xl"></span>
             ) : error ? (
                 <p className="text-red-500">{error}</p>
-            ) : categories.length === 0 ? (
-                <p>No categories found.</p>
+            ) : filteredCategories.length === 0 ? (
+                <p>No matching categories found.</p>
             ) : (
                 <div className="overflow-x-auto border rounded-lg dark:border-gray-700">
                     <Table>
                         <TableHeader>
                             <TableRow className="bg-muted dark:bg-gray-800">
-                                <TableHead>ID</TableHead>
                                 <TableHead>Name</TableHead>
+                                <TableHead>Image</TableHead>
                                 <TableHead className="text-right">Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {categories.map((cat) => (
+                            {filteredCategories.map((cat) => (
                                 <TableRow key={cat._id}>
-                                    <TableCell>{cat._id}</TableCell>
-                                    <TableCell>{cat.name}</TableCell>
+
+                                    <TableCell className="font-semibold text-xl">{cat.name}</TableCell>
                                     <TableCell>
-                                        <div class="avatar">
-                                            <div class="mask mask-squircle w-24">
-                                                <img src="https://img.daisyui.com/images/profile/demo/distracted1@192.webp" />
-                                            </div>
-                                        </div>
+                                        {cat.image ? (
+                                            <Image
+                                                src={`http://localhost:5000/uploads/categories/${cat.image}`}
+                                                alt={cat.name}
+                                                width={80}
+                                                height={80}
+                                                className="object-cover rounded"
+                                            />
+                                        ) : (
+                                            <span>No image</span>
+                                        )}
                                     </TableCell>
                                     <TableCell>
                                         <div className="flex justify-end gap-2">
                                             <Button variant="outline" onClick={() => handleEdit(cat)}>
                                                 Edit
                                             </Button>
-                                            <Button
-                                                variant="destructive"
-                                                onClick={() => handleDelete(cat._id)}
-                                            >
+                                            <Button variant="destructive" onClick={() => handleDelete(cat._id)}>
                                                 Delete
                                             </Button>
                                         </div>
