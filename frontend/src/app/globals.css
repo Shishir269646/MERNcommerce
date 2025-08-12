@@ -1,0 +1,145 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+.p1 {
+  transition: all 1s;
+}
+
+.form-box-empty button:hover .p1 {
+  margin-top: -25px;
+}
+
+/* Decorations */
+.design-1,
+.design-mini-1,
+.design-mini-2 {
+  position: absolute;
+  border-radius: 100px;
+  transform: rotate(-55deg);
+  box-shadow: inset 20px -20px 60px pink, inset -20px 20px 60px rgb(226, 4, 160);
+  border: 2px solid rgb(209, 53, 79);
+}
+
+.design-1 {
+  height: 500px;
+  width: 150px;
+  background-color: pink;
+  left: 550px;
+  bottom: -200px;
+}
+
+.design-1a {
+  position: absolute;
+  height: 450px;
+  width: 130px;
+  background-color: rgb(209, 53, 79);
+  border-radius: 100px;
+  left: 10px;
+  bottom: 35px;
+}
+
+.design-mini-1 {
+  height: 500px;
+  width: 70px;
+  background-color: rgb(209, 53, 79);
+  left: 550px;
+  bottom: -330px;
+}
+
+.design-mini-1a,
+.design-mini-2a {
+  position: absolute;
+  height: 450px;
+  width: 50px;
+  background-color: rgb(209, 53, 79);
+  border-radius: 100px;
+  left: 10px;
+  bottom: 38px;
+}
+
+.design-mini-2 {
+  height: 500px;
+  width: 70px;
+  background-color: pink;
+  left: 700px;
+  bottom: -120px;
+}
+
+
+@keyframes loader {
+  0% {
+    letter-spacing: -1px;
+  }
+
+  100% {
+    letter-spacing: 15px;
+  }
+}
+
+@keyframes sub-banner-left {
+  0% {
+    right: 82%;
+  }
+
+  100% {
+    right: 90%;
+  }
+}
+
+@keyframes sub-banner-right {
+  0% {
+    left: 82%;
+  }
+
+  100% {
+    left: 90%;
+  }
+}
+
+.animate-loader {
+  animation: loader 1s cubic-bezier(0.5, 0.1, 0.15, 1) alternate infinite;
+}
+
+.animate-sub-banner-left {
+  animation: sub-banner-left 1s cubic-bezier(0.5, 0.1, 0.15, 1) alternate infinite;
+}
+
+.animate-sub-banner-right {
+  animation: sub-banner-right 1s cubic-bezier(0.5, 0.1, 0.15, 1) alternate infinite;
+}
