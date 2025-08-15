@@ -51,7 +51,7 @@ export default function UserProfilePage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-base-200 dark:bg-base-300">
+            <div className="min-h-screen flex items-center justify-center bg-base-200">
                 <span className="loading loading-spinner text-primary"></span>
             </div>
         );
@@ -71,10 +71,10 @@ export default function UserProfilePage() {
     }
 
     return (
-        <div className="min-h-screen bg-base-200 dark:bg-base-300 p-4">
+        <div className="min-h-screen bg-base-200 p-4">
             <div className="max-w-6xl mx-auto grid gap-6 md:grid-cols-2">
                 {/* User Info Card */}
-                <div className="card bg-base-100 shadow-lg dark:shadow-xl">
+                <div className="card bg-base-100 shadow-lg shadow-xl">
                     <div className="card-body">
                         <div className="flex items-center justify-between">
                             <h2 className="card-title text-lg md:text-xl">User Information</h2>
@@ -90,7 +90,7 @@ export default function UserProfilePage() {
                 </div>
 
                 {/* Address Info Card */}
-                <div className="card bg-base-100 shadow-lg dark:shadow-xl">
+                <div className="card bg-base-100 shadow-lg shadow-xl">
                     <div className="card-body">
                         <div className="flex items-center justify-between">
                             <h2 className="card-title text-lg md:text-xl">Address Information</h2>

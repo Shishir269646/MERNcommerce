@@ -25,7 +25,7 @@ const ProductQuickView = ({ product, onClose }) => {
                     <div className="w-full md:w-1/2">
                         <h2 className="text-2xl font-bold">{product.title}</h2>
                         <p className="text-gray-600 mt-2">{product.description}</p>
-                        <p className="text-xl text-blue-600 mt-4">$ {product.price}</p>
+                        <p className="text-xl mt-4">$ {product.price}</p>
                         <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                             Add to Cart
                         </button>

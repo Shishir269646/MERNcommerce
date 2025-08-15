@@ -35,14 +35,14 @@ export default function ProductDetailPage() {
 
     if (!product || Object.keys(product).length === 0) {
         return (
-            <div className="min-h-screen flex items-center justify-center text-gray-600 dark:text-gray-300">
+            <div className="min-h-screen flex items-center justify-center text-gray-600">
                 Product not found.
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-900 px-4 py-10">
+        <div className="min-h-screen bg-gray-100 px-4 py-10">
             <ProductDetail product={product} />
             
         </div>

@@ -22,7 +22,7 @@ const items = [
 
 const Category = () => {
     return (
-        <section className="py-14 md:py-24 bg-white dark:bg-[#0b1727] text-zinc-900 dark:text-white relative overflow-hidden z-10">
+        <section className="py-14 md:py-24 bg-white text-zinc-900 relative overflow-hidden z-10">
             <div className="absolute top-0 right-0">
                 <Image
                     src="https://cdn.easyfrontend.com/pictures/ecommerce/grid_10_shape1.png"
@@ -55,8 +55,8 @@ const Category = () => {
                     >
                         {items.map((item, index) => (
                             <SwiperSlide key={index} className="my-[80px]">
-                                {/* <div className="bg-white dark:bg-slate-800 shadow-xl relative flex items-end justify-center min-h-[155px] rounded-t-[30px] rounded-b-[15px] border dark:border-slate-700">
-                                    <div className="absolute -top-[75px] left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 shadow border dark:border-slate-700 rounded-full flex justify-center items-center h-40 w-40 overflow-hidden">
+                                {/* <div className="bg-white bg-slate-800 shadow-xl relative flex items-end justify-center min-h-[155px] rounded-t-[30px] rounded-b-[15px] border border-slate-700">
+                                    <div className="absolute -top-[75px] left-1/2 -translate-x-1/2 bg-white bg-slate-800 shadow border border-slate-700 rounded-full flex justify-center items-center h-40 w-40 overflow-hidden">
                                         <Image
                                             src={item.imageUrl}
                                             alt={item.title}

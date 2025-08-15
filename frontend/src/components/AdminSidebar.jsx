@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function AdminSidebar() {
   return (
-    <aside className="bg-gray-100 dark:bg-gray-900 w-60 min-h-screen p-4 text-gray-800 dark:text-gray-100">
+    <aside className="bg-gray-100w-full md:w-60 min-h-screen p-4 text-gray-800">
       <h2 className="text-xl font-bold mb-6">Admin Panel</h2>
       <ul className="space-y-4">
         <li><Link href="/admin/dashboard" className="hover:underline">Dashboard</Link></li>

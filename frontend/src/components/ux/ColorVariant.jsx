@@ -44,11 +44,12 @@ function ColorVariant({ colorVariant = [], onSelect }) {
                             onChange={() => handleColorChange(item.value)}
                         />
                         <label
-                            className={`w-8 h-8 rounded-full ${item.bgcolor} cursor-pointer mt-1 
-                ${selectedColor === item.value
+                            className={`w-8 h-8 rounded-full cursor-pointer mt-1 
+                                ${selectedColor === item.value
                                     ? "ring-2 ring-offset-2 ring-blue-500"
                                     : "ring-1 ring-gray-300"
                                 }`}
+                            style={{ backgroundColor: item.bgcolor }}
                             onClick={() => handleColorChange(item.value)}
                         />
                     </Fragment>

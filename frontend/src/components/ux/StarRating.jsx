@@ -13,16 +13,16 @@ const StarRating = ({ rating, review }) => {
                         key={i}
                         className={`h-4 w-4 ${i < Math.round(rating)
                             ? 'text-yellow-400 fill-current'
-                            : 'text-gray-300 dark:text-gray-500'
+                            : 'text-gray-300'
                             }`}
                     />
                 ))}
             </div>
-            <p className="text-sm font-medium text-gray-900 dark:text-white">
+            <p className="text-sm font-medium text-gray-900">
                 {rating.toFixed(1)}
             </p>
             {review > 0 && (
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-gray-500">
                     ({review})
                 </p>
             )}

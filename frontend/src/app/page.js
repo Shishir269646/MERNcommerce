@@ -54,12 +54,12 @@ const incentives = [
 
 const IncentiveItem = ({ item }) => (
   <div className="flex justify-center items-center">
-    <div className="text-[45px] text-blue-600">
+    <div className="text-[45px] text-blue-600 dark:text-blue-400">
       <FontAwesomeIcon icon={item.icon} />
     </div>
     <div className="ml-4 mt-2">
-      <h5 className="mb-1 text-2xl font-medium">{item.title}</h5>
-      <p className="text-sm opacity-70">{item.desc}</p>
+      <h5 className="mb-1 text-2xl font-medium text-black dark:text-white">{item.title}</h5>
+      <p className="text-sm opacity-70 dark:opacity-80 text-black dark:text-white">{item.desc}</p>
     </div>
   </div>
 );
@@ -158,7 +158,7 @@ export default function Home() {
         <ImageSlider Images={Images} loading={loadingSetting} error={errorSetting} />
         <Incentives1 />
 
-        <div className="bg-gray-100 py-16 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start w-full">
+        <div className="bg-gray-100 dark:bg-gray-800 py-16 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start w-full">
 
           <div>
 
@@ -189,17 +189,17 @@ export default function Home() {
           />
         </div>
 
-        <div className="bg-gray-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="bg-gray-100 dark:bg-gray-800 py-10 px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-y-6 lg:gap-y-0 lg:gap-x-6 items-start">
             {/* Left Card */}
             <div className="w-full lg:w-1/3">
-              <div className="card bg-primary w-full h-full shadow-md">
+              <div className="card bg-primary dark:bg-gray-900 w-full h-full shadow-md">
                 <div className="card-body items-center text-center">
                   <h2 className="card-title text-2xl text-white justify-center">
                     The best of smartphone
                   </h2>
                   <div className="card-actions justify-center mt-4">
-                    <button className="btn uppercase bg-white text-primary hover:bg-[#fd7b7b] hover:text-white">
+                    <button className="btn uppercase bg-white text-primary hover:bg-[#fd7b7b] hover:text-white dark:bg-gray-700 dark:text-white">
                       View All
                     </button>
                   </div>

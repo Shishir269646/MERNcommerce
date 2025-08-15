@@ -98,7 +98,7 @@ export default function Login() {
                             {loading ? "Logging in..." : "Login"}
                         </button>
 
-                        <p className="text-sm text-center text-gray-400">
+                        <p className="text-sm text-center">
                             Forgot Email or Password?
                         </p>
                     </form>

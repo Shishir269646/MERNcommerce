@@ -60,13 +60,13 @@ function SizeVariant({ sizeVariant = [], onSelect }) {
                         />
                         <label
                             htmlFor={`size-${size.value}`}
-                            className={`bg-gray-100 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-blue-100/[0.2]
-              py-1 px-4 rounded-full border text-sm mt-1
-              ${selectedSize === size.value
-                                    ? 'border-blue-600 dark:border-blue-600'
-                                    : 'border-blue-50 dark:border-blue-600 dark:border-opacity-20'
+                            className={`bg-gray-100 hover:bg-slate-100
+                                py-1 px-4 rounded-full border text-sm mt-1
+                                ${selectedSize === size.value
+                                    ? 'border-blue-600'
+                                    : 'border-blue-50 border-opacity-20'
                                 }
-              ${size.disabled
+                                ${size.disabled
                                     ? 'line-through opacity-40 cursor-not-allowed'
                                     : 'cursor-pointer'
                                 }`}

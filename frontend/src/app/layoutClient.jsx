@@ -55,7 +55,7 @@ function LayoutInitializer({ children }) {
         <>
             {!hideLayout && <TopHeader />}
             {!hideLayout && <Navbar />}
-            <main>{children}</main>
+            <main className="container mx-auto px-4">{children}</main>
             {!hideLayout && <Footer />}
         </>
     );

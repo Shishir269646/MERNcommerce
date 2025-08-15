@@ -22,7 +22,7 @@ const ProductItem = ({ item, index, onChangeQty, onRemove }) => {
             </figure>
             <div className="card-body px-4 pt-2 pb-4 w-full">
                 <h2 className="card-title text-base md:text-lg line-clamp-2">{productTitle}</h2>
-                <p className="text-blue-600 font-bold">৳ {productPrice}</p>
+                <p className="font-bold">৳ {productPrice}</p>
                 <div className="flex items-center justify-between mt-2">
                     <QtyField
                         name={`qty-${index}`}

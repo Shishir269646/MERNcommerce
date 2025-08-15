@@ -13,13 +13,13 @@ export function Switch({ checked = false, onChange, label = '', className = '' }
 
     return (
         <div className={clsx('flex items-center space-x-2', className)}>
-            {label && <span className="text-sm text-gray-700 dark:text-gray-300">{label}</span>}
+            {label && <span className="text-sm text-gray-700">{label}</span>}
             <button
                 type="button"
                 onClick={handleToggle}
                 className={clsx(
                     'relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 focus:outline-none',
-                    isChecked ? 'bg-primary-600 dark:bg-primary-400' : 'bg-gray-300 dark:bg-gray-600'
+                    isChecked ? 'bg-primary-600' : 'bg-gray-300'
                 )}
             >
                 <span

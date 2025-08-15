@@ -54,19 +54,25 @@ const WishlistPage = () => {
                         className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 group relative"
                     >
                         <figure className="relative w-full h-56">
+
                             <Image
-                                src={product.Image?.[0] || '/placeholder.jpg'}
-                                alt={product.name || 'Wishlist product image'}
+                                src={
+                                    product.Image?.[0]?.find(img => img.size === "small")?.url ||
+                                    product.Image?.[0]?.[0]?.url ||
+                                    '/fallback.jpg'
+                                }
+                                alt={product.title || 'Product Image'}
+                                loading='lazy'
                                 fill
-                                className="object-cover rounded-t-lg"
                                 sizes="(max-width: 768px) 100vw, 33vw"
+                                className="object-cover rounded-t-lg"
                             />
                         </figure>
                         <div className="card-body">
                             <h2 className="card-title text-lg truncate">
                                 {product.title}
                             </h2>
-                            <p className="text-sm text-base-content/60 truncate">
+                            <p className="text-sm truncate">
                                 {product.description}
                             </p>
                             <div className="flex items-center justify-between mt-3">

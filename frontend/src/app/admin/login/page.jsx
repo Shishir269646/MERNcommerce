@@ -24,7 +24,7 @@ const AdminLoginPage = () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(form),
-                
+
             });
 
             const data = await res.json();
@@ -43,9 +43,9 @@ const AdminLoginPage = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-            <form onSubmit={handleLogin} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-sm">
-                <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800 dark:text-gray-100">Admin Login</h2>
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+            <form onSubmit={handleLogin} className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
+                <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">Admin Login</h2>
                 <div className="mb-4">
                     <Input
                         type="email"

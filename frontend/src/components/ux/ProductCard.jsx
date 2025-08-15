@@ -41,7 +41,6 @@ const ProductCard = ({ item }) => {
         }
     }, [wishlist?.products, item]);
 
-
     if (!item) return null;
 
     const hasColorVariants =
@@ -56,7 +55,7 @@ const ProductCard = ({ item }) => {
     };
 
     const actionButtonClass =
-        'rounded-lg p-2 text-gray-500 hover:bg-amber-800 hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white';
+        'rounded-lg p-2 text-gray-500 hover:bg-amber-800 hover:text-white';
 
     const toggleWishlist = () => {
         if (isWishlisted) {
@@ -67,7 +66,7 @@ const ProductCard = ({ item }) => {
     };
 
     return (
-        <div className="relative rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 w-full max-w-sm mx-auto">
+        <div className="relative rounded-lg border border-gray-200 bg-white p-4 shadow-sm w-full max-w-sm mx-auto">
             {/* Wishlist Icon */}
             <button
                 className={`${actionButtonClass} absolute top-2 right-2 z-10`}
@@ -86,8 +85,8 @@ const ProductCard = ({ item }) => {
                 <Link href={`/product/${item._id}`} className="block w-full h-full">
                     <Image
                         src={
-                            item.Image?.[0] ||
-                            item.images?.[0] || // Optional fallback
+                            item.Image?.[0]?.find(img => img.size === "small")?.url ||
+                            item.Image?.[0]?.[0]?.url ||
                             '/fallback.jpg'
                         }
                         alt={item.title || 'Product Image'}
@@ -101,7 +100,7 @@ const ProductCard = ({ item }) => {
             {/* Product Name */}
             <Link
                 href={`/product/${item._id}`}
-                className="mt-3 block text-base font-semibold text-gray-900 hover:underline dark:text-white truncate"
+                className="mt-3 block text-base font-semibold text-gray-900 hover:underline truncate"
                 title={item.title}
             >
                 {item.title}
@@ -118,12 +117,12 @@ const ProductCard = ({ item }) => {
             {/* Price + Cart */}
             <div className="mt-4 flex items-center justify-between flex-wrap">
                 <div className="flex items-baseline space-x-2">
-                    <span className="text-blue-700 text-xl font-semibold">
-                        ${item.price}
+                    <span className="text-blue-700 dark:text-blue-400 text-xl font-semibold">
+                        {`$${item.price}`}
                     </span>
                     {item.discountPrice && (
                         <span className="text-gray-400 text-sm line-through">
-                            ${item.discountPrice}
+                            {`$${item.discountPrice}`}
                         </span>
                     )}
                 </div>
@@ -144,7 +143,7 @@ const ProductCard = ({ item }) => {
             <div className="mt-4">
                 <button
                     onClick={() => setShowQuickView(true)}
-                    className="w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 flex items-center justify-center gap-2"
+                    className="w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 flex items-center justify-center gap-2"
                     title="Quick View"
                 >
                     <FiEye className="h-5 w-5" />

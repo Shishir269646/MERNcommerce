@@ -6,14 +6,14 @@ function Footer() {
         <div>
             <footer className="bg-gray-100 text-[#28303b] mt-[150px] py-16 flex flex-col justify-center items-center">
                 {/* Newsletter Section */}
-                <div className="bg-white shadow-[0px_6px_44px_rgba(173,174,197,0.2)] rounded-[10px] w-[90%] md:w-[60%] -mt-[150px] md:-mt-[200px] mb-[100px] text-center p-4 md:p-5">
-                    <h2 className="text-[26px] md:text-[45px] font-semibold">Newsletter</h2>
+                <div className="bg-white shadow-[0px_6px_44px_rgba(173,174,197,0.2)] shadow-none rounded-[10px] w-[90%] md:w-[60%] -mt-[150px] md:-mt-[200px] mb-[100px] text-center p-4 md:p-5">
+                    <h2 className="text-[26px] md:text-[45px] font-semibold text-gray-900">Newsletter</h2>
                     <form className="mt-5 mb-0">
                         <div className="flex flex-col sm:flex-row justify-center gap-2 items-center">
                             <input
                                 type="email"
                                 placeholder="Enter Email"
-                                className="max-w-[350px] min-h-[48px] px-6 py-2 bg-gray-100 border-0 focus:outline-none"
+                                className="max-w-[350px] min-h-[48px] px-6 py-2 bg-gray-100 text-white border-0 focus:outline-none"
                             />
                             <button
                                 type="submit"
@@ -39,26 +39,26 @@ function Footer() {
                         <div className="lg:col-span-2">
                             <h5 className="font-semibold mb-2">Quick Links</h5>
                             <ul className="space-y-2 text-opacity-70 text-[#28303b]">
-                                <li><a href="#!" className="hover:opacity-100">Home</a></li>
-                                <li><a href="#!" className="hover:opacity-100">About Us</a></li>
-                                <li><a href="#!" className="hover:opacity-100">Services</a></li>
+                                <li><a href="#!" className="hover:opacity-100 hover:text-white">Home</a></li>
+                                <li><a href="#!" className="hover:opacity-100 hover:text-white">About Us</a></li>
+                                <li><a href="#!" className="hover:opacity-100 hover:text-white">Services</a></li>
                             </ul>
                         </div>
                         <div className="lg:col-span-2">
                             <h5 className="font-semibold mb-2">Social Media</h5>
                             <ul className="space-y-2 text-opacity-70 text-[#28303b]">
-                                <li><a href="#!" className="hover:opacity-100">Facebook</a></li>
-                                <li><a href="#!" className="hover:opacity-100">Instagram</a></li>
-                                <li><a href="#!" className="hover:opacity-100">LinkedIn</a></li>
-                                <li><a href="#!" className="hover:opacity-100">Twitter</a></li>
+                                <li><a href="#!" className="hover:opacity-100 hover:text-white">Facebook</a></li>
+                                <li><a href="#!" className="hover:opacity-100 hover:text-white">Instagram</a></li>
+                                <li><a href="#!" className="hover:opacity-100 hover:text-white">LinkedIn</a></li>
+                                <li><a href="#!" className="hover:opacity-100 hover:text-white">Twitter</a></li>
                             </ul>
                         </div>
                         <div className="lg:col-span-2">
                             <h5 className="font-semibold mb-2">Job Info</h5>
                             <ul className="space-y-2 text-opacity-70 text-[#28303b]">
-                                <li><a href="#!" className="hover:opacity-100">Select</a></li>
-                                <li><a href="#!" className="hover:opacity-100">Service</a></li>
-                                <li><a href="#!" className="hover:opacity-100">Payment</a></li>
+                                <li><a href="#!" className="hover:opacity-100 hover:text-white">Select</a></li>
+                                <li><a href="#!" className="hover:opacity-100 hover:text-white">Service</a></li>
+                                <li><a href="#!" className="hover:opacity-100 hover:text-white">Payment</a></li>
                             </ul>
                         </div>
                         <div className="lg:col-span-3">
@@ -66,12 +66,12 @@ function Footer() {
                             <ul className="space-y-2 text-opacity-70 text-[#28303b]">
                                 <li>Sylhet, Bangladesh</li>
                                 <li>
-                                    <a href="#!" className="hover:opacity-100">
+                                    <a href="#!" className="hover:opacity-100 hover:text-white">
                                         📧 contact@easyfrontend.com
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#!" className="hover:opacity-100">
+                                    <a href="#!" className="hover:opacity-100 hover:text-white">
                                         📞 +880 1633-154215
                                     </a>
                                 </li>
@@ -88,9 +88,9 @@ function Footer() {
                             &copy; Easy Frontend, All rights reserved
                         </p>
                         <ul className="flex gap-4 text-sm text-opacity-75 text-[#28303b]">
-                            <li><a href="#!" className="hover:opacity-100">Privacy</a></li>
-                            <li><a href="#!" className="hover:opacity-100">Security</a></li>
-                            <li><a href="#!" className="hover:opacity-100">Terms</a></li>
+                            <li><a href="#!" className="hover:opacity-100 hover:text-white">Privacy</a></li>
+                            <li><a href="#!" className="hover:opacity-100 hover:text-white">Security</a></li>
+                            <li><a href="#!" className="hover:opacity-100 hover:text-white">Terms</a></li>
                         </ul>
                     </div>
                 </div>

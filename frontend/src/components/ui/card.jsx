@@ -5,7 +5,7 @@ export function Card({ className = '', children, ...props }) {
     return (
         <div
             className={clsx(
-                'rounded-2xl border bg-white p-4 shadow-sm transition-colors dark:border-gray-700 dark:bg-gray-900',
+                'rounded-2xl border bg-white p-4 shadow-sm transition-colors',
                 className
             )}
             {...props}
@@ -18,7 +18,7 @@ export function Card({ className = '', children, ...props }) {
 export function CardContent({ className = '', children, ...props }) {
     return (
         <div
-            className={clsx('text-sm text-gray-700 dark:text-gray-300', className)}
+            className={clsx('text-sm text-gray-700', className)}
             {...props}
         >
             {children}

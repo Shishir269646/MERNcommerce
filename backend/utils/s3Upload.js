@@ -62,31 +62,52 @@ const resizeAndUploadToS3 = async (filePath, originalFilename, mimetype, group =
     category: [{ label: "category", width: 130, height: 162 }],
     product: [
       { label: "small", width: 350, height: 350 },
-      { label: "large", width: 800, height: 800 }
+      { label: "large", width: 800, height: 800 },
     ],
-    setting: [
-      { label: "setting", width: 1680, height: 500 },
-    ],
+    setting: [{ label: "setting", width: 1680, height: 500 }],
   };
 
   const selectedSizes = sizesByGroup[group] || sizesByGroup.general;
   const results = [];
 
+  const image = sharp(filePath);
+  const metadata = await image.metadata();
+
   for (const size of selectedSizes) {
-    const buffer = await sharp(filePath)
-      .resize(size.width, size.height, { fit: "inside" })
-      .toBuffer();
+    let transformer = sharp(filePath).withMetadata();
+
+    // Resize only if original larger than target, and prevent enlargement
+    if (metadata.width > size.width || metadata.height > size.height) {
+      transformer = transformer.resize(size.width, size.height, {
+        fit: "inside",
+        withoutEnlargement: true,
+      });
+    }
+
+    // Optional: sharpen image after resize to enhance details
+    transformer = transformer.sharpen();
+
+    // Set output options by mimetype
+    if (mimetype === "image/jpeg" || mimetype === "image/jpg") {
+      transformer = transformer.jpeg({ quality: 95, mozjpeg: true });
+    } else if (mimetype === "image/png") {
+      transformer = transformer.png({ compressionLevel: 9, adaptiveFiltering: true });
+    } else if (mimetype === "image/webp") {
+      transformer = transformer.webp({ quality: 95 });
+    }
+
+    const buffer = await transformer.toBuffer();
 
     const key = `uploads/${group}/${size.label}-${originalFilename}`;
     const uploadResult = await uploadBufferToS3(buffer, key, mimetype);
     results.push({ size: size.label, url: uploadResult.Location });
   }
 
-  // Clean up temp file
   fs.unlinkSync(filePath);
-
   return results;
 };
+
+
 
 /**
  * Upload original file to S3 (no resizing)

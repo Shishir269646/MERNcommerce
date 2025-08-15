@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux"; // ✅ Needed
+import { useDispatch, useSelector } from "react-redux";
 import { fetchAdminMetrics } from "@/redux/adminSlice";
 import { FaBox, FaUsers, FaChartBar, FaTicketAlt } from "react-icons/fa";
 

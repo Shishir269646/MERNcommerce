@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"; // For active navigation highligh
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DarkMode from "@/components/DarkMode";
+
 
 export default function AdminLayout({ children }) {
     const pathname = usePathname();
@@ -22,7 +22,7 @@ export default function AdminLayout({ children }) {
                 <header className="flex items-center justify-between py-4 mb-6">
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Admin Dashboard</h1>
                 </header>
-                <DarkMode />
+                
                 {/* Content Area */}
                 <div>{children} <ToastContainer position="top-right" autoClose={3000} /></div>
             </div>

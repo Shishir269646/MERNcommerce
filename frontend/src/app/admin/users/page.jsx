@@ -39,7 +39,7 @@ const UsersPage = () => {
     };
 
     return (
-        <div className="p-4 md:p-6 text-gray-800 dark:text-gray-100">
+        <div className="p-4 md:p-6 text-gray-800">
             <h2 className="text-2xl font-semibold mb-4">Users</h2>
 
             {loading ? (
@@ -49,10 +49,10 @@ const UsersPage = () => {
             ) : users?.length === 0 ? (
                 <p>No users found.</p>
             ) : (
-                <div className="overflow-x-auto rounded-xl border dark:border-gray-700">
+                <div className="overflow-x-auto rounded-xl border border-gray-700">
                     <Table>
                         <TableHeader>
-                            <TableRow className="bg-gray-100 dark:bg-gray-800">
+                            <TableRow className="bg-gray-100">
                                 <TableHead>ID</TableHead>
                                 <TableHead>Name</TableHead>
                                 <TableHead>Email</TableHead>

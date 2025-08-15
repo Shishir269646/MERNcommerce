@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts, deleteProduct } from "@/redux/productSlice";
@@ -11,11 +10,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Image from "next/image";
+// import { get } from "react-hook-form"; // (unused)
 
 export default function AdminProductsPage() {
     const dispatch = useDispatch();
     const router = useRouter();
-
     const { products, loading } = useSelector((state) => state.product);
 
     const handleRedirect = () => {
@@ -56,8 +55,8 @@ export default function AdminProductsPage() {
     }, []);
 
     return (
-        <div className="p-4 min-h-screen text-foreground">
-
+        <div className="p-4 min-h-screen bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100 transition-colors">
+            {/* Header */}
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold">Admin Products</h1>
 
@@ -69,7 +68,7 @@ export default function AdminProductsPage() {
                 </Button>
             </div>
 
-
+            {/* Product Grid */}
             {loading ? (
                 <span className="loading loading-dots loading-xl" />
             ) : (
@@ -78,24 +77,36 @@ export default function AdminProductsPage() {
                         products.map((product) => (
                             <Card
                                 key={product._id}
-                                className="rounded-2xl shadow-md bg-white dark:bg-gray-800"
+                                className="rounded-2xl shadow-md border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-800 transition-colors"
                             >
                                 <CardContent className="p-4">
+                                    {/* Image */}
                                     <Image
-                                        src={getImageUrl(product.Image)}
+                                        src={
+                                            getImageUrl(
+                                                product.Image?.[0]?.find((img) => img.size === "small")?.url ||
+                                                product.Image?.[0]?.[0]?.url ||
+                                                "/fallback.jpg"
+                                            )
+                                        }
                                         alt={product.title || "Product Image"}
-                                        width={250}
-                                        height={160}
-                                        className="w-full object-cover rounded-lg mb-2"
+                                        width={300}
+                                        height={170}
+                                        loading="lazy"
+                                        className="object-cover rounded-sm mb-4"
                                     />
 
-                                    <h2 className="text-lg font-semibold dark:text-gray-100">
+                                    {/* Title */}
+                                    <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
                                         {product.title}
                                     </h2>
-                                    <p className="text-sm text-muted-foreground dark:text-gray-400 mb-2">
+
+                                    {/* Price */}
+                                    <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">
                                         ${product.price}
                                     </p>
 
+                                    {/* Actions */}
                                     <div className="flex justify-between">
                                         <Button
                                             size="sm"
@@ -103,7 +114,7 @@ export default function AdminProductsPage() {
                                             onClick={() =>
                                                 router.push(`/admin/products/edit/${product._id}`)
                                             }
-                                            className="border-gray-300 dark:border-gray-600 dark:text-gray-200"
+                                            className="border-neutral-300 text-neutral-800 hover:bg-neutral-100 dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-700"
                                         >
                                             <FaPencilAlt className="w-4 h-4 mr-1" />
                                             Edit
@@ -123,9 +134,7 @@ export default function AdminProductsPage() {
                             </Card>
                         ))
                     ) : (
-                        <p className="text-gray-600 dark:text-gray-400">
-                            No products found.
-                        </p>
+                        <p className="text-neutral-600 dark:text-neutral-400">No products found.</p>
                     )}
                 </div>
             )}

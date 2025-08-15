@@ -1,24 +1,32 @@
-
 const mongoose = require('mongoose');
 
+// Color variant schema
 const colorVariantSchema = new mongoose.Schema({
   value: { type: String, required: true },
   bgcolor: { type: String, required: true },
-});
+}, { _id: false });
 
+// Size variant schema
 const sizeVariantSchema = new mongoose.Schema({
   value: { type: String, required: true },
   label: { type: String, required: true },
   disabled: { type: Boolean, default: false },
-});
+}, { _id: false });
 
+// Image variant schema (for size + url)
+const imageVariantSchema = new mongoose.Schema({
+  size: { type: String, required: true },
+  url: { type: String, required: true },
+}, { _id: false });
 
+// Specifications (Map of strings)
 const specificationSchema = {
   type: Map,
   of: String,
   default: {},
 };
 
+// Review schema
 const reviewSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   rating: { type: Number, required: true },
@@ -26,12 +34,14 @@ const reviewSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 }, { _id: false });
 
+// Comment schema
 const commentSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   message: String,
   createdAt: { type: Date, default: Date.now },
 }, { _id: false });
 
+// Main product schema
 const productSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: String,
@@ -46,7 +56,8 @@ const productSchema = new mongoose.Schema({
 
   stock: { type: Number, default: 0 },
 
-  Image: [{ type: String, required: true }],
+  // Support array of arrays of size+url objects
+  Image: [[imageVariantSchema]],
 
   colorVariants: [colorVariantSchema],
   sizeVariants: [sizeVariantSchema],
@@ -70,4 +81,3 @@ const productSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 module.exports = mongoose.model('Product', productSchema);
-

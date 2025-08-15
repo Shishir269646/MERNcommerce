@@ -41,7 +41,7 @@ function ImageInputer({ onChange }) {
                     )}
 
                     <div className="grid gap-2">
-                        <h4 className="text-center text-gray-900 text-sm font-medium leading-snug">
+                        <h4 className="text-center text-sm font-medium leading-snug">
                             Drag and Drop your Image here or
                         </h4>
                         <div className="flex items-center justify-center">

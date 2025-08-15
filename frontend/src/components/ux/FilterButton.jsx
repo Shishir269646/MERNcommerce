@@ -140,13 +140,13 @@ function FilterButton({ onFilterChange }) {
                 >
                     <div className="relative h-full w-full max-w-xl md:h-auto">
                         {/* Modal content */}
-                        <div className="relative rounded-lg bg-white shadow dark:bg-gray-800">
+                        <div className="relative rounded-lg bg-white shadow bg-gray-800">
                             {/* Modal header */}
                             <div className="flex items-start justify-between rounded-t p-4 md:p-5">
-                                <h3 className="text-lg font-normal text-gray-500 dark:text-gray-400">Filters</h3>
+                                <h3 className="text-lg font-normal text-gray-500 text-gray-400">Filters</h3>
                                 <button
                                     type="button"
-                                    className="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    className="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-100 hover:text-gray-900 hover:bg-gray-600 hover:text-white"
                                     onClick={() => setIsOpen(false)}
                                 >
                                     <svg className="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -159,12 +159,12 @@ function FilterButton({ onFilterChange }) {
                             </div>
                             {/* Modal body */}
                             <div className="px-4 md:px-5">
-                                <div className="mb-4 border-b border-gray-200 dark:border-gray-700">
+                                <div className="mb-4 border-b border-gray-200 border-gray-700">
                                     <ul className="-mb-px flex flex-wrap text-center text-sm font-medium" id="myTab"
                                         data-tabs-toggle="#myTabContent" role="tablist">
                                         <li className="mr-1" role="presentation">
                                             <button
-                                                className={`inline-block pb-2 pr-4 ${activeTab === 'brand' ? 'border-b-2 border-primary-600 text-primary-600 dark:text-primary-500' : 'hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300'}`}
+                                                className={`inline-block pb-2 pr-4 ${activeTab === 'brand' ? 'border-b-2 border-primary-600 text-primary-600 text-primary-500' : 'hover:border-gray-300 hover:text-gray-600 hover:text-gray-300'}`}
                                                 id="brand-tab"
                                                 onClick={() => setActiveTab('brand')}
                                                 type="button"
@@ -177,7 +177,7 @@ function FilterButton({ onFilterChange }) {
                                         </li>
                                         <li className="mr-1" role="presentation">
                                             <button
-                                                className={`inline-block px-4 pb-2 ${activeTab === 'advanced-filters' ? 'border-b-2 border-primary-600 text-primary-600 dark:text-primary-500' : 'hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300'}`}
+                                                className={`inline-block px-4 pb-2 ${activeTab === 'advanced-filters' ? 'border-b-2 border-primary-600 text-primary-600 text-primary-500' : 'hover:border-gray-300 hover:text-gray-600 hover:text-gray-300'}`}
                                                 id="advanced-filers-tab"
                                                 onClick={() => setActiveTab('advanced-filters')}
                                                 type="button"
@@ -196,14 +196,14 @@ function FilterButton({ onFilterChange }) {
                                             aria-labelledby="brand-tab">
                                             {Object.keys(groupedBrands).map((letter) => (
                                                 <div key={letter} className="space-y-2">
-                                                    <h5 className="text-lg font-medium uppercase text-black dark:text-white">{letter}</h5>
+                                                    <h5 className="text-lg font-medium uppercase text-black text-white">{letter}</h5>
                                                     {groupedBrands[letter].map((brand) => (
                                                         <div key={brand.id} className="flex items-center">
                                                             <input
                                                                 id={brand.id}
                                                                 type="checkbox"
                                                                 value={brand.id}
-                                                                className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600"
+                                                                className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 border-gray-600 bg-gray-700 ring-offset-gray-800 focus:ring-primary-600"
                                                                 checked={filters.brands.includes(brand.id)}
                                                                 onChange={handleCheckboxChange}
                                                             />
@@ -226,7 +226,7 @@ function FilterButton({ onFilterChange }) {
                                                 <div className="grid grid-cols-2 gap-3">
                                                     <div>
                                                         <label htmlFor="min-price"
-                                                            className="block text-sm font-medium text-gray-900 dark:text-white"> Min Price
+                                                            className="block text-sm font-medium text-gray-900 text-white"> Min Price
                                                         </label>
                                                         <input
                                                             id="min-price"
@@ -235,14 +235,14 @@ function FilterButton({ onFilterChange }) {
                                                             max="7000"
                                                             value={priceRange.min}
                                                             step="1"
-                                                            className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
+                                                            className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 bg-gray-700"
                                                             onChange={handlePriceRangeChange}
                                                         />
                                                     </div>
 
                                                     <div>
                                                         <label htmlFor="max-price"
-                                                            className="block text-sm font-medium text-gray-900 dark:text-white"> Max Price
+                                                            className="block text-sm font-medium text-gray-900 text-white"> Max Price
                                                         </label>
                                                         <input
                                                             id="max-price"
@@ -251,7 +251,7 @@ function FilterButton({ onFilterChange }) {
                                                             max="7000"
                                                             value={priceRange.max}
                                                             step="1"
-                                                            className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
+                                                            className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 bg-gray-700"
                                                             onChange={handlePriceRangeChange}
                                                         />
                                                     </div>
@@ -263,7 +263,7 @@ function FilterButton({ onFilterChange }) {
                                                             value={priceRange.min}
                                                             min="0"
                                                             max="7000"
-                                                            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 "
+                                                            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 border-gray-600 bg-gray-700 text-white placeholder:text-gray-400 focus:border-primary-500 focus:ring-primary-500 "
                                                             placeholder=""
                                                             required
                                                             onChange={handlePriceInputChange}
@@ -277,7 +277,7 @@ function FilterButton({ onFilterChange }) {
                                                             value={priceRange.max}
                                                             min="0"
                                                             max="7000"
-                                                            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                                                            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 border-gray-600 bg-gray-700 text-white placeholder:text-gray-400 focus:border-primary-500 focus:ring-primary-500"
                                                             placeholder=""
                                                             required
                                                             onChange={handlePriceInputChange}
@@ -288,7 +288,7 @@ function FilterButton({ onFilterChange }) {
                                                 <div className="space-y-3">
                                                     <div>
                                                         <label htmlFor="min-delivery-time"
-                                                            className="block text-sm font-medium text-gray-900 dark:text-white"> Min Delivery
+                                                            className="block text-sm font-medium text-gray-900 text-white"> Min Delivery
                                                             Time (Days) </label>
 
                                                         <input
@@ -298,7 +298,7 @@ function FilterButton({ onFilterChange }) {
                                                             max="50"
                                                             value={deliveryTime}
                                                             step="1"
-                                                            className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
+                                                            className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 bg-gray-700"
                                                             onChange={handleDeliveryTime}
 
                                                         />
@@ -310,7 +310,7 @@ function FilterButton({ onFilterChange }) {
                                                         value={deliveryTime}
                                                         min="3"
                                                         max="50"
-                                                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 "
+                                                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 border-gray-600 bg-gray-700 text-white placeholder:text-gray-400 focus:border-primary-500 focus:ring-primary-500 "
                                                         placeholder=""
                                                         required
                                                         onChange={handleDeliveryTimeChange}
@@ -319,31 +319,31 @@ function FilterButton({ onFilterChange }) {
                                             </div>
 
                                             <div>
-                                                <h6 className="mb-2 text-sm font-medium text-black dark:text-white">Condition</h6>
+                                                <h6 className="mb-2 text-sm font-medium text-black text-white">Condition</h6>
 
                                                 <ul
-                                                    className="flex w-full items-center rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                                    className="flex w-full items-center rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-900 border-gray-600 bg-gray-700 text-white"
                                                 >
-                                                    <li className="w-full border-b border-r border-gray-200 dark:border-gray-600">
+                                                    <li className="w-full border-b border-r border-gray-200 border-gray-600">
                                                         <div className="flex items-center pl-3">
                                                             <input
                                                                 id="condition-new"
                                                                 type="checkbox"
                                                                 value="new"
-                                                                className="h-4 w-4 border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600"
+                                                                className="h-4 w-4 border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 border-gray-600 bg-gray-700 ring-offset-gray-800 focus:ring-primary-600"
                                                             />
                                                             <label htmlFor="condition-new" className="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">
                                                                 New
                                                             </label>
                                                         </div>
                                                     </li>
-                                                    <li className="w-full border-b border-gray-200 dark:border-gray-600">
+                                                    <li className="w-full border-b border-gray-200 border-gray-600">
                                                         <div className="flex items-center pl-3">
                                                             <input
                                                                 id="condition-used"
                                                                 type="checkbox"
                                                                 value="used"
-                                                                className="h-4 w-4 border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600"
+                                                                className="h-4 w-4 border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 border-gray-600 bg-gray-700 ring-offset-gray-800 focus:ring-primary-600"
                                                             />
                                                             <label htmlFor="condition-used" className="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">
                                                                 Used
@@ -357,17 +357,17 @@ function FilterButton({ onFilterChange }) {
                                 </div>
                             </div>
                             {/* Modal footer */}
-                            <div className="flex items-center justify-end space-x-2 rounded-b border-t border-gray-200 p-4 md:p-5 dark:border-gray-600">
+                            <div className="flex items-center justify-end space-x-2 rounded-b border-t border-gray-200 p-4 md:p-5 border-gray-600">
                                 <button
                                     type="button"
-                                    className="rounded-lg bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                                    className="rounded-lg bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-300 bg-gray-800 text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
                                     onClick={handleClearFilters}
                                 >
                                     Clear Filters
                                 </button>
                                 <button
                                     type="button"
-                                    className="rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                    className="rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 bg-primary-600 hover:bg-primary-700 focus:ring-primary-800"
                                     onClick={handleApplyFilters}
                                 >
                                     Apply Filters

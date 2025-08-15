@@ -137,10 +137,10 @@ const ProductQuickView = ({ onClose, product }) => {
 									</button>
 								</div>
 								<div className="flex items-center gap-4 mt-4">
-									<button className="text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900 px-3 py-2 rounded">
+									<button className="text-blue-600 hover:bg-blue-100 hover:bg-blue-900 px-3 py-2 rounded">
 										<FontAwesomeIcon icon={faHeart} /> Add to wishlist
 									</button>
-									<button className="text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900 px-3 py-2 rounded">
+									<button className="text-blue-600 hover:bg-blue-100 hover:bg-blue-900 px-3 py-2 rounded">
 										<FontAwesomeIcon icon={faShareAlt} className="mr-2" />
 										Share
 									</button>

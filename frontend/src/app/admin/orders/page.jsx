@@ -7,9 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import API from '@/utils/api';
 
 const AdminOrdersPage = () => {
-    const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [darkMode, setDarkMode] = useState(false);
 
     const { userInfo } = useSelector((state) => state.user);
 
@@ -42,15 +40,13 @@ const AdminOrdersPage = () => {
         }
     };
 
-    const toggleTheme = () => setDarkMode(!darkMode);
+    
 
     return (
-        <div className={darkMode ? 'bg-gray-900 text-white min-h-screen p-4' : 'bg-white text-gray-900 min-h-screen p-4'}>
+        <div className="bg-white min-h-screen p-4">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-3xl font-bold">Orders Management</h1>
-                <Button onClick={toggleTheme} variant="outline">
-                    {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                </Button>
+                
             </div>
 
             {loading ? (
@@ -60,7 +56,7 @@ const AdminOrdersPage = () => {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {orders.map((order) => (
-                        <Card key={order._id} className={darkMode ? 'bg-gray-800 text-white' : ''}>
+                        <Card key={order._id} className="">
                             <CardContent className="p-4">
                                 <h2 className="font-semibold text-lg">Order ID: {order._id}</h2>
                                 <p><strong>User:</strong> {order.user?.name}</p>

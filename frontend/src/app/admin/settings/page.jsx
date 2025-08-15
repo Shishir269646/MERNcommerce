@@ -12,7 +12,9 @@ import { getProducts } from "@/redux/productSlice";
 import { toast } from "react-toastify";
 import Loader from "@/components/Loader";
 import Image from "next/image";
-import ExampleCard from "@/components/ExampleCard";
+
+
+
 
 const SettingsPage = () => {
     const dispatch = useDispatch();
@@ -172,28 +174,28 @@ const SettingsPage = () => {
 
     return (
         <div className="p-6 max-w-5xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Settings Management</h2>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">Settings Management</h2>
 
             {/* SETTINGS LIST */}
             <div className="space-y-4 mb-12">
                 {settings.length === 0 && (
-                    <p className="text-gray-700 dark:text-gray-300">No settings found.</p>
+                    <p className="text-gray-700">No settings found.</p>
                 )}
                 {settings.map((setting) => (
                     <div
                         key={setting._id}
-                        className="border border-gray-200 dark:border-gray-700 p-4 rounded-lg shadow bg-base-100 dark:bg-gray-900"
+                        className="border border-gray-200 p-4 rounded-lg shadow bg-base-100"
                     >
-                        <h3 className="font-semibold text-lg mb-1 text-gray-800 dark:text-white">
+                        {/* <h3 className="font-semibold text-lg mb-1 text-gray-800">
                             Setting ID: {setting._id}
                         </h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                        <p className="text-sm text-gray-500 mb-2">
                             User: {setting.user?.username || setting.user}
-                        </p>
+                        </p> */}
 
                         <div>
-                            <h4 className="font-semibold text-gray-800 dark:text-gray-200">Products:</h4>
-                            <ul className="list-disc ml-6 mb-2 text-gray-700 dark:text-gray-300">
+                            <h4 className="font-semibold text-gray-800">Deals of the Day Products:</h4>
+                            <ul className="list-disc ml-6 mb-2 text-gray-700">
                                 {setting.products.map((p, idx) => (
                                     <li key={idx}>
                                         {p?.product?.title || p.product || "Unknown Product"} -{" "}
@@ -206,8 +208,8 @@ const SettingsPage = () => {
                         </div>
 
                         <div>
-                            <h4 className="font-semibold text-gray-800 dark:text-gray-200">Images:</h4>
-                            <div className="grid grid-cols-7 gap-2 mt-1">
+                            <h4 className="font-semibold text-gray-800">Hero Banner Images:</h4>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 mt-1">
                                 {setting.images.map((img, i) => (
                                     <Image
                                         key={i}
@@ -215,15 +217,15 @@ const SettingsPage = () => {
                                         alt={`img-${i}`}
                                         width={96}
                                         height={96}
-                                        unoptimized
-                                        className="w-24 h-24 object-cover rounded border dark:border-gray-700"
+                                        loading="lazy"
+                                        className="object-cover rounded border border-gray-700"
                                     />
                                 ))}
                             </div>
                         </div>
 
                         <div className="mt-4 flex gap-2">
-                            <button className="btn btn-outline dark:btn-outline" onClick={() => handleEdit(setting)}>
+                            <button className="btn btn-outline" onClick={() => handleEdit(setting)}>
                                 Edit
                             </button>
                             {/* <button
@@ -240,21 +242,21 @@ const SettingsPage = () => {
             {/* CREATE / UPDATE FORM */}
             <form
                 onSubmit={handleSubmit}
-                className="border-t pt-6 max-w-3xl border-gray-300 dark:border-gray-700"
+                className="border-t pt-6 max-w-3xl border-gray-300"
                 encType="multipart/form-data"
                 autoComplete="off"
             >
-                <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+                <h3 className="text-xl font-semibold mb-4 text-gray-900">
                     {selectedSettingId ? "Update Setting" : "Create New Setting"}
                 </h3>
 
                 {/* Products Section */}
                 <div className="mb-6">
-                    <label className="font-medium block mb-2 text-gray-800 dark:text-gray-200">Products</label>
+                    <label className="font-medium block mb-2 text-gray-800">Deals of the Day Products</label>
                     {formProducts.map((item, index) => (
                         <div key={index} className="flex gap-2 items-center mb-2">
                             <select
-                                className="select select-bordered w-full dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                className="select select-bordered w-full text-black"
                                 value={item.product}
                                 onChange={(e) => handleProductChange(index, e.target.value)}
                                 required
@@ -267,10 +269,10 @@ const SettingsPage = () => {
                                 ))}
                             </select>
 
-                            <label className="label cursor-pointer flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                            <label className="label cursor-pointer flex items-center gap-2 text-gray-700">
                                 <input
                                     type="checkbox"
-                                    className="checkbox"
+                                    className="checkbox text-gray-700"
                                     checked={item.isNewProduct}
                                     onChange={(e) => handleIsNewChange(index, e.target.checked)}
                                 />
@@ -290,7 +292,7 @@ const SettingsPage = () => {
                     <button
                         type="button"
                         onClick={handleAddProduct}
-                        className="btn btn-sm btn-outline dark:btn-outline"
+                        className="btn btn-sm btn-outline"
                     >
                         + Add Product
                     </button>
@@ -298,15 +300,15 @@ const SettingsPage = () => {
 
                 {/* Images Section */}
                 <div className="space-y-2">
-                    <label className="block font-semibold text-gray-800 dark:text-gray-200">Upload Images</label>
+                    <label className="block font-semibold text-gray-800">Upload Images</label>
 
                     {formImages.map((img, index) => (
-                        <div key={index} className="flex items-center gap-2">
+                        <div key={index} className="flex items-center gap-2 text-gray-700">
                             <input
                                 type="file"
                                 accept="image/*"
                                 onChange={(e) => handleImageChange(e, index)}
-                                className="file-input file-input-bordered dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                                className="file-input file-input-bordered text-gray-700"
                             />
                             <button
                                 type="button"
@@ -337,7 +339,7 @@ const SettingsPage = () => {
                         <button
                             type="button"
                             onClick={clearForm}
-                            className="btn btn-outline dark:btn-outline"
+                            className="btn btn-outline"
                         >
                             Cancel Edit
                         </button>
@@ -350,11 +352,6 @@ const SettingsPage = () => {
                     </p>
                 )}
             </form>
-
-
-            <div>
-                <ExampleCard />
-            </div>
 
 
 

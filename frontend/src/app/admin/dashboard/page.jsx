@@ -13,14 +13,14 @@ const stats = [
 export default function AdminDashboard() {
 
     return (
-        <div className="dark:bg-gray-900 dark:text-white dark:min-h-screen text-black min-h-screen">
-            
+        <div className="bg-gray-900 min-h-screen">
+
 
             <main className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {stats.map((item) => (
-                    <Card key={item.label} className="dark:bg-gray-800 dark:text-white bg-gray-100 text-black">
+                    <Card key={item.label} className="bg-gray-100 text-black">
                         <CardContent className="p-4">
-                            <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400">
+                            <h2 className="text-sm font-semibold text-gray-500">
                                 {item.label}
                             </h2>
                             <p className="text-xl font-bold">{item.value}</p>
@@ -39,7 +39,7 @@ export default function AdminDashboard() {
                     <li>Create / Edit / Delete Products</li>
                     <li>Revenue Analytics</li>
                     <li>Category Management</li>
-                    
+
                 </ul>
             </section>
         </div>

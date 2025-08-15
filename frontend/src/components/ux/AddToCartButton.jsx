@@ -46,7 +46,7 @@ const AddToCartButton = ({ product, formData, label = "Add to cart" }) => {
     <button
       onClick={handleAddToCart}
       disabled={product?.stock === 0}
-      className="flex items-center gap-2 border-2 uppercase font-bold rounded-md text-gray-700 px-5 py-2 text-md transition duration-300 ease-in-out hover:bg-blue-700 hover:text-white disabled:opacity-50 dark:bg-primary-600 dark:hover:bg-primary-700"
+      className="flex items-center gap-2 border-2 uppercase font-bold rounded-md text-gray-700 px-5 py-2 text-md transition duration-300 ease-in-out hover:bg-blue-700 hover:text-white disabled:opacity-50"
     >
       <FiShoppingCart className="h-5 w-5" />
       {label}

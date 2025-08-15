@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 export function Table({ children, className }) {
     return (
-        <div className="w-full overflow-auto rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="w-full overflow-auto rounded-lg border border-gray-200">
             <table className={clsx('w-full text-sm text-left', className)}>
                 {children}
             </table>
@@ -14,7 +14,7 @@ export function Table({ children, className }) {
 
 export function TableHeader({ children }) {
     return (
-        <thead className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+        <thead className="bg-gray-100 text-gray-700">
             {children}
         </thead>
     );
@@ -30,7 +30,7 @@ export function TableHead({ children, className }) {
 
 export function TableBody({ children }) {
     return (
-        <tbody className="divide-y divide-gray-200 dark:divide-gray-700 text-gray-800 dark:text-gray-200">
+        <tbody className="divide-y divide-gray-200 text-gray-800">
             {children}
         </tbody>
     );
@@ -38,7 +38,7 @@ export function TableBody({ children }) {
 
 export function TableRow({ children, className }) {
     return (
-        <tr className={clsx('hover:bg-gray-100 dark:hover:bg-gray-800 transition', className)}>
+        <tr className={clsx('hover:bg-gray-100 transition', className)}>
             {children}
         </tr>
     );

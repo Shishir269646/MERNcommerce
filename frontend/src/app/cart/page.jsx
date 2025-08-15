@@ -47,7 +47,7 @@ const Epcart1 = () => {
     }, [cartItems]);
 
     return (
-        <section className="py-14 px-4 bg-base-100 text-base-content">
+        <section className="py-14 px-4 bg-base-100">
             <div className="container mx-auto flex flex-col lg:flex-row gap-6">
                 {/* Product List */}
                 <div className="w-full lg:w-2/3">

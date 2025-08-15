@@ -12,6 +12,7 @@ import {
     getCartItems,
 } from "@/redux/cartSlice";
 import Loader from "@/components/Loader";
+import Image from "next/image";
 
 function MiniShoppingCart({ isVisible, setIsVisible, basketRef }) {
     const dispatch = useDispatch();
@@ -77,7 +78,9 @@ function MiniShoppingCart({ isVisible, setIsVisible, basketRef }) {
                         {cartItems.map((item) => {
                             const { _id, quantity, product } = item;
                             const price = product?.priceAtPurchase || 0;
-                            const image = product?.Image?.[0] || "/placeholder.jpg";
+                            const image = product.Image?.[0]?.find(img => img.size === "small")?.url ||
+                                product.Image?.[0]?.[0]?.url ||
+                                '/fallback.jpg'
                             const title = product?.title || "Untitled Product";
                             const description = product?.description || "";
 
@@ -87,10 +90,12 @@ function MiniShoppingCart({ isVisible, setIsVisible, basketRef }) {
                                     className="flex items-start justify-between border-t border-base-200 pt-4 gap-4"
                                 >
                                     <div className="flex gap-4 items-center w-full">
-                                        <img
+                                        <Image
                                             src={image}
                                             alt={title}
-                                            className="w-20 h-20 object-contain rounded"
+                                            height={80}
+                                            width={80}
+                                            className="object-contain rounded"
                                         />
                                         <div className="text-sm w-full">
                                             <p className="font-semibold text-base-content line-clamp-1">
@@ -102,7 +107,7 @@ function MiniShoppingCart({ isVisible, setIsVisible, basketRef }) {
                                         </div>
                                     </div>
 
-                                    <div className="flex text-gray-900 items-center gap-4 mt-2">
+                                    <div className="flex items-center gap-4 mt-2">
                                         <QtyField
                                             name={`qty-${_id}`}
                                             value={quantity}

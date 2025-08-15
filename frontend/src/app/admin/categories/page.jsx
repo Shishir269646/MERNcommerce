@@ -105,7 +105,7 @@ const CategoriesPage = () => {
     );
 
     return (
-        <div className="p-4 md:p-6 text-gray-800 dark:text-gray-100">
+        <div className="p-4 md:p-6 text-gray-800">
             <h2 className="text-2xl font-bold mb-6">Manage Categories</h2>
 
             <form onSubmit={handleSubmit} className="gap-4 mb-8 items-center">
@@ -149,10 +149,10 @@ const CategoriesPage = () => {
             ) : filteredCategories.length === 0 ? (
                 <p>No matching categories found.</p>
             ) : (
-                <div className="overflow-x-auto border rounded-lg dark:border-gray-700">
+                <div className="overflow-x-auto border rounded-lg">
                     <Table>
                         <TableHeader>
-                            <TableRow className="bg-muted dark:bg-gray-800">
+                            <TableRow className="bg-muted">
                                 <TableHead>Name</TableHead>
                                 <TableHead>Image</TableHead>
                                 <TableHead className="text-right">Actions</TableHead>

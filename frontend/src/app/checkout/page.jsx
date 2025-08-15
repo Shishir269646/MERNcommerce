@@ -12,9 +12,8 @@ export default function CheckoutPage() {
                     {['Cart', 'Checkout', 'Order'].map((label, i) => (
                         <div key={label} className="w-full flex items-center">
                             <div
-                                className={`w-8 h-8 shrink-0 mx-[-1px] p-1.5 flex items-center justify-center rounded-full ${i <= 1 ? 'bg-primary text-white' : 'bg-base-300 text-base-content'
-                                    }`}
-                            >
+                                className={`w-8 h-8 shrink-0 mx-[-1px] p-1.5 flex items-center justify-center rounded-full ${i <= 1 ? 'bg-primary text-white' : 'bg-base-300'
+                                    }`}>
                                 <span className="text-sm font-semibold">{i + 1}</span>
                             </div>
                             {i < 2 && (
@@ -26,8 +25,7 @@ export default function CheckoutPage() {
                             <div className="mt-2 mr-4">
                                 <h6
                                     className={`text-sm font-semibold ${i <= 1 ? 'text-base-content' : 'text-base-content/50'
-                                        }`}
-                                >
+                                        }`}>
                                     {label}
                                 </h6>
                             </div>
@@ -42,7 +40,7 @@ export default function CheckoutPage() {
                         <form>
                             {/* Delivery Details */}
                             <div>
-                                <h2 className="text-xl font-semibold mb-6 text-base-content">
+                                <h2 className="text-xl font-semibold mb-6">
                                     Delivery Details
                                 </h2>
                                 <div className="grid lg:grid-cols-2 gap-y-6 gap-x-4">
@@ -57,7 +55,7 @@ export default function CheckoutPage() {
                                         { label: 'Zip Code', type: 'text' },
                                     ].map((field, index) => (
                                         <div key={index}>
-                                            <label className="label text-sm font-medium text-base-content">
+                                            <label className="label text-sm font-medium">
                                                 {field.label}
                                             </label>
                                             <input
@@ -72,7 +70,7 @@ export default function CheckoutPage() {
 
                             {/* Payment Options */}
                             <div className="mt-12">
-                                <h2 className="text-xl font-semibold mb-6 text-base-content">Payment</h2>
+                                <h2 className="text-xl font-semibold mb-6">Payment</h2>
                                 <div className="grid gap-4 lg:grid-cols-2">
                                     {/* Card Payment */}
                                     <div className="card bg-base-200 border border-base-300 max-w-sm">
@@ -91,7 +89,7 @@ export default function CheckoutPage() {
                                                     <Image src="https://readymadeui.com/images/master.webp" width={48} height={32} alt="MasterCard" />
                                                 </label>
                                             </div>
-                                            <p className="mt-4 text-sm text-base-content/70 font-medium">
+                                            <p className="mt-4 text-sm font-medium">
                                                 Pay with your debit or credit card
                                             </p>
                                         </div>
@@ -121,7 +119,7 @@ export default function CheckoutPage() {
 
                             {/* Promo Code */}
                             <div className="mt-12 max-w-md">
-                                <p className="text-base-content text-sm font-medium mb-2">
+                                <p className="text-sm font-medium mb-2">
                                     Do you have a promo code?
                                 </p>
                                 <div className="flex gap-4">
@@ -143,22 +141,22 @@ export default function CheckoutPage() {
 
                     {/* Order Summary */}
                     <div className="relative">
-                        <h2 className="text-xl font-semibold mb-6 text-base-content">Order Summary</h2>
-                        <ul className="text-base-content/70 font-medium space-y-4">
+                        <h2 className="text-xl font-semibold mb-6">Order Summary</h2>
+                        <ul className="font-medium space-y-4">
                             <li className="flex flex-wrap gap-4 text-sm">
-                                Subtotal <span className="ml-auto font-semibold text-base-content">$72.00</span>
+                                Subtotal <span className="ml-auto font-semibold">$72.00</span>
                             </li>
                             <li className="flex flex-wrap gap-4 text-sm">
-                                Discount <span className="ml-auto font-semibold text-base-content">$0.00</span>
+                                Discount <span className="ml-auto font-semibold">$0.00</span>
                             </li>
                             <li className="flex flex-wrap gap-4 text-sm">
-                                Shipping <span className="ml-auto font-semibold text-base-content">$6.00</span>
+                                Shipping <span className="ml-auto font-semibold">$6.00</span>
                             </li>
                             <li className="flex flex-wrap gap-4 text-sm">
-                                Tax <span className="ml-auto font-semibold text-base-content">$5.00</span>
+                                Tax <span className="ml-auto font-semibold">$5.00</span>
                             </li>
                             <hr className="border-base-300" />
-                            <li className="flex flex-wrap gap-4 text-[15px] font-semibold text-base-content">
+                            <li className="flex flex-wrap gap-4 text-[15px] font-semibold">
                                 Total <span className="ml-auto">$83.00</span>
                             </li>
                         </ul>

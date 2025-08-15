@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "@/redux/productSlice";
 
 import ProductCard from "@/components/ux/ProductCard";
@@ -9,27 +10,23 @@ import toast from "react-hot-toast";
 
 
 export default function ProductsPage() {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch();
+    const { products, loading, error } = useSelector((state) => state.product);
 
-    const fetchProducts = async () => {
-        try {
-            const res = await getProducts();
-            setProducts(res.products);
-        } catch (err) {
-            toast.error("Failed to load products");
-        } finally {
-            setLoading(false);
-        }
-    };
 
     useEffect(() => {
-        fetchProducts();
-    }, []);
+        dispatch(getProducts());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (error) {
+            toast.error(error);
+        }
+    }, [error]);
 
     return (
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-10 px-4">
-            <h1 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-8">
+        <div className="min-h-screen bg-gray-100 dark:bg-base-200 py-10 px-4">
+            <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
                 All Products
             </h1>
 
@@ -39,10 +36,10 @@ export default function ProductsPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {products.length > 0 ? (
                         products.map((product) => (
-                            <ProductCard key={product._id} product={product} />
+                            <ProductCard key={product._id} item={product} />
                         ))
                     ) : (
-                        <p className="text-center text-gray-600 dark:text-gray-300 col-span-full">
+                        <p className="text-center text-gray-600 col-span-full">
                             No products found.
                         </p>
                     )}

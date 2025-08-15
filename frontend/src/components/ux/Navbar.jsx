@@ -21,8 +21,8 @@ function Navbar() {
 
     return (
         <div className="bg-primary">
-            <ul className="text-white text-md gap-8 px-4 py-2 items-center lg:menu-horizontal flex flex-wrap">
-                <div className="flex px-4 py-2 text-sm font-medium items-center uppercase gap-2 rounded-sm bg-[#ffd200] text-gray-950 transition">
+            <ul className="container mx-auto text-white text-md gap-8 px-4 py-2 items-center lg:menu-horizontal flex flex-wrap">
+                <div className="flex px-4 py-2 text-sm font-medium items-center uppercase gap-2 rounded-sm bg-[#ffd200] text-white text-gray-950 transition">
                     <RiMenuUnfold3Fill />
                     <HoverDropDown label="All Categories" options={AllCatagory} />
                 </div>

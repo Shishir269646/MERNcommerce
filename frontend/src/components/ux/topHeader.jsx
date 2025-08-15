@@ -16,12 +16,13 @@ import { fetchCategories } from "@/redux/categorySlice";
 import { logoutUser } from "@/redux/userSlice";
 import api from "@/utils/api";
 
+
 export default function TopHeader() {
-  /* 1️⃣ –– সব Hooks সবসময় একই ক্রমে কল হবে –– */
-  const [hydrated, setHydrated] = useState(false);      // guard
+
+  const [hydrated, setHydrated] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);  // cart dropdown
+  const [isVisible, setIsVisible] = useState(false);
   const basketRef = useRef();
 
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ export default function TopHeader() {
 
 
 
-  /* once‑only client init */
+
   useEffect(() => setHydrated(true), []);
   useEffect(() => {
     dispatch(fetchCategories());
@@ -77,7 +78,7 @@ export default function TopHeader() {
 
 
   return (
-    <header className="bg-primary text-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+    <header className="bg-primary text-white border-b border-gray-200">
       {/* top strip */}
       <div className="container mx-auto flex justify-between items-center py-3 px-4">
         <button
@@ -108,9 +109,12 @@ export default function TopHeader() {
             </>
           )}
         </div>
+
+        
+
       </div>
 
-      <hr className="border-gray-300 dark:border-gray-700" />
+      <hr className="border-gray-300" />
 
       {/* main row */}
       <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between py-3 px-4">
@@ -131,7 +135,7 @@ export default function TopHeader() {
             <input
               type="text"
               placeholder="Search Product"
-              className="px-4 py-2 outline-none text-gray-700 dark:text-white bg-gray-100 dark:bg-gray-800"
+              className="px-4 py-2 outline-none text-gray-700 bg-gray-100"
             />
             <button
               type="submit"
@@ -182,7 +186,7 @@ export default function TopHeader() {
             <input
               type="text"
               placeholder="Search Product"
-              className="px-4 py-2 w-full outline-none text-gray-700 dark:text-white bg-gray-100 dark:bg-gray-800"
+              className="px-4 py-2 w-full outline-none text-gray-700 bg-gray-100"
             />
             <button type="submit" className="bg-primary text-white px-4 py-2">
               <FaSearch />

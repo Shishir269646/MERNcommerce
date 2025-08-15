@@ -75,17 +75,17 @@ const AdminReviewPage = () => {
     };
 
     return (
-        <div className="p-4 md:p-8 max-w-7xl mx-auto min-h-screen bg-base-100 dark:bg-base-300 transition-colors duration-500">
-            <h1 className="text-3xl md:text-4xl font-bold text-primary dark:text-primary-focus mb-8 text-center md:text-left">
+        <div className="p-4 md:p-8 max-w-7xl mx-auto min-h-screen bg-base-100 transition-colors duration-500">
+            <h1 className="text-3xl md:text-4xl font-bold text-primary text-primary-focus mb-8 text-center md:text-left">
                 Manage Reviews - Product ID: {productId}
             </h1>
 
             {loading ? (
                 <div className="flex justify-center py-16">
-                    <span className="loading loading-spinner loading-lg text-primary dark:text-primary-focus"></span>
+                    <span className="loading loading-spinner loading-lg text-primary text-primary-focus"></span>
                 </div>
             ) : reviews?.length ? (
-                <div className="overflow-x-auto rounded-lg shadow-lg border border-base-300 dark:border-base-700">
+                <div className="overflow-x-auto rounded-lg shadow-lg border border-base-300">
                     <Table className="table-auto w-full min-w-[600px] md:min-w-full">
                         <TableHeader>
                             <tr>
@@ -100,7 +100,7 @@ const AdminReviewPage = () => {
                             {reviews.map((review) => (
                                 <TableRow
                                     key={review._id}
-                                    className="hover:bg-base-200 dark:hover:bg-base-700 transition-colors duration-300"
+                                    className="hover:bg-base-200 transition-colors duration-300"
                                 >
                                     <TableCell className="whitespace-nowrap">{review.user?.name || 'Unknown'}</TableCell>
                                     <TableCell>{review.rating}</TableCell>
@@ -130,7 +130,7 @@ const AdminReviewPage = () => {
                     </Table>
                 </div>
             ) : (
-                <p className="text-center mt-12 text-base-content dark:text-base-content/70 text-lg">
+                <p className="text-center mt-12 text-base-content text-lg">
                     No reviews found.
                 </p>
             )}
@@ -139,18 +139,18 @@ const AdminReviewPage = () => {
             <dialog id="edit_modal" className="modal">
                 <form
                     method="dialog"
-                    className="modal-box max-w-lg w-full bg-base-100 dark:bg-base-300"
+                    className="modal-box max-w-lg w-full bg-base-100"
                     onSubmit={(e) => {
                         e.preventDefault();
                         handleUpdateSubmit();
                     }}
                 >
-                    <h3 className="font-bold text-xl mb-4 dark:text-primary-focus">Edit Review</h3>
+                    <h3 className="font-bold text-xl mb-4 text-primary-focus">Edit Review</h3>
                     <div className="form-control mb-4">
-                        <label className="label dark:text-base-content">Rating (1-5)</label>
+                        <label className="label text-base-content">Rating (1-5)</label>
                         <input
                             type="number"
-                            className="input input-bordered dark:bg-base-200 dark:text-base-content"
+                            className="input input-bordered bg-base-200 text-base-content"
                             min={1}
                             max={5}
                             value={rating}
@@ -159,9 +159,9 @@ const AdminReviewPage = () => {
                         />
                     </div>
                     <div className="form-control mb-6">
-                        <label className="label dark:text-base-content">Comment</label>
+                        <label className="label text-base-content">Comment</label>
                         <textarea
-                            className="textarea textarea-bordered dark:bg-base-200 dark:text-base-content"
+                            className="textarea textarea-bordered bg-base-200 text-base-content"
                             rows={4}
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}

@@ -59,14 +59,32 @@ const products = [
 
 
 
-function LargeProductSlider({ Products }) {
+function ReadMore({ text, limit = 80 }) {
+    const [expanded, setExpanded] = useState(false);
+    const isLong = text.length > limit;
+    const displayText = expanded ? text : text.slice(0, limit) + (isLong ? "..." : "");
 
+    if (!text) return null;
 
-    console.log("Products in LargeProductSlider:", Products);
+    return (
+        <div className="mt-2 text-[4px] sm:text-lg text-gray-600">
+            <p>{displayText}</p>
+            {isLong && (
+                <button
+                    onClick={() => setExpanded(!expanded)}
+                    className="mt-1 text-blue-600 hover:underline"
+                    aria-expanded={expanded}
+                >
+                    {expanded ? "Read less" : "Read more"}
+                </button>
+            )}
+        </div>
+    );
+}
 
+export default function LargeProductSlider({ Products }) {
     const [index, setIndex] = useState(0);
 
-    // Defensive fallback
     if (!Array.isArray(Products) || Products.length === 0) {
         return <div className="text-center py-8">No featured products found.</div>;
     }
@@ -83,15 +101,21 @@ function LargeProductSlider({ Products }) {
         setIndex((prevIndex) => (prevIndex === Products.length - 1 ? 0 : prevIndex + 1));
     };
 
+    // Select image URL with fallback
+    const imageUrl =
+        product.Image?.[0]?.find((img) => img.size === "large")?.url ||
+        product.Image?.[0]?.[0]?.url ||
+        "/fallback.jpg";
+
     return (
         <div className="max-w-6xl mx-auto relative">
-            <h1 className="font-bold text-3xl sm:text-4xl mb-6 text-center">Deals of the Day</h1>
+            <h1 className="font-bold text-3xl sm:text-4xl mb-6 text-center text-gray-900">Deals of the Day</h1>
 
-            <div className="rounded-xl shadow-xl overflow-hidden flex flex-col md:flex-row bg-white dark:bg-gray-800 transition-all duration-500">
+            <div className="rounded-xl shadow-xl overflow-hidden flex flex-col md:flex-row bg-white transition-all duration-500">
                 {/* Left content */}
-                <div className="w-full md:w-2/5 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+                <div className="w-full md:w-2/5 p-6 sm:p-8 flex flex-col justify-between space-y-4">
                     <div>
-                        <h1 className="text-2xl sm:text-3xl font-serif text-gray-800 dark:text-white relative">
+                        <h1 className="text-xl sm:text-2xl font-bold font-serif text-gray-800 relative">
                             {product.title}
                             {isNew && (
                                 <span className="absolute top-0 right-0 transform translate-x-5 -translate-y-3 bg-pink-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">
@@ -102,52 +126,67 @@ function LargeProductSlider({ Products }) {
                         <div className="mt-2">
                             <StarRating rating={product.rating} />
                         </div>
-                        <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-300">{product.description}</p>
+
+                        {/* Read More description */}
+                        <ReadMore text={product.description} limit={80} />
                     </div>
 
                     <div>
-                        <div className="flex items-baseline space-x-3 mt-4">
-                            <span className="text-blue-600 dark:text-blue-400 text-xl font-semibold">${product.price}</span>
+                        <div className="flex items-baseline space-x-3">
+                            <span className="text-blue-600 text-xl font-semibold">
+                                ${product.price}
+                            </span>
                             {product.discountPrice && (
                                 <span className="text-gray-400 text-sm line-through">${product.discountPrice}</span>
                             )}
                         </div>
-                        <div className="mt-6">
+                        <div className="mt-3">
                             <AddToCartButton productId={product._id} />
                         </div>
                     </div>
                 </div>
 
                 {/* Right image + overlay */}
-                <div className="relative w-full md:w-3/5 group overflow-hidden">
+                <div className="relative w-full md:w-3/5 group overflow-hidden rounded-lg">
+                
                     {product.discountPercentage && (
                         <span className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded-full z-10">
                             {product.discountPercentage}%
                         </span>
                     )}
 
-
                     <Image
-                        src={product.Image?.[0] || "/placeholder.jpg"}
-                        alt={product.title}
-                        width={800}
-                        height={600}
-                        className="w-full h-80 md:h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        src={imageUrl}
+                        alt={product.title || "Product Image"}
+                        width={600}
+                        height={400}
+                        className="object-cover rounded-lg"
+                        priority
                     />
 
                     {/* Hover info */}
                     <div
-                        className="absolute inset-0 bg-black bg-opacity-70 text-white p-4 sm:p-6 
-            -translate-x-full group-hover:translate-x-0 
-            transition-all duration-500 ease-in-out flex flex-col justify-center"
+                        className="absolute inset-0 bg-black bg-opacity-70 text-white p-4 sm:p-6
+              -translate-x-full group-hover:translate-x-0
+              transition-all duration-500 ease-in-out flex flex-col justify-center rounded-lg"
                     >
-                        <h2 className="text-xl sm:text-2xl text-center mb-3">Quick Specs</h2>
+                        <h2 className="text-xl sm:text-2xl text-center mb-3 text-gray-900">Quick Specs</h2>
                         <ul className="text-sm sm:text-base space-y-1 sm:space-y-2">
-                            <li><strong>Material:</strong> {product.material || 'N/A'}</li>
-                            <li><strong>Dimensions:</strong> {product.dimensions || 'N/A'}</li>
-                            <li><strong>Weight:</strong> {product.weight || 'N/A'}</li>
-                            <li><strong>Warranty:</strong> {product.warranty || 'N/A'}</li>
-                            <li><strong>Return Policy:</strong> {product.returnPolicy || 'N/A'}</li>
+                            <li>
+                                <strong>Material:</strong> {product.material || "N/A"}
+                            </li>
+                            <li>
+                                <strong>Dimensions:</strong> {product.dimensions || "N/A"}
+                            </li>
+                            <li>
+                                <strong>Weight:</strong> {product.weight || "N/A"}
+                            </li>
+                            <li>
+                                <strong>Warranty:</strong> {product.warranty || "N/A"}
+                            </li>
+                            <li>
+                                <strong>Return Policy:</strong> {product.returnPolicy || "N/A"}
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -160,7 +199,3 @@ function LargeProductSlider({ Products }) {
         </div>
     );
 }
-
-
-
-export default LargeProductSlider;

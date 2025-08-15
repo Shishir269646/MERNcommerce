@@ -55,7 +55,7 @@ export default function CustomSelect({ options = [], onChange, label }) {
 
     return (
         <div
-            className="relative w-28"
+            className="relative w-full"
             tabIndex={0}
             onBlur={(e) => {
                 if (!e.currentTarget.contains(e.relatedTarget)) {
