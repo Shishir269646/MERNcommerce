@@ -1,12 +1,16 @@
 "use client";
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { RiMenuUnfold3Fill } from "react-icons/ri";
+import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import HoverDropDown from "./HoverDropDown";
 import { fetchCategories } from "@/redux/categorySlice";
+import { useRouter } from "next/navigation";
 
 function Navbar() {
     const dispatch = useDispatch();
+    const router = useRouter();
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         dispatch(fetchCategories());
@@ -14,29 +18,85 @@ function Navbar() {
 
     const categories = useSelector((state) => state.category.categories);
 
-    const AllCatagory = categories.map((cat) => ({
-        label: cat.name,
-        onClick: () => alert(`You clicked on ${cat.name}`),
-    }));
+    // Handle category click → go to product list
+    const handleCategoryClick = useCallback((categoryName) => {
+        const params = new URLSearchParams();
+        if (categoryName && categoryName !== "All Categories") {
+            params.set("category", categoryName);
+        }
+        router.push(`/products?${params.toString()}`);
+    }, [router]);
+
+    // Dropdown options for HoverDropDown
+    const categoryOptions = [
+        { label: "All Categories", onClick: () => handleCategoryClick("All Categories") },
+        ...categories.map((c) => ({
+            label: c.name,
+            onClick: () => handleCategoryClick(c.name),
+        }))
+    ];
+
+    const navLinks = [
+        { href: "/", label: "Home" },
+        { href: "/products", label: "Products" },
+        { href: "/product", label: "Single Product" },
+        { href: "/about", label: "About Us" },
+        { href: "/contact", label: "Contact Us" },
+        { href: "/cart", label: "Orders" },
+        { href: "/profile", label: "Profile" },
+        { href: "/login", label: "Log In" },
+        { href: "/register", label: "Register" },
+    ];
 
     return (
         <div className="bg-primary">
-            <ul className="container mx-auto text-white text-md gap-8 px-4 py-2 items-center lg:menu-horizontal flex flex-wrap">
-                <div className="flex px-4 py-2 text-sm font-medium items-center uppercase gap-2 rounded-sm bg-[#ffd200] text-white text-gray-950 transition">
-                    <RiMenuUnfold3Fill />
-                    <HoverDropDown label="All Categories" options={AllCatagory} />
+            <div className="container mx-auto px-4 py-2 flex items-center justify-between">
+                {/* Left - Categories Dropdown */}
+                <div className="flex items-center gap-2 text-sm font-medium uppercase">
+                    <div className="flex items-center gap-2 px-3 py-2 rounded-sm bg-orange-500 text-white transition">
+                        <RiMenuUnfold3Fill />
+                        <HoverDropDown label="All Categories" options={categoryOptions} />
+                    </div>
                 </div>
 
-                <li><a href="/about" className="hover:text-[#ffd200]">About Us</a></li>
-                <li><a href="/contact" className="hover:text-[#ffd200]">Contact Us</a></li>
-                <li><a href="/login" className="hover:text-[#ffd200]">Log In</a></li>
-                <li><a href="/cart" className="hover:text-[#ffd200]">Order'S</a></li>
-                <li><a href="/product" className="hover:text-[#ffd200]">Product</a></li>
-                <li><a href="/products" className="hover:text-[#ffd200]">Product'S</a></li>
-                <li><a href="/profile" className="hover:text-[#ffd200]">Profile</a></li>
-                <li><a href="/register" className="hover:text-[#ffd200]">Register</a></li>
-                <li><a href="/" className="hover:text-[#ffd200]">Home</a></li>
-            </ul>
+                {/* Desktop Menu */}
+                <ul className="hidden lg:flex text-white text-md gap-8 items-center">
+                    {navLinks.map((link, idx) => (
+                        <li key={idx}>
+                            <a href={link.href} className="hover:text-orange-500">
+                                {link.label}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+
+                {/* Mobile Menu Button */}
+                <button
+                    className="lg:hidden text-white text-2xl"
+                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                >
+                    {mobileMenuOpen ? <HiOutlineX /> : <HiOutlineMenu />}
+                </button>
+            </div>
+
+            {/* Mobile Menu */}
+            {mobileMenuOpen && (
+                <div className="lg:hidden bg-primary text-white px-4 pb-4">
+                    <ul className="flex flex-col gap-4 mt-4">
+                        {navLinks.map((link, idx) => (
+                            <li key={idx}>
+                                <a
+                                    href={link.href}
+                                    className="block hover:text-orange-500"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                >
+                                    {link.label}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
     );
 }

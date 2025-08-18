@@ -147,37 +147,45 @@ export default function ProductDetail({ product }) {
   };
 
   return (
-    <div className="space-y-8">
-      <div className="grid md:grid-cols-2 gap-6">
+    <div className="space-y-8 px-4 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Product Gallery */}
         <ProductGallery images={Image} />
 
+        {/* Product Info */}
         <div className="space-y-4">
-          <h1 className="text-3xl font-bold">{title}</h1>
-          <p className="text-gray-600">{description}</p>
+          {/* Title */}
+          <h1 className="text-2xl sm:text-3xl font-bold">{title}</h1>
+
+          {/* Description */}
+          <p className="text-gray-600 text-sm sm:text-base">{description}</p>
 
           {/* Pricing with discount */}
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-wrap items-center gap-3">
             {discountPrice ? (
               <>
-                <span className="text-2xl text-green-600 font-semibold">
+                <span className="text-xl sm:text-2xl text-green-600 font-semibold">
                   {formatPrice(discountPrice)}
                 </span>
-                <span className="line-through text-gray-400">
+                <span className="line-through text-gray-400 text-sm sm:text-base">
                   {formatPrice(price)}
                 </span>
-                <span className="text-sm text-red-500 font-medium">
+                <span className="text-xs sm:text-sm text-red-500 font-medium">
                   -{discountPercentage}%
                 </span>
               </>
             ) : (
-              <span className="text-2xl text-green-600 font-semibold">
+              <span className="text-xl sm:text-2xl text-green-600 font-semibold">
                 {formatPrice(price)}
               </span>
             )}
           </div>
 
           {/* Stock Info */}
-          <div className={`text-sm ${stock > 0 ? "text-green-500" : "text-red-500"}`}>
+          <div
+            className={`text-xs sm:text-sm ${stock > 0 ? "text-green-500" : "text-red-500"
+              }`}
+          >
             {stock > 0 ? `${stock} in stock` : "Out of stock"}
           </div>
 
@@ -189,11 +197,9 @@ export default function ProductDetail({ product }) {
           {/* Color Variants */}
           {colorVariants.length > 0 && (
             <div className="space-y-1">
-              <h3 className="font-medium">Available Colors:</h3>
-              <div className="flex gap-2">
+              <h3 className="font-medium text-sm sm:text-base">Available Colors:</h3>
+              <div className="flex flex-wrap gap-2">
                 <ColorVariant colorVariant={colorVariants} onSelect={setField} />
-
-
               </div>
             </div>
           )}
@@ -201,7 +207,7 @@ export default function ProductDetail({ product }) {
           {/* Size Variants */}
           {sizeVariants.length > 0 && (
             <div className="space-y-1">
-              <h3 className="font-medium">Available Sizes:</h3>
+              <h3 className="font-medium text-sm sm:text-base">Available Sizes:</h3>
               <div className="flex flex-wrap gap-2">
                 <SizeVariant sizeVariant={sizeVariants} onSelect={setField} />
               </div>
@@ -210,38 +216,52 @@ export default function ProductDetail({ product }) {
 
           {/* Quantity Field */}
           <div className="mb-6">
-            <h5 className="font-medium mb-2">QTY</h5>
-            <QtyField
-              onChange={setField}
-              name="qty"
-              value={formData.qty}
-            />
+            <h5 className="font-medium mb-2 text-sm sm:text-base">QTY</h5>
+            <QtyField onChange={setField} name="qty" value={formData.qty} />
           </div>
-          <AddToCartButton
-            product={product}
-            formData={formData}
-          />
 
+          {/* Add to Cart */}
+          <AddToCartButton product={product} formData={formData} />
 
           {/* Product Details */}
-          <div className="mt-4 space-y-2 text-gray-700">
-            <p><strong>Brand:</strong> {brand}</p>
-            <p><strong>Category:</strong> {category}</p>
-            <p><strong>SKU:</strong> {sku}</p>
-            <p><strong>Material:</strong> {material}</p>
-            <p><strong>Dimensions:</strong> {dimensions}</p>
-            <p><strong>Weight:</strong> {weight}</p>
-            <p><strong>Warranty:</strong> {warranty}</p>
-            <p><strong>Return Policy:</strong> {returnPolicy}</p>
+          <div className="mt-4 space-y-2 text-gray-700 text-sm sm:text-base">
+            <p>
+              <strong>Brand:</strong> {brand}
+            </p>
+            <p>
+              <strong>Category:</strong> {category}
+            </p>
+            <p>
+              <strong>SKU:</strong> {sku}
+            </p>
+            <p>
+              <strong>Material:</strong> {material}
+            </p>
+            <p>
+              <strong>Dimensions:</strong> {dimensions}
+            </p>
+            <p>
+              <strong>Weight:</strong> {weight}
+            </p>
+            <p>
+              <strong>Warranty:</strong> {warranty}
+            </p>
+            <p>
+              <strong>Return Policy:</strong> {returnPolicy}
+            </p>
           </div>
 
           {/* Specifications */}
           {Object.keys(specifications).length > 0 && (
-            <div className="mt-4">
-              <h2 className="text-lg font-semibold">Specifications:</h2>
-              <ul className="list-disc ml-6 text-gray-700">
+            <div className="mt-6">
+              <h2 className="text-base sm:text-lg font-semibold">
+                Specifications:
+              </h2>
+              <ul className="list-disc ml-4 sm:ml-6 text-xs sm:text-sm text-gray-700">
                 {Object.entries(specifications).map(([key, value]) => (
-                  <li key={key}><strong>{key}:</strong> {value}</li>
+                  <li key={key}>
+                    <strong>{key}:</strong> {value}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -250,8 +270,11 @@ export default function ProductDetail({ product }) {
       </div>
 
       {/* Reviews & Comments */}
-      <Reviews reviews={reviews} />
-      <Comments comments={comments} />
+      <div className="space-y-6">
+        <Reviews reviews={reviews} />
+        <Comments comments={comments} />
+      </div>
     </div>
   );
+
 }

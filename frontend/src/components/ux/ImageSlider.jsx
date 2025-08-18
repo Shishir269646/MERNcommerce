@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import NextPrivBTN from './NextPrivBTN';
 import Image from 'next/image';
+import Loader from './Loader';
 
 function ImageSlider({ Images, loading, error }) {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -16,11 +17,7 @@ function ImageSlider({ Images, loading, error }) {
     };
 
     if (loading) {
-        return (
-            <div className="w-full h-[300px] flex items-center justify-center">
-                Loading...
-            </div>
-        );
+        return <Loader />
     }
 
     if (error || !Array.isArray(Images) || Images.length === 0) {
@@ -33,7 +30,7 @@ function ImageSlider({ Images, loading, error }) {
 
     return (
         <div className="relative w-full overflow-hidden">
-            <div className="relative sm:h-[300px] md:h-[400px] lg:h-[500px] transition-all duration-500">
+            <div className="relative h-[250px] sm:h-[300px] md:h-[400px] lg:h-[500px] transition-all duration-500">
                 {Images.map((src, idx) => (
                     <Image
                         key={idx}
@@ -41,7 +38,7 @@ function ImageSlider({ Images, loading, error }) {
                         alt={`Slide ${idx + 1}`}
                         width={1680}
                         height={500}
-                        className={`absolute top-0 left-0 object-cover transition-opacity duration-700 ${idx === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                        className={`absolute top-0 left-0 w-full h-full object-contain transition-opacity duration-700 ${idx === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
                         loading="lazy"
                         draggable={false}
                     />

@@ -16,6 +16,8 @@ const QtyField = ({ name, value, onChange }) => {
         });
 
     return (
+        
+       
         <div className="join mt-4 w-fit">
             <button
                 type="button"
@@ -43,7 +45,10 @@ const QtyField = ({ name, value, onChange }) => {
             </button>
         </div>
     );
-};
+}
+    
+    
+
 
 QtyField.propTypes = {
     name: PropTypes.string.isRequired,

@@ -132,70 +132,72 @@ export default function CouponPage() {
                 onSubmit={handleSubmit}
                 className="card bg-base-200 p-6 space-y-4 shadow-xl"
             >
-                <div className="form-control">
-                    <label className="label text-base-content" htmlFor="code">
-                        Coupon Code
-                    </label>
-                    <input
-                        id="code"
-                        type="text"
-                        name="code"
-                        value={formData.code}
-                        onChange={handleChange}
-                        placeholder="e.g. SUMMER50"
-                        className="input input-bordered"
-                        required
-                    />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="form-control">
+                        <label className="label text-base-content" htmlFor="code">
+                            Coupon Code
+                        </label>
+                        <input
+                            id="code"
+                            type="text"
+                            name="code"
+                            value={formData.code}
+                            onChange={handleChange}
+                            placeholder="e.g. SUMMER50"
+                            className="input input-bordered"
+                            required
+                        />
+                    </div>
+
+                    <div className="form-control">
+                        <label className="label text-base-content" htmlFor="discountPercent">
+                            Discount Percent (%)
+                        </label>
+                        <input
+                            id="discountPercent"
+                            type="number"
+                            name="discountPercent"
+                            value={formData.discountPercent}
+                            onChange={handleChange}
+                            placeholder="e.g. 20"
+                            className="input input-bordered"
+                            required
+                            min={1}
+                            max={100}
+                        />
+                    </div>
+
+                    <div className="form-control">
+                        <label className="label text-base-content" htmlFor="expiresAt">
+                            Expiry Date
+                        </label>
+                        <input
+                            id="expiresAt"
+                            type="date"
+                            name="expiresAt"
+                            value={formData.expiresAt}
+                            onChange={handleChange}
+                            className="input input-bordered"
+                            required
+                        />
+                    </div>
+
+                    <div className="form-control flex-row items-center gap-2">
+                        <input
+                            id="active"
+                            type="checkbox"
+                            name="active"
+                            checked={formData.active}
+                            onChange={handleChange}
+                            className="checkbox"
+                        />
+                        <label className="label text-base-content" htmlFor="active">
+                            Active
+                        </label>
+                    </div>
                 </div>
 
-                <div className="form-control">
-                    <label className="label text-base-content" htmlFor="discountPercent">
-                        Discount Percent (%)
-                    </label>
-                    <input
-                        id="discountPercent"
-                        type="number"
-                        name="discountPercent"
-                        value={formData.discountPercent}
-                        onChange={handleChange}
-                        placeholder="e.g. 20"
-                        className="input input-bordered"
-                        required
-                        min={1}
-                        max={100}
-                    />
-                </div>
-
-                <div className="form-control">
-                    <label className="label text-base-content" htmlFor="expiresAt">
-                        Expiry Date
-                    </label>
-                    <input
-                        id="expiresAt"
-                        type="date"
-                        name="expiresAt"
-                        value={formData.expiresAt}
-                        onChange={handleChange}
-                        className="input input-bordered"
-                        required
-                    />
-                </div>
-
-                <div className="form-control flex-row items-center gap-2">
-                    <input
-                        id="active"
-                        type="checkbox"
-                        name="active"
-                        checked={formData.active}
-                        onChange={handleChange}
-                        className="checkbox"
-                    />
-                    <label className="label text-base-content" htmlFor="active">
-                        Active
-                    </label>
-                </div>
-
-                <div className="flex gap-4">
+                <div className="flex gap-4 mt-4">
                     <button type="submit" className="btn btn-primary">
                         {editMode ? "Update Coupon" : "Create Coupon"}
                     </button>
@@ -221,7 +223,7 @@ export default function CouponPage() {
                         <tr>
                             <TableHead>Code</TableHead>
                             <TableHead>Discount (%)</TableHead>
-                            <TableHead>Expires At</TableHead>
+                            <TableHead className="hidden sm:table-cell">Expires At</TableHead>
                             <TableHead>Active</TableHead>
                             <TableHead className="text-right">Actions</TableHead>
                         </tr>
@@ -230,8 +232,8 @@ export default function CouponPage() {
                         {coupons.map((coupon) => (
                             <TableRow key={coupon._id}>
                                 <TableCell>{coupon.code}</TableCell>
-                                <TableCell>{coupon.discountPercent}%</TableCell>
-                                <TableCell>
+                                <TableCell>{coupon.discountPercent}<span>%</span></TableCell>
+                                <TableCell className="hidden sm:table-cell">
                                     {new Date(coupon.expiresAt).toLocaleDateString()}
                                 </TableCell>
                                 <TableCell>{coupon.active ? "Yes" : "No"}</TableCell>

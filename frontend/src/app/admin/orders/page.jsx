@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '@/components/ui/button';
-import { Moon, Sun } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import API from '@/utils/api';
+import Loader from '@/components/Loader';
 
 const AdminOrdersPage = () => {
     const [loading, setLoading] = useState(true);
@@ -40,17 +40,17 @@ const AdminOrdersPage = () => {
         }
     };
 
-    
+
 
     return (
-        <div className="bg-white min-h-screen p-4">
+        <div className="min-h-screen p-4">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-3xl font-bold">Orders Management</h1>
-                
+
             </div>
 
             {loading ? (
-                <p>Loading...</p>
+                <Loader />
             ) : orders.length === 0 ? (
                 <p>No orders found.</p>
             ) : (

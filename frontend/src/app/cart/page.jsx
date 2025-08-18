@@ -40,7 +40,7 @@ const Epcart1 = () => {
 
     const total = useMemo(() => {
         return cartItems.reduce((sum, item) => {
-            const price = item?.product?.priceAtPurchase || 0;
+            const price = item?.product?.discountPrice || 0;
             const qty = item?.quantity || 1;
             return sum + price * qty;
         }, 0);

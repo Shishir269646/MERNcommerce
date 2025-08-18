@@ -5,9 +5,9 @@ const Address = require('../models/address.model');
 const createAddress = async (req, res) => {
     try {
         const { street, city, postalCode, country, phone } = req.body;
-        // const userId = req.user._id;
+        const userId = req.user._id;
         const address = await Address.create({
-            // user: userId,
+            user: userId,
             street,
             city,
             postalCode,

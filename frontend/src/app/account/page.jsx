@@ -1,31 +1,64 @@
 'use client';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { FaPencilAlt } from "react-icons/fa";
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import Link from 'next/link';
+import {
+    fetchAddresses,
+    createAddress,
+    updateAddress,
+    deleteAddress
+} from '@/redux/addressSlice';
 
 export default function UserProfilePage() {
-    const { user, isAuthenticated, loading } = useSelector((state) => state.user);
+    const { user, loading: userLoading } = useSelector((state) => state.user);
+    const { addresses, loading, error } = useSelector((state) => state.address);
+    const dispatch = useDispatch();
 
     const [isUserModalOpen, setUserModalOpen] = useState(false);
     const [isAddressModalOpen, setAddressModalOpen] = useState(false);
+    const [isAddingAddress, setIsAddingAddress] = useState(false);
+    const [selectedAddressId, setSelectedAddressId] = useState(null);
 
     const [editUser, setEditUser] = useState({});
     const [editAddress, setEditAddress] = useState({});
 
+    useEffect(() => {
+        if (user?._id) {
+            dispatch(fetchAddresses());
+        }
+    }, [user, dispatch]);
+
     const openUserModal = () => {
-        setEditUser({ name: user.username, email: user.email, phone: user.phone || '' });
+        setEditUser({
+            name: user.username,
+            email: user.email,
+            phone: user.phone || ''
+        });
         setUserModalOpen(true);
     };
 
-    const openAddressModal = () => {
-        setEditAddress({
-            street: user.address?.street || '',
-            city: user.address?.city || '',
-            division: user.address?.division || '',
-            zip: user.address?.zip || '',
-            country: user.address?.country || '',
-        });
+    const openAddressModal = (adding = false, address = null) => {
+        setIsAddingAddress(adding);
+        if (adding) {
+            setEditAddress({
+                street: '',
+                city: '',
+                postalCode: '',
+                country: '',
+                phone: ''
+            });
+            setSelectedAddressId(null);
+        } else if (address) {
+            setEditAddress({
+                street: address.street || '',
+                city: address.city || '',
+                postalCode: address.postalCode || '',
+                country: address.country || '',
+                phone: address.phone || ''
+            });
+            setSelectedAddressId(address._id);
+        }
         setAddressModalOpen(true);
     };
 
@@ -45,11 +78,24 @@ export default function UserProfilePage() {
 
     const handleAddressSubmit = (e) => {
         e.preventDefault();
-        console.log('Updated Address Info:', editAddress);
-        setAddressModalOpen(false);
+        if (isAddingAddress) {
+            dispatch(createAddress(editAddress))
+                .unwrap()
+                .then(() => setAddressModalOpen(false));
+        } else {
+            dispatch(updateAddress({ id: selectedAddressId, data: editAddress }))
+                .unwrap()
+                .then(() => setAddressModalOpen(false));
+        }
     };
 
-    if (loading) {
+    const handleDeleteAddress = (id) => {
+        if (confirm("Are you sure you want to delete this address?")) {
+            dispatch(deleteAddress(id));
+        }
+    };
+
+    if (userLoading || loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-base-200">
                 <span className="loading loading-spinner text-primary"></span>
@@ -70,11 +116,22 @@ export default function UserProfilePage() {
         );
     }
 
+    const hasAddress = addresses.length > 0;
+    const address = addresses[0]; // Only one address allowed
+
     return (
         <div className="min-h-screen bg-base-200 p-4">
+            {error && (
+                <div className="alert alert-error shadow-lg mb-4">
+                    <div>
+                        <span>{error}</span>
+                    </div>
+                </div>
+            )}
+
             <div className="max-w-6xl mx-auto grid gap-6 md:grid-cols-2">
                 {/* User Info Card */}
-                <div className="card bg-base-100 shadow-lg shadow-xl">
+                <div className="card bg-base-100 shadow-lg">
                     <div className="card-body">
                         <div className="flex items-center justify-between">
                             <h2 className="card-title text-lg md:text-xl">User Information</h2>
@@ -90,20 +147,43 @@ export default function UserProfilePage() {
                 </div>
 
                 {/* Address Info Card */}
-                <div className="card bg-base-100 shadow-lg shadow-xl">
+                <div className="card bg-base-100 shadow-lg">
                     <div className="card-body">
                         <div className="flex items-center justify-between">
                             <h2 className="card-title text-lg md:text-xl">Address Information</h2>
-                            <button onClick={openAddressModal} className="btn btn-sm btn-outline btn-primary">
-                                <FaPencilAlt className="w-4 h-4 mr-1" />
-                                Edit
-                            </button>
+                            {!hasAddress && (
+                                <button onClick={() => openAddressModal(true)} className="btn btn-sm btn-outline btn-primary">
+                                    Add
+                                </button>
+                            )}
                         </div>
-                        <p><span className="font-semibold">Street:</span> {user.address?.street || 'N/A'}</p>
-                        <p><span className="font-semibold">City:</span> {user.address?.city || 'N/A'}</p>
-                        <p><span className="font-semibold">Division:</span> {user.address?.division || 'N/A'}</p>
-                        <p><span className="font-semibold">ZIP Code:</span> {user.address?.zip || 'N/A'}</p>
-                        <p><span className="font-semibold">Country:</span> {user.address?.country || 'N/A'}</p>
+                        {!hasAddress ? (
+                            <p>No address found. Please add one.</p>
+                        ) : (
+                            <div className="p-3 border rounded-lg">
+                                <p><span className="font-semibold">Street:</span> {address.street}</p>
+                                <p><span className="font-semibold">City:</span> {address.city}</p>
+                                <p><span className="font-semibold">Postal Code:</span> {address.postalCode}</p>
+                                <p><span className="font-semibold">Country:</span> {address.country}</p>
+                                <p><span className="font-semibold">Phone:</span> {address.phone}</p>
+                                <div className="flex gap-2 mt-2">
+                                    <button
+                                        onClick={() => openAddressModal(false, address)}
+                                        className="btn btn-xs btn-outline btn-secondary"
+                                    >
+                                        <FaPencilAlt className="w-3 h-3 mr-1" />
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={() => handleDeleteAddress(address._id)}
+                                        className="btn btn-xs btn-outline btn-error"
+                                    >
+                                        <FaTrash className="w-3 h-3 mr-1" />
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -147,11 +227,11 @@ export default function UserProfilePage() {
                 </dialog>
             )}
 
-            {/* Address Edit Modal */}
+            {/* Address Edit/Add Modal */}
             {isAddressModalOpen && (
                 <dialog open className="modal">
                     <div className="modal-box">
-                        <h3 className="font-bold text-lg mb-4">Edit Address</h3>
+                        <h3 className="font-bold text-lg mb-4">{isAddingAddress ? 'Add Address' : 'Edit Address'}</h3>
                         <form onSubmit={handleAddressSubmit} className="space-y-3">
                             <input
                                 type="text"
@@ -171,18 +251,10 @@ export default function UserProfilePage() {
                             />
                             <input
                                 type="text"
-                                name="division"
-                                value={editAddress.division}
+                                name="postalCode"
+                                value={editAddress.postalCode}
                                 onChange={handleAddressChange}
-                                placeholder="Division"
-                                className="input input-bordered w-full"
-                            />
-                            <input
-                                type="text"
-                                name="zip"
-                                value={editAddress.zip}
-                                onChange={handleAddressChange}
-                                placeholder="ZIP Code"
+                                placeholder="Postal Code"
                                 className="input input-bordered w-full"
                             />
                             <input
@@ -191,6 +263,14 @@ export default function UserProfilePage() {
                                 value={editAddress.country}
                                 onChange={handleAddressChange}
                                 placeholder="Country"
+                                className="input input-bordered w-full"
+                            />
+                            <input
+                                type="text"
+                                name="phone"
+                                value={editAddress.phone}
+                                onChange={handleAddressChange}
+                                placeholder="Phone"
                                 className="input input-bordered w-full"
                             />
                             <div className="modal-action">

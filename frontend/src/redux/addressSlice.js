@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from '@/utils/api'; // Axios instance with auth header
+import api from '@/utils/api';
 
 // CREATE address
 export const createAddress = createAsyncThunk(

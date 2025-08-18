@@ -53,11 +53,11 @@ const UsersPage = () => {
                     <Table>
                         <TableHeader>
                             <TableRow className="bg-gray-100">
-                                <TableHead>ID</TableHead>
+                                <TableHead className="hidden sm:table-cell">ID</TableHead>
                                 <TableHead>Name</TableHead>
                                 <TableHead>Email</TableHead>
                                 <TableHead>Admin</TableHead>
-                                <TableHead>Joined</TableHead>
+                                <TableHead className="hidden sm:table-cell">Joined</TableHead>
                                 <TableHead>Actions</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -70,7 +70,7 @@ const UsersPage = () => {
 
                                 return (
                                     <TableRow key={user._id}>
-                                        <TableCell>{user._id}</TableCell>
+                                        <TableCell className="hidden sm:table-cell">{user._id}</TableCell>
                                         <TableCell>{user.username}</TableCell>
                                         <TableCell>{user.email}</TableCell>
                                         <TableCell>
@@ -80,7 +80,7 @@ const UsersPage = () => {
                                                 <span className="text-gray-500">No</span>
                                             )}
                                         </TableCell>
-                                        <TableCell>{formattedDate}</TableCell>
+                                        <TableCell className="hidden sm:table-cell">{formattedDate}</TableCell>
                                         <TableCell>
                                             <div className="flex gap-2">
                                                 <Button

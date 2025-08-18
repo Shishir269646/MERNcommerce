@@ -184,7 +184,7 @@ export default function ProductForm({ isEditing = false }) {
                     <input {...register('title')} placeholder="Title" className="input input-bordered" required />
                     <textarea {...register('description')} placeholder="Description" className="textarea textarea-bordered" />
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <input {...register('brand')} placeholder="Brand" className="input input-bordered" />
                         <select {...register('category')} defaultValue="" className="select select-bordered" required>
                             <option value="" disabled>Category</option>
@@ -197,7 +197,7 @@ export default function ProductForm({ isEditing = false }) {
                         <input {...register('sku')} placeholder="SKU" className="input input-bordered" />
                     </div>
 
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <input type="number" {...register('price')} placeholder="Price" className="input input-bordered" required />
                         <input type="number" {...register('discountPrice')} placeholder="Discount Price" className="input input-bordered" />
                         <input
@@ -276,7 +276,7 @@ export default function ProductForm({ isEditing = false }) {
                     </div>
 
                     {/* Other Fields */}
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <input {...register('selectedColor')} placeholder="Selected Color" className="input input-bordered" />
                         <input {...register('selectedSize')} placeholder="Selected Size" className="input input-bordered" />
                     </div>
@@ -290,9 +290,9 @@ export default function ProductForm({ isEditing = false }) {
                     <div>
                         <label className="label-text font-semibold">Color Variants</label>
                         {colorFields.map((field, index) => (
-                            <div key={field.id} className="flex gap-2 mb-2">
-                                <input {...register(`colorVariants.${index}.value`)} placeholder="Color (e.g. Red)" className="input input-bordered w-1/2" />
-                                <input {...register(`colorVariants.${index}.bgcolor`)} placeholder="Hex (#ff0000)" className="input input-bordered w-1/2" />
+                            <div key={field.id} className="flex flex-col md:flex-row gap-2 mb-2">
+                                <input {...register(`colorVariants.${index}.value`)} placeholder="Color (e.g. Red)" className="input input-bordered w-full md:w-1/2" />
+                                <input {...register(`colorVariants.${index}.bgcolor`)} placeholder="Hex (#ff0000)" className="input input-bordered w-full md:w-1/2" />
                                 <button type="button" className="btn btn-sm btn-error" onClick={() => removeColor(index)}>✕</button>
                             </div>
                         ))}
@@ -302,9 +302,9 @@ export default function ProductForm({ isEditing = false }) {
                     <div>
                         <label className="label-text font-semibold">Size Variants</label>
                         {sizeFields.map((field, index) => (
-                            <div key={field.id} className="flex gap-2 mb-2">
-                                <input {...register(`sizeVariants.${index}.value`)} placeholder="Size (e.g. M)" className="input input-bordered w-1/2" />
-                                <input {...register(`sizeVariants.${index}.label`)} placeholder="Label (e.g. Medium)" className="input input-bordered w-1/2" />
+                            <div key={field.id} className="flex flex-col md:flex-row gap-2 mb-2">
+                                <input {...register(`sizeVariants.${index}.value`)} placeholder="Size (e.g. M)" className="input input-bordered w-full md:w-1/2" />
+                                <input {...register(`sizeVariants.${index}.label`)} placeholder="Label (e.g. Medium)" className="input input-bordered w-full md:w-1/2" />
                                 <button type="button" className="btn btn-sm btn-error" onClick={() => removeSize(index)}>✕</button>
                             </div>
                         ))}
@@ -314,9 +314,9 @@ export default function ProductForm({ isEditing = false }) {
                     <div>
                         <label className="label-text font-semibold">Specifications</label>
                         {specFields.map((field, index) => (
-                            <div key={field.id} className="flex gap-2 mb-2">
-                                <input {...register(`specifications.${index}.key`)} placeholder="Key (e.g. Material)" className="input input-bordered w-1/2" />
-                                <input {...register(`specifications.${index}.value`)} placeholder="Value (e.g. Cotton)" className="input input-bordered w-1/2" />
+                            <div key={field.id} className="flex flex-col md:flex-row gap-2 mb-2">
+                                <input {...register(`specifications.${index}.key`)} placeholder="Key (e.g. Material)" className="input input-bordered w-full md:w-1/2" />
+                                <input {...register(`specifications.${index}.value`)} placeholder="Value (e.g. Cotton)" className="input input-bordered w-full md:w-1/2" />
                                 <button type="button" className="btn btn-sm btn-error" onClick={() => removeSpec(index)}>✕</button>
                             </div>
                         ))}

@@ -1,5 +1,4 @@
 const express = require("express");
-
 const {
     getAllCategories,
     createCategory,
@@ -7,26 +6,20 @@ const {
     deleteCategory,
 } = require("../controllers/category.controller");
 
-const {
-    protect,
-    admin
-} = require("../middleware/auth.middleware");
-
+const { protect, admin } = require("../middleware/auth.middleware");
 const { upload } = require("../utils/s3Upload");
 
 const router = express.Router();
 
-const uploadFields = upload.single("Image")
 
+const uploadSingle = upload.single("image");
 
 
 router.get("/", getAllCategories);
-router.post("/", uploadFields, createCategory);
-router.put("/:id", uploadFields, updateCategory);
-router.delete("/:id", deleteCategory);
 
 
+router.post("/", protect, admin, uploadSingle, createCategory);
+router.put("/:id", protect, admin, uploadSingle, updateCategory);
+router.delete("/:id", protect, admin, deleteCategory);
 
-
-
-module.exports = router; 
+module.exports = router;

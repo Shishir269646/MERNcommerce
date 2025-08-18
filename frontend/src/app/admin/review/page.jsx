@@ -9,7 +9,7 @@ import {
     createOrUpdateReview,
 } from '@/redux/reviewSlice';
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
-import { useParams } from 'next/navigation';
+
 import { toast } from 'react-toastify';
 import {
     Table,
@@ -22,24 +22,21 @@ import {
 
 const AdminReviewPage = () => {
     const dispatch = useDispatch();
-    const { productId } = useParams();
+    const [productId, setProductId] = useState('');
 
     const { reviews, loading, error, successMessage } = useSelector(
-        (state) => state.reviews || {}
+        (state) => state.review || {}
     );
 
     const [editReview, setEditReview] = useState(null);
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
 
-    useEffect(() => {
+    const handleFetchReviews = () => {
         if (productId) {
             dispatch(fetchReviewsByProduct(productId));
         }
-        return () => {
-            dispatch(clearReviewState());
-        };
-    }, [dispatch, productId]);
+    };
 
     useEffect(() => {
         if (successMessage) toast.success(successMessage);
@@ -75,17 +72,34 @@ const AdminReviewPage = () => {
     };
 
     return (
-        <div className="p-4 md:p-8 max-w-7xl mx-auto min-h-screen bg-base-100 transition-colors duration-500">
+        <div className="p-4 md:p-8 max-w-7xl mx-auto min-h-screen transition-colors duration-500">
             <h1 className="text-3xl md:text-4xl font-bold text-primary text-primary-focus mb-8 text-center md:text-left">
-                Manage Reviews - Product ID: {productId}
+                Manage Reviews
             </h1>
+
+            <div className="flex items-center gap-4 mb-8">
+                <input
+                    type="text"
+                    placeholder="Enter Product ID"
+                    className="input input-bordered w-full max-w-xs"
+                    value={productId}
+                    onChange={(e) => setProductId(e.target.value)}
+                />
+                <button
+                    className="btn btn-primary"
+                    onClick={handleFetchReviews}
+                    disabled={!productId || loading}
+                >
+                    {loading ? 'Fetching...' : 'Fetch Reviews'}
+                </button>
+            </div>
 
             {loading ? (
                 <div className="flex justify-center py-16">
                     <span className="loading loading-spinner loading-lg text-primary text-primary-focus"></span>
                 </div>
             ) : reviews?.length ? (
-                <div className="overflow-x-auto rounded-lg shadow-lg border border-base-300">
+                <div className="overflow-x-auto rounded-lg shadow-lg border border-base-300 max-w-full">
                     <Table className="table-auto w-full min-w-[600px] md:min-w-full">
                         <TableHeader>
                             <tr>
@@ -102,26 +116,26 @@ const AdminReviewPage = () => {
                                     key={review._id}
                                     className="hover:bg-base-200 transition-colors duration-300"
                                 >
-                                    <TableCell className="whitespace-nowrap">{review.user?.name || 'Unknown'}</TableCell>
-                                    <TableCell>{review.rating}</TableCell>
-                                    <TableCell className="max-w-xs truncate">{review.comment || 'No comment'}</TableCell>
-                                    <TableCell className="whitespace-nowrap">
+                                    <TableCell className="whitespace-nowrap px-4 py-2">{review.user?.name || 'Unknown'}</TableCell>
+                                    <TableCell className="px-4 py-2">{review.rating}</TableCell>
+                                    <TableCell className="max-w-xs truncate px-4 py-2">{review.comment || 'No comment'}</TableCell>
+                                    <TableCell className="whitespace-nowrap px-4 py-2">
                                         {new Date(review.createdAt).toLocaleDateString()}
                                     </TableCell>
-                                    <TableCell className="flex gap-2 whitespace-nowrap">
+                                    <TableCell className="flex gap-2 whitespace-nowrap px-4 py-2">
                                         <button
                                             className="btn btn-sm btn-outline btn-warning"
                                             onClick={() => handleEditClick(review)}
                                             aria-label={`Edit review by ${review.user?.name || 'Unknown'}`}
                                         >
-                                            <FaRegTrashAlt size={16} />
+                                            <FaPencilAlt size={16} />
                                         </button>
                                         <button
                                             className="btn btn-sm btn-outline btn-error"
                                             onClick={() => handleDelete(review._id)}
                                             aria-label={`Delete review by ${review.user?.name || 'Unknown'}`}
                                         >
-                                            <FaPencilAlt size={16} />
+                                            <FaRegTrashAlt size={16} />
                                         </button>
                                     </TableCell>
                                 </TableRow>
@@ -139,7 +153,7 @@ const AdminReviewPage = () => {
             <dialog id="edit_modal" className="modal">
                 <form
                     method="dialog"
-                    className="modal-box max-w-lg w-full bg-base-100"
+                    className="modal-box max-w-lg w-full bg-base-100 md:max-w-2xl"
                     onSubmit={(e) => {
                         e.preventDefault();
                         handleUpdateSubmit();

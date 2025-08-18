@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
+import Link from "next/link";
 
 function HoverDropDown({ label, options = [] }) {
     return (
@@ -16,13 +17,24 @@ function HoverDropDown({ label, options = [] }) {
             >
                 {options.map((option, idx) => (
                     <li key={idx}>
-                        <a href={option.LinkUrl}>{option.label}</a>
-                        
+                        {option.onClick ? (
+                            <button
+                                type="button"
+                                onClick={option.onClick}
+                                className="w-full text-left hover:bg-gray-200 px-2 py-1"
+                            >
+                                {option.label}
+                            </button>
+                        ) : (
+                            <Link href={option.LinkUrl || "#"} className="hover:bg-gray-200 px-2 py-1 block">
+                                {option.label}
+                            </Link>
+                        )}
                     </li>
                 ))}
             </ul>
         </div>
-    )
+    );
 }
 
 export default HoverDropDown;

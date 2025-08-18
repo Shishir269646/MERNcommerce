@@ -254,7 +254,7 @@ const SettingsPage = () => {
                 <div className="mb-6">
                     <label className="font-medium block mb-2 text-gray-800">Deals of the Day Products</label>
                     {formProducts.map((item, index) => (
-                        <div key={index} className="flex gap-2 items-center mb-2">
+                        <div key={index} className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-2 items-center mb-2">
                             <select
                                 className="select select-bordered w-full text-black"
                                 value={item.product}
@@ -303,7 +303,7 @@ const SettingsPage = () => {
                     <label className="block font-semibold text-gray-800">Upload Images</label>
 
                     {formImages.map((img, index) => (
-                        <div key={index} className="flex items-center gap-2 text-gray-700">
+                        <div key={index} className="grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-2 text-gray-700">
                             <input
                                 type="file"
                                 accept="image/*"

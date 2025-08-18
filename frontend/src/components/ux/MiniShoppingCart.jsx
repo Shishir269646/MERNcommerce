@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
 import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { FaShoppingCart, FaShoppingBasket } from "react-icons/fa";
+import { FaShoppingBag } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import QtyField from "@/components/ux/QtyField";
 import Link from "next/link";
@@ -18,135 +18,98 @@ function MiniShoppingCart({ isVisible, setIsVisible, basketRef }) {
     const dispatch = useDispatch();
     const { cartItems, loading, error } = useSelector((state) => state.cart);
 
-    // Refetch cart items on mount and when cart changes
     useEffect(() => {
         dispatch(getCartItems());
     }, [dispatch, cartItems.length]);
 
     if (!isVisible) return null;
 
+    const containerClasses = "absolute z-50 w-[calc(100vw-2rem)] lg:w-[750px] top-14 right-1/2 lg:right-0 translate-x-1/2 lg:translate-x-0 bg-base-100 shadow-2xl rounded-lg p-4 border border-base-300";
+
     if (loading) {
         return (
-            <div
-                ref={basketRef}
-                className="absolute z-50 w-[750px] max-w-[95vw] top-12 right-0 bg-base-100 shadow-lg rounded-lg p-6 border border-base-300 flex justify-center items-center min-h-[200px]"
-            >
+            <div ref={basketRef} className={`${containerClasses} flex justify-center items-center min-h-[200px]`}>
                 <Loader />
             </div>
         );
     }
 
-    const basketCount = cartItems.reduce(
-        (sum, item) => sum + (item.quantity || 1),
-        0
-    );
-
+    const basketCount = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0);
     const totalPrice = cartItems.reduce((sum, item) => {
-        const price = item.product?.priceAtPurchase || 0;
+        const price = item.product?.discountPrice ?? item.product?.price ?? 0;
         return sum + price * (item.quantity || 1);
     }, 0);
 
     const handleQuantity = async (cartItemId, value) => {
         if (!isNaN(value) && value > 0) {
             await dispatch(updateCartItemQuantity({ cartItemId, quantity: value }));
-            dispatch(getCartItems()); // Refetch after update
+            dispatch(getCartItems());
         }
     };
 
     const handleDelete = async (cartItemId) => {
         await dispatch(removeFromCart(cartItemId));
-        dispatch(getCartItems()); // Refetch after delete
+        dispatch(getCartItems());
     };
 
     return (
-        <div
-            ref={basketRef}
-            className="absolute z-50 w-[750px] max-w-[95vw] top-12 right-0 bg-base-100 shadow-lg rounded-lg p-6 border border-base-300"
-        >
+        <div ref={basketRef} className={containerClasses}>
             {basketCount === 0 ? (
-                <h2 className="text-center text-neutral">Your shopping cart is empty!</h2>
+                <div className="flex flex-col items-center justify-center text-center py-12">
+                    <FaShoppingBag className="text-6xl text-gray-300 mb-4" />
+                    <h2 className="text-xl font-semibold text-neutral mb-2">Your shopping cart is empty!</h2>
+                    <p className="text-gray-500 mb-6">Looks like you haven't added anything yet.</p>
+                    <Link 
+                        href="/products" 
+                        className="btn btn-primary"
+                        onClick={() => setIsVisible(false)}
+                    >
+                        Continue Shopping
+                    </Link>
+                </div>
             ) : (
                 <>
-                    <div className="border-b border-base-300 pb-4 text-lg font-bold text-base-content">
+                    <div className="border-b border-base-300 pb-3 text-lg font-bold text-base-content">
                         My Basket{" "}
-                        <span className="text-sm font-normal text-neutral">
-                            ({basketCount} items)
-                        </span>
+                        <span className="text-sm font-normal text-neutral">({basketCount} items)</span>
                     </div>
 
-                    <div className="mt-4 space-y-6 max-h-[400px] overflow-y-auto pr-2">
+                    <div className="mt-4 space-y-4 max-h-[60vh] overflow-y-auto pr-2">
                         {cartItems.map((item) => {
                             const { _id, quantity, product } = item;
-                            const price = product?.priceAtPurchase || 0;
-                            const image = product.Image?.[0]?.find(img => img.size === "small")?.url ||
-                                product.Image?.[0]?.[0]?.url ||
-                                '/fallback.jpg'
+                            const price = product?.discountPrice || product?.price || 0;
+                            const image = product.Image?.[0]?.find(img => img.size === "small")?.url || product.Image?.[0]?.[0]?.url || '/fallback.jpg';
                             const title = product?.title || "Untitled Product";
-                            const description = product?.description || "";
 
                             return (
-                                <div
-                                    key={_id}
-                                    className="flex items-start justify-between border-t border-base-200 pt-4 gap-4"
-                                >
-                                    <div className="flex gap-4 items-center w-full">
-                                        <Image
-                                            src={image}
-                                            alt={title}
-                                            height={80}
-                                            width={80}
-                                            className="object-contain rounded"
-                                        />
-                                        <div className="text-sm w-full">
-                                            <p className="font-semibold text-base-content line-clamp-1">
-                                                {title}
-                                            </p>
-                                            <p className="text-sm text-neutral line-clamp-2">
-                                                {description}
-                                            </p>
+                                <div key={_id} className="flex flex-col md:flex-row items-start md:items-center justify-between border-b border-base-200 pb-4 gap-3">
+                                    <div className="flex items-center gap-4 flex-grow">
+                                        <Image src={image} alt={title} height={80} width={80} className="object-contain rounded border p-1" />
+                                        <div className="text-sm">
+                                            <p className="font-semibold text-base-content line-clamp-2">{title}</p>
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-4 mt-2">
-                                        <QtyField
-                                            name={`qty-${_id}`}
-                                            value={quantity}
-                                            onChange={(e) =>
-                                                handleQuantity(_id, parseInt(e.target.value))
-                                            }
-                                        />
-                                        <p className="text-sm font-semibold text-success">
-                                            £{(price * quantity).toFixed(2)}
-                                        </p>
+                                    <div className="flex items-center justify-between w-full md:w-auto md:justify-end gap-4 mt-3 md:mt-0">
+                                        <QtyField name={`qty-${_id}`} value={quantity} onChange={(e) => handleQuantity(_id, parseInt(e.target.value))} />
+                                        <p className="text-sm font-semibold text-success min-w-[70px] text-right">${(price * quantity).toFixed(2)}</p>
+                                        <button onClick={() => handleDelete(_id)} className="btn btn-xs btn-circle btn-outline text-lg text-error">
+                                            <MdDeleteForever />
+                                        </button>
                                     </div>
-
-                                    <button
-                                        onClick={() => handleDelete(_id)}
-                                        className="btn btn-sm btn-circle btn-outline text-2xl text-error"
-                                    >
-                                        <MdDeleteForever />
-                                    </button>
                                 </div>
                             );
                         })}
                     </div>
 
-                    <div className="flex justify-between items-center border-t border-base-200 mt-6 pt-4">
-                        <span className="text-lg font-medium text-base-content">
-                            Total:
-                        </span>
-                        <span className="text-lg font-bold text-success">
-                            £{totalPrice.toFixed(2)}
-                        </span>
+                    <div className="flex justify-between items-center border-t border-base-200 mt-4 pt-4">
+                        <span className="text-lg font-medium text-base-content">Total:</span>
+                        <span className="text-lg font-bold text-success">${totalPrice.toFixed(2)}</span>
                     </div>
 
-                    <div className="flex justify-end gap-4 mt-6">
-                        <Link className="btn btn-primary text-2xl" href="/checkout">
-                            Checkout <FaShoppingCart className="ml-2" />
-                        </Link>
-                        <Link className="btn btn-dash btn-primary text-xl" href="/cart">
-                            View Cart <FaShoppingBasket className="ml-2" />
-                        </Link>
+                    <div className="flex flex-col sm:flex-row justify-end gap-3 mt-4">
+                        <Link className="btn btn-primary w-full sm:w-auto" href="/checkout">Checkout</Link>
+                        <Link className="btn btn-outline w-full sm:w-auto" href="/cart">View Cart</Link>
                     </div>
                 </>
             )}

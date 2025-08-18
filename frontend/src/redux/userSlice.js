@@ -55,6 +55,19 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
+// Update user address
+export const updateUserAddress = createAsyncThunk(
+  'user/updateAddress',
+  async ({ userId, addressData }, thunkAPI) => {
+    try {
+      const res = await api.put(`/auth/user/${userId}/address`, addressData);
+      return res.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response?.data?.message || 'Failed to update address');
+    }
+  }
+);
+
 // ------------------ INITIAL STATE ------------------ //
 
 const initialState = {
@@ -63,6 +76,7 @@ const initialState = {
   isAuthenticated: false,
   loading: false,
   error: null,
+  addressError: null,
 
   // Admin-related state
   users: [],
@@ -101,6 +115,9 @@ export const userSlice = createSlice({
     ,
     clearUserError: (state) => {
       state.error = null;
+    },
+    clearAddressError: (state) => {
+      state.addressError = null;
     },
   },
   extraReducers: (builder) => {
@@ -171,6 +188,22 @@ export const userSlice = createSlice({
         state.adminLoading = false;
         state.adminError = action.payload;
       });
+
+    // ----- Update User Address -----
+    builder
+      .addCase(updateUserAddress.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserAddress.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        localStorage.setItem('userInfo', JSON.stringify(action.payload.user));
+      })
+      .addCase(updateUserAddress.rejected, (state, action) => {
+        state.loading = false;
+        state.addressError = action.payload;
+      });
   },
 });
 
@@ -180,5 +213,6 @@ export const {
   logoutUser,
   loadUserFromStorage,
   clearUserError,
+  clearAddressError,
 } = userSlice.actions;
 

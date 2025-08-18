@@ -55,7 +55,7 @@ export default function AdminProductsPage() {
     }, []);
 
     return (
-        <div className="p-4 min-h-screen bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100 transition-colors">
+        <div className="p-4 min-h-screen text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100 transition-colors">
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold">Admin Products</h1>

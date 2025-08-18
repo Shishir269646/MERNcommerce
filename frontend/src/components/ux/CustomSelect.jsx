@@ -69,7 +69,7 @@ export default function CustomSelect({ options = [], onChange, label }) {
             <button
                 type="button"
                 ref={buttonRef}
-                className="w-full border border-gray-300 px-4 py-2 rounded-sm bg-transparent text-left flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full border border-gray-300 px-3 sm:px-4 py-2 rounded-md bg-transparent text-left flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm sm:text-base"
                 aria-haspopup="listbox"
                 aria-expanded={isOpen}
                 aria-labelledby={`${id}-label`}
@@ -84,7 +84,7 @@ export default function CustomSelect({ options = [], onChange, label }) {
                 <ul
                     ref={listRef}
                     id={`${id}-listbox`}
-                    className="absolute left-0 right-0 mt-1 border border-gray-300 bg-white rounded-sm shadow-md z-10"
+                    className="absolute left-0 right-0 mt-1 border border-gray-300 bg-white rounded-md shadow-lg z-10 max-h-60 overflow-y-auto"
                     role="listbox"
                     aria-labelledby={`${id}-label`}
                 >
@@ -93,10 +93,11 @@ export default function CustomSelect({ options = [], onChange, label }) {
                             key={option.value}
                             role="option"
                             tabIndex={0}
-                            className={`px-4 py-2 cursor-pointer outline-none ${selected.value === option.value
+                            className={`px-3 sm:px-4 py-2 cursor-pointer outline-none text-sm sm:text-base ${selected.value === option.value
                                     ? 'bg-blue-500 text-white'
                                     : 'hover:bg-gray-100'
-                                } focus:ring-2 focus:ring-blue-500`}
+                                }
+                                focus:ring-2 focus:ring-blue-500`}
                             aria-selected={selected.value === option.value}
                             onClick={() => selectOption(option)}
                             onKeyDown={(e) => {

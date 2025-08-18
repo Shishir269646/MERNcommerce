@@ -67,12 +67,12 @@ function ReadMore({ text, limit = 80 }) {
     if (!text) return null;
 
     return (
-        <div className="mt-2 text-[4px] sm:text-lg text-gray-600">
+        <div className="mt-2 text-sm sm:text-base text-gray-600">
             <p>{displayText}</p>
             {isLong && (
                 <button
                     onClick={() => setExpanded(!expanded)}
-                    className="mt-1 text-blue-600 hover:underline"
+                    className="mt-1 text-blue-600 hover:underline text-sm sm:text-base"
                     aria-expanded={expanded}
                 >
                     {expanded ? "Read less" : "Read more"}

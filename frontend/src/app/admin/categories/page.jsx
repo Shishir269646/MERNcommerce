@@ -108,21 +108,23 @@ const CategoriesPage = () => {
         <div className="p-4 md:p-6 text-gray-800">
             <h2 className="text-2xl font-bold mb-6">Manage Categories</h2>
 
-            <form onSubmit={handleSubmit} className="gap-4 mb-8 items-center">
-                <input
-                    type="text"
-                    placeholder="Category name"
-                    value={categoryName}
-                    onChange={(e) => setCategoryName(e.target.value)}
-                    className="input input-bordered mb-4 w-full max-w-sm"
-                />
+            <form onSubmit={handleSubmit} className="mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                    <input
+                        type="text"
+                        placeholder="Category name"
+                        value={categoryName}
+                        onChange={(e) => setCategoryName(e.target.value)}
+                        className="input input-bordered w-full"
+                    />
 
-                <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">Category Image</label>
-                    <ImageInputer onChange={handleFileChange} />
+                    <div className="w-full">
+                        <label className="block text-sm font-medium mb-1">Category Image</label>
+                        <ImageInputer onChange={handleFileChange} />
+                    </div>
                 </div>
 
-                <div className="flex gap-3 mb-6">
+                <div className="flex gap-3 mt-4">
                     <Button type="submit">{editId ? 'Update' : 'Create'}</Button>
                     {editId && (
                         <Button type="button" variant="ghost" onClick={resetForm}>
@@ -162,7 +164,7 @@ const CategoriesPage = () => {
                             {filteredCategories.map((cat) => (
                                 <TableRow key={cat._id}>
                                     <TableCell className="font-semibold text-xl">{cat.name}</TableCell>
-                                    <TableCell>
+                                    <TableCell className="hidden md:table-cell">
                                         {cat.image ? (
                                             <Image
                                                 src={getImageUrl(cat.image)}

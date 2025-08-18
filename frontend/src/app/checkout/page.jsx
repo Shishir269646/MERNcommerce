@@ -1,9 +1,51 @@
 'use client';
 
-import Image from 'next/image';
+import { useSearchParams } from "next/navigation";
+import { FaCcVisa, FaCcAmex, FaCcMastercard, FaCcPaypal } from 'react-icons/fa';
 import Link from 'next/link';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    validateCoupon,
+    clearValidatedCoupon,
+} from "@/redux/couponSlice";
+import { toast } from "react-toastify";
 
 export default function CheckoutPage() {
+    const dispatch = useDispatch();
+    const searchParams = useSearchParams();
+    const total = searchParams.get("total");
+    const parsedTotal = parseFloat(total);
+
+    const [couponCode, setCouponCode] = useState("");
+    const { validatedCoupon, error } = useSelector((state) => state.coupon);
+
+    const handleApplyCoupon = () => {
+        if (couponCode) {
+            dispatch(validateCoupon(couponCode))
+                .unwrap()
+                .then(() => {
+                    toast.success("Coupon applied successfully");
+                })
+                .catch((err) => {
+                    toast.error(err.message || "Invalid coupon code");
+                });
+        } else {
+            toast.error("Please enter a coupon code");
+        }
+    };
+
+    const discount = validatedCoupon
+        ? (parsedTotal * validatedCoupon.discountPercent) / 100
+        : 0;
+    const newTotal = parsedTotal - discount;
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearValidatedCoupon());
+        };
+    }, [dispatch]);
+
     return (
         <div className="bg-base-100 sm:px-8 px-4 py-6">
             <div className="max-w-screen-xl max-md:max-w-xl mx-auto">
@@ -13,7 +55,8 @@ export default function CheckoutPage() {
                         <div key={label} className="w-full flex items-center">
                             <div
                                 className={`w-8 h-8 shrink-0 mx-[-1px] p-1.5 flex items-center justify-center rounded-full ${i <= 1 ? 'bg-primary text-white' : 'bg-base-300'
-                                    }`}>
+                                    }`}
+                            >
                                 <span className="text-sm font-semibold">{i + 1}</span>
                             </div>
                             {i < 2 && (
@@ -25,7 +68,8 @@ export default function CheckoutPage() {
                             <div className="mt-2 mr-4">
                                 <h6
                                     className={`text-sm font-semibold ${i <= 1 ? 'text-base-content' : 'text-base-content/50'
-                                        }`}>
+                                        }`}
+                                >
                                     {label}
                                 </h6>
                             </div>
@@ -84,9 +128,9 @@ export default function CheckoutPage() {
                                                     defaultChecked
                                                 />
                                                 <label htmlFor="card" className="ml-4 flex gap-2 cursor-pointer">
-                                                    <Image src="https://readymadeui.com/images/visa.webp" width={48} height={32} alt="Visa" />
-                                                    <Image src="https://readymadeui.com/images/american-express.webp" width={48} height={32} alt="Amex" />
-                                                    <Image src="https://readymadeui.com/images/master.webp" width={48} height={32} alt="MasterCard" />
+                                                    <FaCcVisa size={48} />
+                                                    <FaCcAmex size={48} />
+                                                    <FaCcMastercard size={48} />
                                                 </label>
                                             </div>
                                             <p className="mt-4 text-sm font-medium">
@@ -106,7 +150,7 @@ export default function CheckoutPage() {
                                                     id="paypal"
                                                 />
                                                 <label htmlFor="paypal" className="ml-4 flex gap-2 cursor-pointer">
-                                                    <Image src="https://readymadeui.com/images/paypal.webp" width={80} height={32} alt="Paypal" />
+                                                    <FaCcPaypal size={80} />
                                                 </label>
                                             </div>
                                             <p className="mt-4 text-sm text-base-content/70 font-medium">
@@ -127,10 +171,13 @@ export default function CheckoutPage() {
                                         type="text"
                                         placeholder="Promo code"
                                         className="input input-bordered w-full text-sm"
+                                        value={couponCode}
+                                        onChange={(e) => setCouponCode(e.target.value)}
                                     />
                                     <button
                                         type="button"
                                         className="btn btn-primary"
+                                        onClick={handleApplyCoupon}
                                     >
                                         Apply
                                     </button>
@@ -144,20 +191,14 @@ export default function CheckoutPage() {
                         <h2 className="text-xl font-semibold mb-6">Order Summary</h2>
                         <ul className="font-medium space-y-4">
                             <li className="flex flex-wrap gap-4 text-sm">
-                                Subtotal <span className="ml-auto font-semibold">$72.00</span>
+                                Subtotal <span className="ml-auto font-semibold">${parsedTotal.toFixed(2)}</span>
                             </li>
                             <li className="flex flex-wrap gap-4 text-sm">
-                                Discount <span className="ml-auto font-semibold">$0.00</span>
-                            </li>
-                            <li className="flex flex-wrap gap-4 text-sm">
-                                Shipping <span className="ml-auto font-semibold">$6.00</span>
-                            </li>
-                            <li className="flex flex-wrap gap-4 text-sm">
-                                Tax <span className="ml-auto font-semibold">$5.00</span>
+                                Discount <span className="ml-auto font-semibold">${discount.toFixed(2)}</span>
                             </li>
                             <hr className="border-base-300" />
                             <li className="flex flex-wrap gap-4 text-[15px] font-semibold">
-                                Total <span className="ml-auto">$83.00</span>
+                                Total <span className="ml-auto">${newTotal.toFixed(2)}</span>
                             </li>
                         </ul>
 

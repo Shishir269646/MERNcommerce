@@ -82,19 +82,30 @@ const ProductCard = ({ item }) => {
 
             {/* Product Image */}
             <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg">
-                <Link href={`/product/${item._id}`} className="block w-full h-full">
-                    <Image
-                        src={
-                            item.Image?.[0]?.find(img => img.size === "small")?.url ||
-                            item.Image?.[0]?.[0]?.url ||
-                            '/fallback.jpg'
-                        }
-                        alt={item.title || 'Product Image'}
-                        fill
-                        sizes="100%"
-                        className="object-cover w-full h-full rounded-lg"
-                    />
-                </Link>
+                <div>
+
+                    {item.discountPercentage && (
+                        <span className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded-full z-10">
+                            {item.discountPercentage}%
+                        </span>
+                    )}
+
+
+                    <Link href={`/product/${item._id}`} className="block w-full h-full">
+                        <Image
+                            src={
+                                item.Image?.[0]?.find(img => img.size === "small")?.url ||
+                                item.Image?.[0]?.[0]?.url ||
+                                '/fallback.jpg'
+                            }
+                            alt={item.title || 'Product Image'}
+                            fill
+                            sizes="100%"
+                            className="object-cover w-full h-full rounded-lg"
+                        />
+
+                    </Link>
+                </div>
             </div>
 
             {/* Product Name */}
