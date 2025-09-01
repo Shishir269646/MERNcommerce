@@ -16,6 +16,8 @@ const Epcart1 = () => {
     const { cartItems = [], loading } = useSelector((state) => state.cart);
     const [refreshFlag, setRefreshFlag] = useState(false);
 
+  
+
     // Fetch cart items on mount and whenever refreshFlag changes
     useEffect(() => {
         dispatch(getCartItems());
@@ -40,11 +42,22 @@ const Epcart1 = () => {
 
     const total = useMemo(() => {
         return cartItems.reduce((sum, item) => {
-            const price = item?.product?.discountPrice || 0;
+            const price = item?.priceAtPurchase || 0;
             const qty = item?.quantity || 1;
             return sum + price * qty;
         }, 0);
     }, [cartItems]);
+
+
+    const totaldiscountPrice = useMemo(() => {
+        return cartItems.reduce((sum, item) => {
+            const price = item?.discountPriceAtPurchase || 0;
+            const qty = item?.quantity || 1;
+            return sum + price * qty;
+        }, 0);
+    }, [cartItems]);
+
+    
 
     return (
         <section className="py-14 px-4 bg-base-100">
@@ -70,7 +83,7 @@ const Epcart1 = () => {
 
                 {/* Sidebar */}
                 <div className="w-full lg:w-1/3">
-                    <SideBar total={total} />
+                    <SideBar total={total} totaldiscountPrice={totaldiscountPrice} />
                 </div>
             </div>
         </section>

@@ -9,21 +9,21 @@ const {
     updateOrderToDelivered,
 } = require("../controllers/order.controller");
 
-
+const { protect, admin } = require("../middleware/auth.middleware");
 
 const router = express.Router();
 
 
-// User Routes (Protected)
-router.post("/", createOrder);              // Create new order
-router.get("/my-orders", getMyOrders);      // Get user's orders
-router.get("/:id", getOrderById);           // Get order by ID
-router.put("/:id/pay", updateOrderToPaid);  // Mark as paid
+// User Routes
+router.post("/", protect, createOrder);
+router.get("/my-orders", protect, getMyOrders);
+router.get("/:id", protect, getOrderById);
+router.put("/:id/pay", protect, updateOrderToPaid);
 
 
 // Admin Routes
-router.get("/", getAllOrders);                   // Get all orders
-router.put("/:id/deliver", updateOrderToDelivered); // Mark as delivered
+router.get("/", protect, admin, getAllOrders);
+router.put("/:id/deliver", protect, admin, updateOrderToDelivered);
 
 
 

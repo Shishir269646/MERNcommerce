@@ -17,7 +17,7 @@ export default function Login() {
 
     const { user, isAuthenticated, loading, error } = useSelector((state) => state.user);
 
-    // ✅ Redirect after login
+
     useEffect(() => {
         if (isAuthenticated && user) {
             toast.success("Login successful!");
@@ -29,7 +29,7 @@ export default function Login() {
         }
     }, [isAuthenticated, user, router]);
 
-    // ✅ Clear error on unmount
+
     useEffect(() => {
         return () => {
             dispatch(clearUserError());
@@ -42,7 +42,7 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen bg-primary flex items-center justify-center px-4">
+        <div className="min-h-screen bg-gray-300 flex items-center justify-center px-4">
             <div
                 className="relative w-full max-w-4xl h-[500px] bg-base-100 shadow-2xl rounded-xl overflow-hidden flex transition-all duration-700"
                 onMouseEnter={() => setIsHovered(true)}
@@ -54,14 +54,12 @@ export default function Login() {
                         }`}
                 >
                     <div className="text-center">
-                        <h2 className="text-3xl font-bold mb-2">Join the Revolution</h2>
-                        <p className="text-sm opacity-90 mb-6">
-                            Subscribe for exclusive content & features
-                        </p>
-                        <button className="btn btn-outline btn-sm border-white text-white">
-                            THE INVINCIBLE KREATOR
+                        <h2 className="text-3xl font-bold mb-2">Join the New User</h2>
+                        
+                        <button className="btn btn-dash">
+                            Register
                         </button>
-                        <p className="text-xs mt-3">Code by Manjirul Islam</p>
+                        <p className="text-xs mt-3">Code by Manjirul Islam Shishir</p>
                     </div>
                 </div>
 

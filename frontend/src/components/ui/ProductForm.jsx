@@ -189,7 +189,7 @@ export default function ProductForm({ isEditing = false }) {
                         <select {...register('category')} defaultValue="" className="select select-bordered" required>
                             <option value="" disabled>Category</option>
                             {categories.map((cat) => (
-                                <option key={cat._id} value={cat._id}>
+                                <option key={cat._id} value={cat.name}>
                                     {cat.name}
                                 </option>
                             ))}

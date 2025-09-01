@@ -40,6 +40,7 @@ function MiniShoppingCart({ isVisible, setIsVisible, basketRef }) {
         return sum + price * (item.quantity || 1);
     }, 0);
 
+
     const handleQuantity = async (cartItemId, value) => {
         if (!isNaN(value) && value > 0) {
             await dispatch(updateCartItemQuantity({ cartItemId, quantity: value }));
@@ -59,8 +60,8 @@ function MiniShoppingCart({ isVisible, setIsVisible, basketRef }) {
                     <FaShoppingBag className="text-6xl text-gray-300 mb-4" />
                     <h2 className="text-xl font-semibold text-neutral mb-2">Your shopping cart is empty!</h2>
                     <p className="text-gray-500 mb-6">Looks like you haven't added anything yet.</p>
-                    <Link 
-                        href="/products" 
+                    <Link
+                        href="/products"
                         className="btn btn-primary"
                         onClick={() => setIsVisible(false)}
                     >
@@ -91,7 +92,9 @@ function MiniShoppingCart({ isVisible, setIsVisible, basketRef }) {
                                     </div>
 
                                     <div className="flex items-center justify-between w-full md:w-auto md:justify-end gap-4 mt-3 md:mt-0">
-                                        <QtyField name={`qty-${_id}`} value={quantity} onChange={(e) => handleQuantity(_id, parseInt(e.target.value))} />
+                                        <div className="text-black">
+                                            <QtyField name={`qty-${_id}`} value={quantity} onChange={(e) => handleQuantity(_id, parseInt(e.target.value))} />
+                                        </div>
                                         <p className="text-sm font-semibold text-success min-w-[70px] text-right">${(price * quantity).toFixed(2)}</p>
                                         <button onClick={() => handleDelete(_id)} className="btn btn-xs btn-circle btn-outline text-lg text-error">
                                             <MdDeleteForever />
@@ -108,8 +111,8 @@ function MiniShoppingCart({ isVisible, setIsVisible, basketRef }) {
                     </div>
 
                     <div className="flex flex-col sm:flex-row justify-end gap-3 mt-4">
-                        <Link className="btn btn-primary w-full sm:w-auto" href="/checkout">Checkout</Link>
-                        <Link className="btn btn-outline w-full sm:w-auto" href="/cart">View Cart</Link>
+                        <Link className="btn btn-primary w-full sm:w-auto" href={`/checkout?total=${totalPrice.toFixed(2)}`}>Checkout</Link>
+                        <Link className="btn btn-dash btn-primary" href="/cart">View Cart</Link>
                     </div>
                 </>
             )}

@@ -20,8 +20,8 @@ export default function UserProfilePage() {
     const [isAddingAddress, setIsAddingAddress] = useState(false);
     const [selectedAddressId, setSelectedAddressId] = useState(null);
 
-    const [editUser, setEditUser] = useState({});
-    const [editAddress, setEditAddress] = useState({});
+    const [editUser, setEditUser] = useState({ username: '', email: '', phone: '' });
+    const [editAddress, setEditAddress] = useState({ street: '', city: '', postalCode: '', country: '', phone: '' });
 
     useEffect(() => {
         if (user?._id) {
@@ -31,8 +31,8 @@ export default function UserProfilePage() {
 
     const openUserModal = () => {
         setEditUser({
-            name: user.username,
-            email: user.email,
+            username: user.username || '',
+            email: user.email || '',
             phone: user.phone || ''
         });
         setUserModalOpen(true);
@@ -41,13 +41,7 @@ export default function UserProfilePage() {
     const openAddressModal = (adding = false, address = null) => {
         setIsAddingAddress(adding);
         if (adding) {
-            setEditAddress({
-                street: '',
-                city: '',
-                postalCode: '',
-                country: '',
-                phone: ''
-            });
+            setEditAddress({ street: '', city: '', postalCode: '', country: '', phone: '' });
             setSelectedAddressId(null);
         } else if (address) {
             setEditAddress({
@@ -76,22 +70,27 @@ export default function UserProfilePage() {
         setUserModalOpen(false);
     };
 
-    const handleAddressSubmit = (e) => {
+    const handleAddressSubmit = async (e) => {
         e.preventDefault();
-        if (isAddingAddress) {
-            dispatch(createAddress(editAddress))
-                .unwrap()
-                .then(() => setAddressModalOpen(false));
-        } else {
-            dispatch(updateAddress({ id: selectedAddressId, data: editAddress }))
-                .unwrap()
-                .then(() => setAddressModalOpen(false));
+        try {
+            if (isAddingAddress) {
+                await dispatch(createAddress(editAddress));
+            } else {
+                await dispatch(updateAddress({ id: selectedAddressId, data: editAddress }));
+            }
+            setAddressModalOpen(false);
+        } catch (err) {
+            console.error("Error saving address:", err);
         }
     };
 
-    const handleDeleteAddress = (id) => {
+    const handleDeleteAddress = async (id) => {
         if (confirm("Are you sure you want to delete this address?")) {
-            dispatch(deleteAddress(id));
+            try {
+                await dispatch(deleteAddress(id));
+            } catch (err) {
+                console.error("Error deleting address:", err);
+            }
         }
     };
 
@@ -196,8 +195,8 @@ export default function UserProfilePage() {
                         <form onSubmit={handleUserSubmit} className="space-y-3">
                             <input
                                 type="text"
-                                name="name"
-                                value={editUser.name}
+                                name="username"
+                                value={editUser.username}
                                 onChange={handleUserChange}
                                 placeholder="Name"
                                 className="input input-bordered w-full"
@@ -220,7 +219,7 @@ export default function UserProfilePage() {
                             />
                             <div className="modal-action">
                                 <button type="submit" className="btn btn-primary">Save</button>
-                                <button onClick={() => setUserModalOpen(false)} className="btn">Cancel</button>
+                                <button type="button" onClick={() => setUserModalOpen(false)} className="btn">Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -275,7 +274,7 @@ export default function UserProfilePage() {
                             />
                             <div className="modal-action">
                                 <button type="submit" className="btn btn-primary">Save</button>
-                                <button onClick={() => setAddressModalOpen(false)} className="btn">Cancel</button>
+                                <button type="button" onClick={() => setAddressModalOpen(false)} className="btn">Cancel</button>
                             </div>
                         </form>
                     </div>

@@ -1,9 +1,0 @@
-User Database
-Product Database
-Category/Brand Database
-Order Database
-Payment Database
-Shipping/Delivery Database
-Product Reviews Database
-Admin/Management System
-Promotions and Coupons

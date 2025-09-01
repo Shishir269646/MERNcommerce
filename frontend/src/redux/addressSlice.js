@@ -142,12 +142,3 @@ export const addressSlice = createSlice({
 export const { clearSelectedAddress } = addressSlice.actions;
 
 
-/* GET /address
-
-POST /address
-
-GET /address/:id
-
-PUT /address/:id
-
-DELETE /address/:id */

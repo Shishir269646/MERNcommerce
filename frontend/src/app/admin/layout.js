@@ -1,7 +1,8 @@
 "use client";
 
+
 import React from "react";
-import AdminSidebar from "@/components/AdminSidebar";
+import AdminSidebar from "@/components/ui/AdminSidebar";
 import { IoMenu } from "react-icons/io5";
 
 import { ToastContainer } from "react-toastify";

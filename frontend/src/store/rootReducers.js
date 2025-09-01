@@ -11,8 +11,7 @@ import { adminSlice } from "@/redux/adminSlice";
 import { couponSlice } from "@/redux/couponSlice";
 import { cartSlice } from "@/redux/cartSlice";
 import { settingsSlice } from "@/redux/settingsSlice";
-
-
+import { authSlice } from "@/redux/authSlice";
 
 const rootReducer = combineReducers({
     cart: cartSlice.reducer,
@@ -25,7 +24,8 @@ const rootReducer = combineReducers({
     coupon: couponSlice.reducer,
     review: reviewSlice.reducer,
     wishlist: wishlistSlice.reducer,
-    admin: adminSlice.reducer
+    admin: adminSlice.reducer,
+    auth: authSlice.reducer,
 });
 
 export default rootReducer;

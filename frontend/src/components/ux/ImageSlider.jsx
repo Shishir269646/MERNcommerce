@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import NextPrivBTN from './NextPrivBTN';
 import Image from 'next/image';
-import Loader from './Loader';
+import Loader from "@/components/Loader";
 
 function ImageSlider({ Images, loading, error }) {
     const [currentIndex, setCurrentIndex] = useState(0);

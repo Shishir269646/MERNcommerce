@@ -6,56 +6,6 @@ import StarRating from "./StarRating";
 import AddToCartButton from "./AddToCartButton";
 import Image from "next/image";
 
-const products = [
-    {
-        name: "Biru Putaran",
-        isNew: true,
-        rating: 4.5,
-        description: "Especially good for container gardening...",
-        price: 200,
-        oldPrice: 250,
-        discount: 15,
-        image: "https://sc01.alicdn.com/kf/HTB1Cic9HFXXXXbZXpXXq6xXFXXX3/200006212/HTB1Cic9HFXXXXbZXpXXq6xXFXXX3.jpg",
-        sunNeeds: "Full Sun",
-        soilNeeds: "Damp",
-        zones: "9 - 11",
-        height: "2 - 3 feet",
-        bloomsIn: "Mid‑Summer - Mid‑Fall",
-        features: "Tolerates heat",
-    },
-    {
-        name: "Marigold Blaze",
-        isNew: false,
-        rating: 4.0,
-        description: "Bright and cheerful, ideal for borders and pots.",
-        price: 150,
-        oldPrice: 180,
-        discount: 10,
-        image: "https://sc01.alicdn.com/kf/HTB1Cic9HFXXXXbZXpXXq6xXFXXX3/200006212/HTB1Cic9HFXXXXbZXpXXq6xXFXXX3.jpg",
-        sunNeeds: "Full Sun",
-        soilNeeds: "Well-drained",
-        zones: "3 - 10",
-        height: "1 - 2 feet",
-        bloomsIn: "Late Spring - Early Fall",
-        features: "Pest resistant",
-    },
-    {
-        name: "Lavender Mist",
-        isNew: true,
-        rating: 5.0,
-        description: "Fragrant purple blooms perfect for aromatherapy.",
-        price: 220,
-        oldPrice: 270,
-        discount: 20,
-        image: "https://sc01.alicdn.com/kf/HTB1Cic9HFXXXXbZXpXXq6xXFXXX3/200006212/HTB1Cic9HFXXXXbZXpXXq6xXFXXX3.jpg",
-        sunNeeds: "Full Sun",
-        soilNeeds: "Dry",
-        zones: "5 - 9",
-        height: "1.5 - 3 feet",
-        bloomsIn: "Early Summer - Mid Fall",
-        features: "Drought tolerant, Attracts bees",
-    },
-];
 
 
 
@@ -107,6 +57,19 @@ export default function LargeProductSlider({ Products }) {
         product.Image?.[0]?.[0]?.url ||
         "/fallback.jpg";
 
+
+
+    const hasColorVariants =
+        Array.isArray(product.colorVariants) && product.colorVariants.length > 0;
+    const hasSizeVariants =
+        Array.isArray(product.sizeVariants) && product.sizeVariants.length > 0;
+
+    const formData = {
+        qty: 1,
+        selectedColor: hasColorVariants ? product.colorVariants[0].value : null,
+        selectedSize: hasSizeVariants ? product.sizeVariants[0].value : null,
+    };
+
     return (
         <div className="max-w-6xl mx-auto relative">
             <h1 className="font-bold text-3xl sm:text-4xl mb-6 text-center text-gray-900">Deals of the Day</h1>
@@ -141,14 +104,23 @@ export default function LargeProductSlider({ Products }) {
                             )}
                         </div>
                         <div className="mt-3">
-                            <AddToCartButton productId={product._id} />
+                            {hasColorVariants && hasSizeVariants ? (
+                                <AddToCartButton product={product} formData={formData} />
+                            ) : (
+                                <button
+                                    disabled
+                                    className="inline-flex items-center justify-center px-3 py-1.5 text-sm font-medium text-white bg-gray-400 cursor-not-allowed rounded-lg"
+                                >
+                                    Not Available
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
 
                 {/* Right image + overlay */}
                 <div className="relative w-full md:w-3/5 group overflow-hidden rounded-lg">
-                
+
                     {product.discountPercentage && (
                         <span className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-semibold px-2 py-1 rounded-full z-10">
                             {product.discountPercentage}%
@@ -170,7 +142,7 @@ export default function LargeProductSlider({ Products }) {
               -translate-x-full group-hover:translate-x-0
               transition-all duration-500 ease-in-out flex flex-col justify-center rounded-lg"
                     >
-                        <h2 className="text-xl sm:text-2xl text-center mb-3 text-gray-900">Quick Specs</h2>
+                        <h2 className="text-2xl sm:text-2xl text-center mb-3 text-amber-50">Quick Specs</h2>
                         <ul className="text-sm sm:text-base space-y-1 sm:space-y-2">
                             <li>
                                 <strong>Material:</strong> {product.material || "N/A"}

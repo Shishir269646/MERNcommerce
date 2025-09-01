@@ -17,26 +17,26 @@ const AddToCartButton = ({ product, formData, label = "Add to cart" }) => {
   const handleAddToCart = () => {
     const { selectedColor, selectedSize, qty } = formData || {};
 
+    // If formData is provided, validate it
+    if (formData) {
+      if (!selectedColor || !selectedSize) {
+        toast.error("Please select color and size.");
+        return;
+      }
 
-    if (!selectedColor || !selectedSize) {
-      toast.error("Please select color and size.");
-      return;
+      if (qty < 1 || qty > product.stock) {
+        toast.error(`Please enter a quantity between 1 and ${product.stock}`);
+        return;
+      }
     }
-
-    if (qty < 1 || qty > product.stock) {
-      toast.error(`Please enter a quantity between 1 and ${product.stock}`);
-      return;
-    }
-
-
 
     dispatch(
       addToCart({
         productId: product._id,
         userId: user?._id,
-        selectedColor,
-        selectedSize,
-        quantity: qty,
+        selectedColor: selectedColor || null,
+        selectedSize: selectedSize || null,
+        quantity: qty || 1,
       })
     );
     toast.success("Added to cart");

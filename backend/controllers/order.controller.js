@@ -1,3 +1,4 @@
+const { get } = require("mongoose");
 const Order = require("../models/order.model");
 
 
@@ -5,6 +6,7 @@ const Order = require("../models/order.model");
 
 const createOrder = async (req, res, next) => {
     try {
+        
         const {
             orderItems,
             shippingAddress,
@@ -18,6 +20,20 @@ const createOrder = async (req, res, next) => {
         if (!orderItems || orderItems.length === 0) {
             res.status(400);
             return next(new Error("No order items"));
+        }
+
+
+        if (!shippingAddress) {
+            res.status(400);
+            return next(new Error("Shipping address is required"));
+        }
+
+        // Check for missing product field in orderItems
+        for (const item of orderItems) {
+            if (!item.product) {
+                res.status(400);
+                return next(new Error(`Invalid order item: product field is missing for item "${item.name}"`));
+            }
         }
 
         const order = new Order({
@@ -34,6 +50,7 @@ const createOrder = async (req, res, next) => {
         const createdOrder = await order.save();
         res.status(201).json(createdOrder);
     } catch (err) {
+        console.error("Error creating order:", err);
         next(err);
     }
 };
@@ -53,7 +70,9 @@ const getMyOrders = async (req, res, next) => {
 
 const getOrderById = async (req, res, next) => {
     try {
-        const order = await Order.findById(req.params.id).populate("user", "name email");
+        const order = await Order.findById(req.params.id)
+        .populate("user", "username email")
+        .populate("shippingAddress");;
 
         if (!order) {
             res.status(404);
@@ -116,13 +135,17 @@ const updateOrderToDelivered = async (req, res, next) => {
 //Get all orders (Admin)
 
 const getAllOrders = async (req, res, next) => {
-    try {
-        const orders = await Order.find({}).populate("user", "id name");
-        res.status(201).json(orders);
-    } catch (err) {
-        next(err);
-    }
+  try {
+    const orders = await Order.find({})
+      .populate("user", "id username email") // user info
+      .populate("shippingAddress"); // full address
+
+    res.status(200).json(orders);
+  } catch (err) {
+    next(err);
+  }
 };
+
 
 
 

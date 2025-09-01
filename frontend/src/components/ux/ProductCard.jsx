@@ -55,7 +55,7 @@ const ProductCard = ({ item }) => {
     };
 
     const actionButtonClass =
-        'rounded-lg p-2 text-gray-500 hover:bg-amber-800 hover:text-white';
+        'rounded-lg p-2 text-gray-500 hover:bg-orange-500 hover:text-white';
 
     const toggleWishlist = () => {
         if (isWishlisted) {
@@ -74,7 +74,7 @@ const ProductCard = ({ item }) => {
                 title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
             >
                 {isWishlisted ? (
-                    <FaHeart className="text-red-500" />
+                    <FaHeart className="text-orange-500" />
                 ) : (
                     <FaRegHeart />
                 )}

@@ -5,11 +5,16 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { store } from '@/store/store';
 import { loadUserFromStorage } from '@/redux/userSlice';
+import { setUser } from '@/redux/authSlice';
+import dynamic from 'next/dynamic';
 
-import TopHeader from '@/components/ux/topHeader';
+
+
+const DynamicTopHeader = dynamic(() => import('@/components/ux/topHeader'), { ssr: false });
 import Navbar from '@/components/ux/Navbar';
 import Footer from '@/components/ux/Footer';
 import Loader from '@/components/Loader';
+
 
 function LayoutInitializer({ children }) {
     const dispatch = useDispatch();
@@ -20,13 +25,15 @@ function LayoutInitializer({ children }) {
     const [hydrated, setHydrated] = useState(false);
     const [checkingAccess, setCheckingAccess] = useState(true);
 
-    // ✅ First: Load user from localStorage
+    
+
     useEffect(() => {
-        dispatch(loadUserFromStorage());
-        setHydrated(true); // hydration complete
+        const userData = dispatch(loadUserFromStorage());
+        dispatch(setUser(userData.payload));
+        setHydrated(true);
     }, [dispatch]);
 
-    // ✅ Wait until hydration is done before checking access
+   
     useEffect(() => {
         if (!hydrated) return;
 
@@ -38,7 +45,7 @@ function LayoutInitializer({ children }) {
                 router.replace('/');
                 return;
             }
-            setCheckingAccess(false); // allow render
+            setCheckingAccess(false);
         }
     }, [pathname, user, loading, hydrated, router]);
 
@@ -53,9 +60,9 @@ function LayoutInitializer({ children }) {
 
     return (
         <>
-            {!hideLayout && <TopHeader />}
+            {!hideLayout && <DynamicTopHeader />}
             {!hideLayout && <Navbar />}
-            <main className="container mx-auto px-4">{children}</main>
+            <main>{children}</main>
             {!hideLayout && <Footer />}
         </>
     );

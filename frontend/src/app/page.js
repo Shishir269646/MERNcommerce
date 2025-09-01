@@ -192,17 +192,15 @@ export default function Home() {
         <div className="bg-gray-100 dark:bg-gray-800 py-10 px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-y-6 lg:gap-y-0 lg:gap-x-6 items-start">
             {/* Left Card */}
-            <div className="w-full lg:w-1/3">
-              <div className="card bg-primary dark:bg-gray-900 w-full h-full shadow-md">
-                <div className="card-body items-center text-center">
-                  <h2 className="card-title text-2xl text-white justify-center">
+            <div className="hero mt-7 lg:w-1/3 w-full bg-primary rounded-md min-h-[460px]">
+              <div className="hero-content text-center">
+                <div className="max-w-md">
+
+                  <p className="py-6 text-amber-50 text-3xl">
                     The best of smartphone
-                  </h2>
-                  <div className="card-actions justify-center mt-4">
-                    <button className="btn uppercase bg-white text-primary hover:bg-[#fd7b7b] hover:text-white dark:bg-gray-700 dark:text-white">
-                      View All
-                    </button>
-                  </div>
+                  </p>
+                  
+                  <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl hover:bg-orange-500 hover:text-amber-50">View All</button>
                 </div>
               </div>
             </div>

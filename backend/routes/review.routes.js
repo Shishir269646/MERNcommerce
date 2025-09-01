@@ -1,19 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const {
-    createOrUpdateReview,
+    createReview,
+    updateReview,
     getReviewsByProduct,
     deleteReview,
 } = require('../controllers/review.controller');
 
+const { protect } = require('../middleware/auth.middleware');
 
+// Create
+router.post('/', protect, createReview);
 
+// Update
+router.put('/:id', protect, updateReview);
 
+// Get reviews by product
+router.get('/product/:productId', getReviewsByProduct);
 
-router.post('/', createOrUpdateReview); // Create or update review
-router.get('/product/:productId', getReviewsByProduct); // Get all reviews for a product
-router.delete('/:id', deleteReview); // Delete a review
-
-
+// Delete
+router.delete('/:id', protect, deleteReview);
 
 module.exports = router;

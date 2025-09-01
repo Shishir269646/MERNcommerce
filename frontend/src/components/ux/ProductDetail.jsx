@@ -131,6 +131,9 @@ export default function ProductDetail({ product }) {
 
 
 
+
+  
+
   const discountPercentage = discountPrice
     ? Math.round(((price - discountPrice) / price) * 100)
     : 0;
@@ -147,7 +150,7 @@ export default function ProductDetail({ product }) {
   };
 
   return (
-    <div className="space-y-8 px-4 sm:px-6 lg:px-8">
+    <div className="sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Product Gallery */}
         <ProductGallery images={Image} />
@@ -272,7 +275,7 @@ export default function ProductDetail({ product }) {
       {/* Reviews & Comments */}
       <div className="space-y-6">
         <Reviews reviews={reviews} />
-        <Comments comments={comments} />
+        <Comments comments={comments} productId={product._id} />
       </div>
     </div>
   );

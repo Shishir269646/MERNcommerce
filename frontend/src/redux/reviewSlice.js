@@ -1,14 +1,24 @@
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '@/utils/api';
 
 // CREATE or UPDATE Review
 export const createOrUpdateReview = createAsyncThunk(
     'reviews/createOrUpdate',
-    async ({ productId, rating, comment }, thunkAPI) => {
+    async ({ productId, rating, comment, reviewId, orderId }, thunkAPI) => {
+        console.log("Creating or updating review with:", { productId, rating, comment, reviewId, orderId });
         try {
-            const res = await api.post('/reviews', { productId, rating, comment });
-            return res.data.review;
+            if (reviewId) {
+                const res = await api.put(`/reviews/${reviewId}`, { rating, comment });
+                console.log("Server response from createOrUpdateReview (update):", res.data);
+                return res.data;
+            } else {
+                const res = await api.post('/reviews', { productId, rating, comment, orderId });
+                console.log("Server response from createOrUpdateReview (create):", res.data);
+                return res.data;
+            }
         } catch (error) {
+            console.error("Error in createOrUpdateReview:", error.response?.data);
             return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
         }
     }
@@ -18,8 +28,9 @@ export const createOrUpdateReview = createAsyncThunk(
 export const fetchReviewsByProduct = createAsyncThunk(
     'reviews/fetchByProduct',
     async (productId, thunkAPI) => {
+        console.log("Fetching reviews for product:", productId);
         try {
-            const res = await api.get(`/reviews/${productId}`);
+            const res = await api.get(`/reviews/product/${productId}`);
             return res.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
@@ -77,7 +88,7 @@ export const reviewSlice = createSlice({
             .addCase(createOrUpdateReview.fulfilled, (state, action) => {
                 state.loading = false;
                 const index = state.reviews.findIndex(
-                    (r) => r.user === action.payload.user && r.product === action.payload.product
+                    (r) => r._id === action.payload._id
                 );
                 if (index !== -1) {
                     state.reviews[index] = action.payload;

@@ -2,11 +2,9 @@
 import PropTypes from "prop-types";
 import Link from "next/link";
 
-const SideBar = ({ total }) => {
-    const shipping = 99;
-    const tax = 168;
-    const grandTotal = total + shipping + tax;
-
+const SideBar = ({ total, totaldiscountPrice }) => {
+    const shippingPrice = 5;
+    const finalTotal = totaldiscountPrice + shippingPrice;
 
     return (
         <div className="card bg-base-200 shadow-md p-6">
@@ -17,23 +15,23 @@ const SideBar = ({ total }) => {
                 <span className="font-semibold">${total.toFixed(2)}</span>
             </div>
             <div className="flex justify-between mb-2">
-                <span>Shipping</span>
-                <span className="font-semibold">${shipping}</span>
+                <span>Discount</span>
+                <span className="font-semibold">- ${(total - totaldiscountPrice).toFixed(2)}</span>
             </div>
             <div className="flex justify-between mb-2">
-                <span>Tax</span>
-                <span className="font-semibold">${tax}</span>
+                <span>Shipping</span>
+                <span className="font-semibold">${shippingPrice.toFixed(2)}</span>
             </div>
 
             <div className="divider my-3"></div>
 
             <div className="flex justify-between text-lg font-bold mb-6">
                 <span>Total</span>
-                <span>${grandTotal.toFixed(2)}</span>
+                <span>${finalTotal.toFixed(2)}</span>
             </div>
 
             <Link
-                href={`/checkout?total=${grandTotal}`}
+                href={`/checkout?total=${finalTotal}`}
                 className="btn btn-primary w-full font-semibold text-2xl"
             >
                 Checkout

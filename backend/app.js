@@ -62,8 +62,9 @@ app.use((req, res, next) => {
 
 // Global Error Handler
 app.use((err, req, res, next) => {
+    const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
     console.error(err.stack);
-    res.status(500).json({ message: "Something broke!" });
+    res.status(statusCode).json({ message: err.message || "Something broke!" });
 });
 
 
