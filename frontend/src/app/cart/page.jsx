@@ -18,7 +18,7 @@ const Epcart1 = () => {
 
   
 
-    // Fetch cart items on mount and whenever refreshFlag changes
+    // Fetch cart items
     useEffect(() => {
         dispatch(getCartItems());
     }, [dispatch, refreshFlag]);
@@ -28,7 +28,7 @@ const Epcart1 = () => {
         const cartItemId = cartItems[index]?._id;
         if (cartItemId) {
             await dispatch(updateCartItemQuantity({ cartItemId, quantity: value }));
-            setRefreshFlag((prev) => !prev); // trigger re-fetch
+            setRefreshFlag((prev) => !prev);
         }
     };
 

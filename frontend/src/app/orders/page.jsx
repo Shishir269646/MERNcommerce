@@ -1,18 +1,13 @@
-// Place these files in an App Router Next.js project
-// 1) app/user/orders/page.jsx   -> User's orders list (responsive)
-// 2) app/user/orders/[id]/page.jsx -> Order detail page for the user
-
-/* -----------------------------
-   File: app/user/orders/page.jsx
------------------------------- */
-
 "use client";
+
 
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMyOrdersThunk } from '@/redux/orderSlice';
 import Loader from '@/components/Loader';
+
+
 
 export default function UserOrdersPage() {
     const dispatch = useDispatch();

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { createOrUpdateReview } from '@/redux/reviewSlice'; // Assuming this action will be created
+import { createOrUpdateReview } from '@/redux/reviewSlice';
 import { useParams } from 'next/navigation';
 
 export default function ReviewForm({ productId: propProductId, onReviewSubmitted, onCancel }) {
@@ -12,7 +12,7 @@ export default function ReviewForm({ productId: propProductId, onReviewSubmitted
     const params = useParams();
     const urlProductId = Array.isArray(params.id) ? params.id[0] : params.id;
     const productId = propProductId || urlProductId;
-    const { loading, error } = useSelector((state) => state.review); // Assuming review slice exists
+    const { loading, error } = useSelector((state) => state.review);
 
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);

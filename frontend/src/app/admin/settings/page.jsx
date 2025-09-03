@@ -186,13 +186,7 @@ const SettingsPage = () => {
                         key={setting._id}
                         className="border border-gray-200 p-4 rounded-lg shadow bg-base-100"
                     >
-                        {/* <h3 className="font-semibold text-lg mb-1 text-gray-800">
-                            Setting ID: {setting._id}
-                        </h3>
-                        <p className="text-sm text-gray-500 mb-2">
-                            User: {setting.user?.username || setting.user}
-                        </p> */}
-
+                       
                         <div>
                             <h4 className="font-semibold text-gray-800">Deals of the Day Products:</h4>
                             <ul className="list-disc ml-6 mb-2 text-gray-700">
@@ -228,12 +222,7 @@ const SettingsPage = () => {
                             <button className="btn btn-outline" onClick={() => handleEdit(setting)}>
                                 Edit
                             </button>
-                            {/* <button
-                            className="btn btn-error"
-                            onClick={() => handleDelete(setting._id)}
-                        >
-                            Delete
-                        </button> */}
+                            
                         </div>
                     </div>
                 ))}

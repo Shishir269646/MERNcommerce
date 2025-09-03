@@ -4,13 +4,13 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts, deleteProduct } from "@/redux/productSlice";
 import { useRouter } from "next/navigation";
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Image from "next/image";
-// import { get } from "react-hook-form"; // (unused)
+
+
 
 export default function AdminProductsPage() {
     const dispatch = useDispatch();

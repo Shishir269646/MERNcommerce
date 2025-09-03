@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     fetchReviewsByProduct,
     deleteReview,
-    clearReviewState,
     createOrUpdateReview,
 } from '@/redux/reviewSlice';
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
@@ -62,7 +61,7 @@ const AdminReviewPage = () => {
 
         await dispatch(
             createOrUpdateReview({
-                productId,
+                reviewId: editReview._id,
                 rating,
                 comment,
             })

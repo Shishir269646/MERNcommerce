@@ -3,7 +3,8 @@ import { useState } from "react";
 import Image from "next/image";
 
 export default function ProductGallery({ images }) {
-    // Convert given image structure into flat list of objects
+   
+    
     const formattedImages = images.map((sizeGroup) => {
         const small = sizeGroup.find((img) => img.size === "small")?.url || "";
         const large = sizeGroup.find((img) => img.size === "large")?.url || small;

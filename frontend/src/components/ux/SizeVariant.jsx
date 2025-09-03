@@ -28,7 +28,8 @@ function SizeVariant({ sizeVariant = [], onSelect }) {
         if (selected?.disabled) return;
         setSelectedSize(value);
 
-        // Notify parent on selection change
+       
+        
         onSelect?.({
             target: {
                 name: 'selectedSize',

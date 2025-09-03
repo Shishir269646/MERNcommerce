@@ -13,20 +13,20 @@ const sizeVariantSchema = new mongoose.Schema({
   disabled: { type: Boolean, default: false },
 }, { _id: false });
 
-// Image variant schema (for size + url)
+// Image variant schema
 const imageVariantSchema = new mongoose.Schema({
   size: { type: String, required: true },
   url: { type: String, required: true },
 }, { _id: false });
 
-// Specifications (Map of strings)
+// Specifications
 const specificationSchema = {
   type: Map,
   of: String,
   default: {},
 };
 
-// Review schema
+// Review
 const reviewSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   rating: { type: Number, required: true },
@@ -34,14 +34,14 @@ const reviewSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 }, { _id: false });
 
-// Comment schema
+// Comment
 const commentSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   message: String,
   createdAt: { type: Date, default: Date.now },
 }, { _id: false });
 
-// Main product schema
+// Main product
 const productSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: String,

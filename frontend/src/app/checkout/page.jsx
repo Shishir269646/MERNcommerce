@@ -46,7 +46,7 @@ export default function CheckoutPage() {
 
 
 
-    // Load user & addresses
+    
     useEffect(() => {
         if (!user) {
             toast.error("Please login to continue");
@@ -55,7 +55,8 @@ export default function CheckoutPage() {
         dispatch(fetchAddresses());
     }, [dispatch, user]);
 
-    // Prefill form from user and first address
+   
+
     useEffect(() => {
         if (!user) return;
         const [firstName = "", lastName = ""] = (user.username || "").split(" ");
@@ -70,7 +71,8 @@ export default function CheckoutPage() {
         }));
     }, [user, addresses]);
 
-    // Apply coupon action
+   
+    
     const handleApplyCoupon = async () => {
         if (!couponCode) return toast.error("Please enter a coupon code");
         try {
@@ -84,11 +86,12 @@ export default function CheckoutPage() {
 
 
 
-    // compute discount (if validatedCoupon has discountPercent)
+   
     const discount = validatedCoupon
         ? (total * (validatedCoupon.discountPercent ?? 0)) / 100
         : 0;
-    // tax and shipping can be calculated here (simple example)
+  
+
     const taxPrice = 1;
     const shippingPrice = 5;
     const totalPrice = Math.max(0, total - discount + taxPrice + shippingPrice);
@@ -97,7 +100,8 @@ export default function CheckoutPage() {
     const handleInputChange = (e) =>
         setFormData((s) => ({ ...s, [e.target.name]: e.target.value }));
 
-    // Submit the order (note: this does NOT perform payment)
+    
+    
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -146,7 +150,7 @@ export default function CheckoutPage() {
         }
 
 
-        // Minimal validation for mapped items
+       
         if (!mappedOrderItems.every((i) => i.product && i.quantity && i.priceAtPurchase >= 0)) {
             toast.error("Cart items are malformed. Please check your cart.");
             return;

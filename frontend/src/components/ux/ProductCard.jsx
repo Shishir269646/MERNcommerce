@@ -22,7 +22,7 @@ const ProductCard = ({ item }) => {
     const [showQuickView, setShowQuickView] = useState(false);
     const [isWishlisted, setIsWishlisted] = useState(false);
 
-    // Auto-fetch wishlist if not loaded
+    // fetch wishlist
     useEffect(() => {
         if (!wishlist?.products || wishlist.products.length === 0) {
             dispatch(fetchWishlist());

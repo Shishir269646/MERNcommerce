@@ -116,7 +116,7 @@ export default function UserProfilePage() {
     }
 
     const hasAddress = addresses.length > 0;
-    const address = addresses[0]; // Only one address allowed
+    const address = addresses[0];
 
     return (
         <div className="min-h-screen bg-base-200 p-4">

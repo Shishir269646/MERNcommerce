@@ -87,7 +87,7 @@ export default function UserOrderDetail() {
                                         onReviewSubmitted={() => {
                                             setShowReviewForm(false);
                                             setSelectedProductForReview(null);
-                                            // Optionally, re-fetch order to update review status or display new review
+                                            
                                         }}
                                         onCancel={() => {
                                             setShowReviewForm(false);

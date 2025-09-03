@@ -40,7 +40,8 @@ export default function TopHeader() {
         return () => document.removeEventListener("mousedown", handleOutsideClick);
     }, [dispatch]);
 
-    // Sync dropdown with URL parameter
+    
+    
     useEffect(() => {
         const categoryFromUrl = searchParams.get('category');
         if (categoryFromUrl) {

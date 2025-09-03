@@ -40,12 +40,12 @@ export default function ProductsPage() {
             if (selectedCategoryObject) {
                 const selectedCategoryId = selectedCategoryObject._id;
                 tempProducts = tempProducts.filter(product => {
-                    // Check if product.category is an object with _id or just the ID string
+                  
                     const productCategoryId = product.category?._id || product.category;
                     return productCategoryId === selectedCategoryId;
                 });
             } else {
-                // If categoryTerm doesn't match any known category, show no products
+                
                 tempProducts = [];
             }
         }

@@ -8,7 +8,8 @@ function ColorVariant({ colorVariant = [], onSelect }) {
         if (colorVariant.length > 0) {
             setSelectedColor(colorVariant[0].value);
 
-            // Notify parent of default selection
+            
+            
             onSelect?.({
                 target: {
                     name: "selectedColor",

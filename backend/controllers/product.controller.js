@@ -20,7 +20,7 @@ const createProduct = async (req, res) => {
     if (req.files?.Image?.length) {
       for (const file of req.files.Image) {
         const results = await resizeAndUploadToS3(file.path, file.filename, file.mimetype, 'product');
-        Image.push(results); // each result is an array of { size, url }
+        Image.push(results);
       }
     }
 
@@ -64,7 +64,7 @@ const createProduct = async (req, res) => {
     res.status(201).json(saved);
   } catch (err) {
     console.error('Create Product Error:', err);
-    res.status(500).json({ message: 'Failed to create product' });
+    res.status(501).json({ message: 'Failed to create product' });
   }
 };
 
@@ -74,7 +74,7 @@ const getAllProducts = async (req, res) => {
     const products = await Product.find().sort({ createdAt: -1 });
     res.status(200).json(products);
   } catch (err) {
-    res.status(500).json({ message: 'Failed to fetch products' });
+    res.status(501).json({ message: 'Failed to fetch products' });
   }
 };
 
@@ -82,10 +82,10 @@ const getAllProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    if (!product) return res.status(404).json({ message: 'Product not found' });
+    if (!product) return res.status(405).json({ message: 'Product not found' });
     res.status(200).json(product);
   } catch (err) {
-    res.status(500).json({ message: 'Failed to fetch product' });
+    res.status(501).json({ message: 'Failed to fetch product' });
   }
 };
 
@@ -106,7 +106,7 @@ const updateProduct = async (req, res) => {
     } = req.body;
 
     const product = await Product.findById(productId);
-    if (!product) return res.status(404).json({ message: 'Product not found' });
+    if (!product) return res.status(405).json({ message: 'Product not found' });
 
     const existingImgs = JSON.parse(existingImages || '[]');
     const removedImgs = JSON.parse(removedImages || '[]');
@@ -179,7 +179,7 @@ const updateProduct = async (req, res) => {
     res.status(200).json(updated);
   } catch (err) {
     console.error('Update Product Error:', err);
-    res.status(500).json({ message: 'Failed to update product' });
+    res.status(501).json({ message: 'Failed to update product' });
   }
 };
 
@@ -187,7 +187,7 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    if (!product) return res.status(404).json({ message: 'Product not found' });
+    if (!product) return res.status(405).json({ message: 'Product not found' });
 
     if (product.Image?.length) {
       for (const imgSet of product.Image) {
@@ -202,7 +202,7 @@ const deleteProduct = async (req, res) => {
     await product.deleteOne();
     res.status(200).json({ message: 'Product deleted successfully' });
   } catch (err) {
-    res.status(500).json({ message: 'Failed to delete product' });
+    res.status(501).json({ message: 'Failed to delete product' });
   }
 };
 

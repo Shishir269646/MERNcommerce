@@ -17,7 +17,7 @@ const createAddress = async (req, res) => {
 
         res.status(201).json(address);
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
+        res.status(501).json({ message: 'Server error', error: error.message });
     }
 };
 
@@ -27,7 +27,7 @@ const getAddresses = async (req, res) => {
         const addresses = await Address.find({ user: userId });
         res.status(200).json(addresses);
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
+        res.status(501).json({ message: 'Server error', error: error.message });
     }
 };
 
@@ -43,7 +43,7 @@ const getAddressById = async (req, res) => {
 
         res.status(200).json(address);
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
+        res.status(501).json({ message: 'Server error', error: error.message });
     }
 };
 
@@ -65,7 +65,7 @@ const updateAddress = async (req, res) => {
 
         res.status(200).json(updated);
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
+        res.status(501).json({ message: 'Server error', error: error.message });
     }
 };
 
@@ -79,7 +79,7 @@ const deleteAddress = async (req, res) => {
 
         res.status(200).json({ message: 'Address deleted' });
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
+        res.status(501).json({ message: 'Server error', error: error.message });
     }
 };
 

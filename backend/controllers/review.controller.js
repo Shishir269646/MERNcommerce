@@ -1,15 +1,14 @@
 const mongoose = require('mongoose');
 const Review = require('../models/review.model');
-const Order = require('../models/order.model'); // Import Order model
+const Order = require('../models/order.model');
 
-// ✅ Create Review
+//  Create Review
 const createReview = async (req, res) => {
     try {
-        const { productId, orderId, rating, comment } = req.body; // Added orderId
-
+        const { productId, orderId, rating, comment } = req.body;
         // Validate orderId
         if (!mongoose.Types.ObjectId.isValid(orderId)) {
-            return res.status(400).json({ message: 'Invalid order ID' });
+            return res.status(401).json({ message: 'Invalid order ID' });
         }
 
         // Find the specific order for the user
@@ -19,7 +18,7 @@ const createReview = async (req, res) => {
         });
 
         if (!order) {
-            return res.status(404).json({ message: 'Order not found or does not belong to you.' });
+            return res.status(405).json({ message: 'Order not found or does not belong to you.' });
         }
 
         // Check if the order is delivered
@@ -30,24 +29,24 @@ const createReview = async (req, res) => {
         // Check if the product is part of this order
         const productInOrder = order.orderItems.some(item => item.product.toString() === productId);
         if (!productInOrder) {
-            return res.status(400).json({ message: 'Product not found in the specified order.' });
+            return res.status(401).json({ message: 'Product not found in the specified order.' });
         }
 
         // Prevent duplicate reviews for this specific order
         const existingReview = await Review.findOne({
             user: req.user._id,
             product: productId,
-            order: orderId, // Check for review linked to this specific order
+            order: orderId,
         });
 
         if (existingReview) {
-            return res.status(400).json({ message: 'You have already left a comment for this specific delivery.' });
+            return res.status(401).json({ message: 'You have already left a comment for this specific delivery.' });
         }
 
         const review = new Review({
             user: req.user._id,
             product: productId,
-            order: orderId, // Link review to the order
+            order: orderId,
             name: req.user.username || req.user.name,
             rating,
             comment,
@@ -60,18 +59,18 @@ const createReview = async (req, res) => {
     }
 };
 
-// ✅ Update Review
+// Update Review
 const updateReview = async (req, res) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-            return res.status(400).json({ message: 'Invalid review ID' });
+            return res.status(401).json({ message: 'Invalid review ID' });
         }
 
         const { rating, comment } = req.body;
         const review = await Review.findById(req.params.id);
 
         if (!review) {
-            return res.status(404).json({ message: 'Review not found' });
+            return res.status(405).json({ message: 'Review not found' });
         }
 
         // Only owner or admin can update
@@ -89,7 +88,7 @@ const updateReview = async (req, res) => {
     }
 };
 
-// ✅ Get all reviews for a product
+//Get all reviews for a product
 const getReviewsByProduct = async (req, res) => {
     try {
         const reviews = await Review.find({ product: req.params.productId });
@@ -99,17 +98,17 @@ const getReviewsByProduct = async (req, res) => {
     }
 };
 
-// ✅ Delete Review
+//  Delete Review
 const deleteReview = async (req, res) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-            return res.status(400).json({ message: 'Invalid review ID' });
+            return res.status(401).json({ message: 'Invalid review ID' });
         }
 
         const review = await Review.findById(req.params.id);
 
         if (!review) {
-            return res.status(404).json({ message: 'Review not found' });
+            return res.status(405).json({ message: 'Review not found' });
         }
 
         // Only owner or admin can delete
@@ -123,6 +122,8 @@ const deleteReview = async (req, res) => {
         res.status(500).json({ message: 'Failed to delete review', error: error.message });
     }
 };
+
+
 
 module.exports = {
     createReview,

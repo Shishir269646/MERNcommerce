@@ -6,6 +6,7 @@ import { loginUser, clearUserError } from "@/redux/userSlice";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
 
 export default function Login() {
     const [isHovered, setIsHovered] = useState(false);
@@ -55,10 +56,8 @@ export default function Login() {
                 >
                     <div className="text-center">
                         <h2 className="text-3xl font-bold mb-2">Join the New User</h2>
-                        
-                        <button className="btn btn-dash">
-                            Register
-                        </button>
+
+                        <Link href="/register" className="btn btn-dash mt-4">Register</Link>
                         <p className="text-xs mt-3">Code by Manjirul Islam Shishir</p>
                     </div>
                 </div>
