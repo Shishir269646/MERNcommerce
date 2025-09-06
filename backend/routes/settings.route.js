@@ -16,11 +16,12 @@ const {
 
 const { upload } = require('../utils/s3Upload');
 
-// Define upload fields (max 15 images)
+// Define upload fields (max 10 images)
 const uploadFields = upload.fields([{ name: "images", maxCount: 10 }]);
 
 
-// Correct middleware order is important: uploadFields should come first
+
+
 router.post('/', uploadFields, protect, admin, createSettings);
 router.put('/:id', uploadFields, protect, admin, updateSettings);
 router.get('/', getAllSettings);

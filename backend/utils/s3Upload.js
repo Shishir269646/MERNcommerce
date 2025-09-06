@@ -176,26 +176,3 @@ module.exports = {
 
 
 
-// for example, you can use the uploaded images like this in your frontend:
-
-/* images: {
-  thumb: "https://your-bucket.s3.region.amazonaws.com/uploads/products/thumb-image.jpg",
-  medium: "https://your-bucket.s3.region.amazonaws.com/uploads/products/medium-image.jpg",
-  large: "https://your-bucket.s3.region.amazonaws.com/uploads/products/large-image.jpg",
-}
-<Image
-  src={product.images.thumb}
-  alt={product.title}
-  width={150}
-  height={150}
-  className="object-cover rounded"
-/>
-<Image
-  src={product.images.large}
-  alt={product.title}
-  width={1200}
-  height={800}
-  className="object-cover w-full"
-/>
-
- */
