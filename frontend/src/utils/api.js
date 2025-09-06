@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || 'https://mernapi.manjirulshishir.com/api',
-  withCredentials: true, // Optional: if you’re using cookies for auth
+  withCredentials: true,
 });
 
 // Automatically add token from localStorage
