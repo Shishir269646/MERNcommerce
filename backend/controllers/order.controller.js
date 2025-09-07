@@ -18,20 +18,20 @@ const createOrder = async (req, res, next) => {
         } = req.body;
 
         if (!orderItems || orderItems.length === 0) {
-            res.status(401);
+            res.status(400);
             return next(new Error("No order items"));
         }
 
 
         if (!shippingAddress) {
-            res.status(401);
+            res.status(400);
             return next(new Error("Shipping address is required"));
         }
 
         // Check for missing product field in orderItems
         for (const item of orderItems) {
             if (!item.product) {
-                res.status(401);
+                res.status(400);
                 return next(new Error(`Invalid order item: product field is missing for item "${item.name}"`));
             }
         }

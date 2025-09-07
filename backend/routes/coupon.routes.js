@@ -10,19 +10,15 @@ const {
     deleteCoupon,
 } = require('../controllers/coupon.controller');
 
+const { protect, admin } = require('../middleware/auth.middleware');
 
-
-router.post('/', createCoupon);
+router.post('/', protect, admin, createCoupon);
 router.get('/', getAllCoupons);
 
-
-
 router.get("/:id", getCouponById);
-router.put("/:id", updateCoupon);
-router.delete("/:id", deleteCoupon);
+router.put("/:id", protect, admin, updateCoupon);
+router.delete("/:id", protect, admin, deleteCoupon);
 
-
-
-router.post('/validate', validateCoupon);
+router.post('/validate', protect, validateCoupon);
 
 module.exports = router;

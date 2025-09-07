@@ -23,10 +23,10 @@ router.get("/", getAllProducts);
 router.get("/:id", getProductById);
 
 //Admin Route
-router.post("/", uploadFields, createProduct);
+router.post("/", protect, admin, uploadFields, createProduct);
 
-router.put("/:id", uploadFields, updateProduct);
+router.put("/:id", protect, admin, uploadFields, updateProduct);
 
-router.delete("/:id", deleteProduct);
+router.delete("/:id", protect, admin, deleteProduct);
 
 module.exports = router;

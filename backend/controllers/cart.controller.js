@@ -4,7 +4,8 @@ const Product = require('../models/product.model');
 // Add to Cart
 const addToCart = async (req, res) => {
     try {
-        const { productId, userId, selectedColor, selectedSize, quantity } = req.body;
+        const { productId, selectedColor, selectedSize, quantity } = req.body;
+        const userId = req.user ? req.user._id : null;
 
         if (!productId || !selectedColor || !selectedSize || !quantity) {
             return res.status(401).json({ message: 'All fields are required' });

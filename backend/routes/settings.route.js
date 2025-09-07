@@ -24,7 +24,7 @@ const uploadFields = upload.fields([{ name: "images", maxCount: 10 }]);
 
 router.post('/', uploadFields, protect, admin, createSettings);
 router.put('/:id', uploadFields, protect, admin, updateSettings);
-router.get('/', getAllSettings);
+router.get('/', protect, admin, getAllSettings);
 router.get('/:id', protect, admin, getSettingsById);
 router.delete('/:id', protect, admin, deleteSettings);
 
