@@ -21,9 +21,24 @@ const settingsRoutes = require('./routes/settings.route');
 const app = express();
 
 // Middleware
+const allowedOrigins = [
+  "http://localhost:3000",          // Dev frontend
+  "https://mern-commerce-mocha.vercel.app" // Production frontend
+];
+
 app.use(cors({
-    origin: '*'
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // cookies / tokens allow করবে
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
