@@ -8,7 +8,7 @@ const {
 
 const getAllSettings = async (req, res) => {
     try {
-        const settings = await Settings.find().populate('user').populate('products.product');
+        const settings = await Settings.find().populate('products.product');
         res.json(settings);
     } catch (error) {
         console.error('Error getting settings:', error);
@@ -20,7 +20,7 @@ const getAllSettings = async (req, res) => {
 
 const getSettingsById = async (req, res) => {
     try {
-        const settings = await Settings.findById(req.params.id).populate('user').populate('products.product');
+        const settings = await Settings.findById(req.params.id).populate('products.product');
         if (!settings) {
             return res.status(405).json({ message: 'Settings not found' });
         }
@@ -35,7 +35,6 @@ const getSettingsById = async (req, res) => {
 
 const createSettings = async (req, res) => {
     try {
-        const userId = req.user._id;
         const products = req.body.products ? JSON.parse(req.body.products) : [];
 
         const imageFiles = Array.isArray(req.files)
@@ -60,7 +59,6 @@ const createSettings = async (req, res) => {
         }
 
         const settings = new Settings({
-            user: userId,
             products,
             images: newImages,
         });

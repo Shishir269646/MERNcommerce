@@ -5,6 +5,8 @@ const api = axios.create({
   withCredentials: true,
 });
 
+console.log('API Base URL:', api.defaults.baseURL);
+
 // Automatically add token from localStorage
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
