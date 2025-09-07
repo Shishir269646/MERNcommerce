@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || 'https://mernapi.manjirulshishir.com/api',
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || 'https://merncommerce-m00o.onrender.com/api',
   withCredentials: true,
 });
 
