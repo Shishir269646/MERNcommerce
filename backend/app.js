@@ -22,8 +22,8 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: 'https://mern-commerce-mocha.vercel.app',
-    credentials: true,
+    origin: '*',
+    
 }));
 
 
