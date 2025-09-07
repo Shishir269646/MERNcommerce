@@ -18,7 +18,7 @@ import Image from "next/image";
 
 const SettingsPage = () => {
     const dispatch = useDispatch();
-    const { user } = useSelector((state) => state.user);
+    
     const { settings, loading, error } = useSelector((state) => state.settings);
     const { products } = useSelector((state) => state.product);
 
@@ -32,11 +32,11 @@ const SettingsPage = () => {
     const [previewImages, setPreviewImages] = useState([]);
 
     useEffect(() => {
-        if (user?._id) {
+        
             dispatch(fetchSettings());
             dispatch(getProducts());
-        }
-    }, [dispatch, user]);
+        
+    }, [dispatch]);
 
     const clearForm = () => {
         setSelectedSettingId(null);
@@ -108,11 +108,6 @@ const SettingsPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!user?._id) {
-            toast.error("User not logged in");
-            return;
-        }
-
         for (const p of formProducts) {
             if (!p.product) {
                 toast.error("Please select all products");
@@ -131,7 +126,7 @@ const SettingsPage = () => {
         // Append products as JSON string to simplify backend parsing
         formData.append("products", JSON.stringify(formProducts));
 
-        // Append images files (if any)
+        // Append images
         formImages.forEach((file) => {
             formData.append("images", file);
             formData.append('type', 'setting');
@@ -143,6 +138,7 @@ const SettingsPage = () => {
                 await dispatch(updateSetting({ id: selectedSettingId, formData })).unwrap();
                 toast.success("Setting updated successfully");
             } else {
+                //Create Setting
                 await dispatch(createSetting(formData)).unwrap();
                 toast.success("Setting created successfully");
             }

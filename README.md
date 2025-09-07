@@ -1,6 +1,6 @@
-# FloraCart - Full-Stack E-Commerce Platform
+# MERNcommerce - Full-Stack E-Commerce Platform
 
-FloraCart is a modern, feature-rich, and scalable e-commerce platform built with the MERN stack (MongoDB, Express.js, React, Node.js) and powered by Next.js for a high-performance frontend. It features a completely decoupled architecture with a robust Node.js REST API backend and a dynamic, server-rendered React frontend.
+MERNcommerce is a modern, feature-rich, and scalable e-commerce platform built with the MERN stack (MongoDB, Express.js, React, Node.js) and powered by Next.js for a high-performance frontend. It features a completely decoupled architecture with a robust Node.js REST API backend and a dynamic, server-rendered React frontend.
 
 ## ✨ Key Features
 

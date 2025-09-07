@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '@/utils/api';
 
-// -------------------- Async Thunks -------------------- //
+
 
 // Get all settings
 export const fetchSettings = createAsyncThunk(
