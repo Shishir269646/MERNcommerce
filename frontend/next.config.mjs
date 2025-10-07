@@ -1,12 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: [
-            'cdn.easyfrontend.com',
-            'plus.unsplash.com',
-            'localhost',
-            'readymadeui.com'
-        ],
+        domains: ['localhost'],
         remotePatterns: [
             {
                 protocol: 'https',
