@@ -13,6 +13,9 @@ const couponRoutes = require('./routes/coupon.routes');
 const wishlistRoutes = require('./routes/wishlist.routes');
 const cartRoutes = require('./routes/cart.route');
 const settingsRoutes = require('./routes/settings.route');
+const connectMongoDB = require("./config/db.js");
+
+connectMongoDB.connectDB();
 
 
 
