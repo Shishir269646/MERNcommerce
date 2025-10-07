@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"; // ✅ Prevent static prerender
+
 "use client";
 
 import { useEffect, useMemo } from "react";
@@ -5,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from 'next/navigation';
 import { getProducts } from "@/redux/productSlice";
 import { fetchCategories } from "@/redux/categorySlice";
-
 import ProductCard from "@/components/ux/ProductCard";
 import Loader from "@/components/Loader";
 import toast from "react-hot-toast";
@@ -34,24 +35,20 @@ export default function ProductsPage() {
         let tempProducts = products;
 
         if (categoryTerm) {
-            // Find the ID of the selected category name from the categories list
             const selectedCategoryObject = categories.find(cat => cat.name.toLowerCase() === categoryTerm.toLowerCase());
-
             if (selectedCategoryObject) {
                 const selectedCategoryId = selectedCategoryObject._id;
                 tempProducts = tempProducts.filter(product => {
-                  
                     const productCategoryId = product.category?._id || product.category;
                     return productCategoryId === selectedCategoryId;
                 });
             } else {
-                
                 tempProducts = [];
             }
         }
 
         if (searchTerm) {
-            tempProducts = tempProducts.filter(product => 
+            tempProducts = tempProducts.filter(product =>
                 product.title.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
