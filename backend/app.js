@@ -19,8 +19,8 @@ const app = express();
 
 // CORS Configuration
 const allowedOrigins = [
-  "http://localhost:3001",
-  "https://mern-commerce-mocha.vercel.app"
+  "http://localhost:3000",
+  "https://mern-commerce-eight.vercel.app"
 ];
 
 app.use(cors({
