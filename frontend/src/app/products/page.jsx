@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "next/navigation";
 import { getProducts } from "@/redux/productSlice";
 import { fetchCategories } from "@/redux/categorySlice";
-import ProductCard from "@/components/ux/ProductCard";
-import Loader from "@/components/Loader";
+import ProductCard from "@/components/ui/ProductCard";
+import Loader from "@/components/ui/Loader";
 import toast from "react-hot-toast";
 
 export default function ProductsPage() {
@@ -39,23 +39,18 @@ export default function ProductsPage() {
 
     // Filter products based on search & category
     const filteredProducts = useMemo(() => {
-        let tempProducts = products;
+        let tempProducts = [...products]; // Create a copy to avoid mutations
 
-        if (categoryTerm) {
-            const selectedCategoryObject = categories.find(
-                (cat) => cat.name.toLowerCase() === categoryTerm.toLowerCase()
-            );
-            if (selectedCategoryObject) {
-                const selectedCategoryId = selectedCategoryObject._id;
-                tempProducts = tempProducts.filter((product) => {
-                    const productCategoryId = product.category?._id || product.category;
-                    return productCategoryId === selectedCategoryId;
-                });
-            } else {
-                tempProducts = [];
-            }
+        // Filter by category (if not "All Categories")
+        if (categoryTerm && categoryTerm !== "All Categories") {
+            tempProducts = tempProducts.filter((product) => {
+                // Since category is stored as a string in your model
+                // Compare directly with the category string (case-insensitive)
+                return product.category?.toLowerCase() === categoryTerm.toLowerCase();
+            });
         }
 
+        // Filter by search term (search in title)
         if (searchTerm) {
             tempProducts = tempProducts.filter((product) =>
                 product.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -63,20 +58,33 @@ export default function ProductsPage() {
         }
 
         return tempProducts;
-    }, [products, searchTerm, categoryTerm, categories]);
+    }, [products, searchTerm, categoryTerm]);
 
     const isLoading = productsLoading || categoriesLoading;
+
+    // Get display title for the page
+    const getPageTitle = () => {
+        if (searchTerm && categoryTerm && categoryTerm !== "All Categories") {
+            return `Search Results for "${searchTerm}" in ${categoryTerm}`;
+        } else if (searchTerm) {
+            return `Search Results for "${searchTerm}"`;
+        } else if (categoryTerm && categoryTerm !== "All Categories") {
+            return categoryTerm;
+        }
+        return "All Products";
+    };
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-base-200 py-10 px-4">
             <div className="text-center mb-8">
                 <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
-                    {searchTerm
-                        ? `Search Results for "${searchTerm}"`
-                        : categoryTerm || "All Products"}
+                    {getPageTitle()}
                 </h1>
                 <p className="text-gray-600 dark:text-gray-400 mt-2">
-                    {filteredProducts.length} products found
+                    {isLoading
+                        ? "Loading products..."
+                        : `${filteredProducts.length} product${filteredProducts.length !== 1 ? 's' : ''} found`
+                    }
                 </p>
             </div>
 
@@ -89,9 +97,14 @@ export default function ProductsPage() {
                             <ProductCard key={product._id} item={product} />
                         ))
                     ) : (
-                        <p className="text-center text-gray-600 dark:text-gray-400 col-span-full">
-                            No products found matching your criteria.
-                        </p>
+                        <div className="col-span-full text-center py-16">
+                            <p className="text-xl text-gray-600 dark:text-gray-400 mb-2">
+                                No products found
+                            </p>
+                            <p className="text-sm text-gray-500 dark:text-gray-500">
+                                Try adjusting your search or category filters
+                            </p>
+                        </div>
                     )}
                 </div>
             )}

@@ -4,9 +4,9 @@ import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductById } from "@/redux/productSlice";
-import Loader from "@/components/Loader";
+import Loader from "@/components/ui/Loader";
 import toast from "react-hot-toast";
-import ProductDetail from "@/components/ux/ProductDetail";
+import ProductDetail from "@/components/ui/ProductDetail";
 
 
 export default function ProductDetailPage() {

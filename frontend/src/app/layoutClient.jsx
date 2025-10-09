@@ -10,10 +10,10 @@ import dynamic from 'next/dynamic';
 
 
 
-const DynamicTopHeader = dynamic(() => import('@/components/ux/topHeader'), { ssr: false });
-import Navbar from '@/components/ux/Navbar';
-import Footer from '@/components/ux/Footer';
-import Loader from '@/components/Loader';
+const DynamicTopHeader = dynamic(() => import('@/components/ui/topHeader'), { ssr: false });
+import Navbar from '@/components/ui/Navbar';
+import Footer from '@/components/ui/Footer';
+import Loader from '@/components/ui/Loader';
 
 
 function LayoutInitializer({ children }) {

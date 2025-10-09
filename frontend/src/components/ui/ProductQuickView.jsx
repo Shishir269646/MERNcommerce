@@ -139,83 +139,90 @@ const ProductQuickView = ({ onClose, product }) => {
 
 	return (
 		<div
-			className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+			className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-2 sm:p-4 overflow-y-auto"
+		>
 			<div
-				className="bg-white w-full max-w-2xl p-6 rounded-xl relative"
+				className="bg-white w-full max-w-2xl p-4 sm:p-6 rounded-xl relative shadow-lg mx-auto my-8"
 				role="dialog"
 				aria-modal="true"
 				aria-labelledby="modal-headline"
 			>
+				{/* Close Button */}
 				<button
-					className="absolute top-4 right-4 text-gray-600 hover:text-red-500"
+					className="absolute top-3 right-3 text-gray-600 hover:text-red-500 transition-colors"
 					onClick={onClose}
 					aria-label="Close"
 				>
-					<FontAwesomeIcon icon={faTimes} />
+					<FontAwesomeIcon icon={faTimes} size="lg" />
 				</button>
 
+				{/* Modal Content */}
 				<div className="flex flex-col lg:flex-row gap-6">
+					{/* Left Side - Image Previews */}
 					<div className="flex-1 min-w-0">
 						<ProductPreviews Images={product.Image || []} />
 					</div>
 
+					{/* Right Side - Product Info */}
 					<div className="flex-1 min-w-0">
-						<div className="mb-6">
-							<h1 className="text-2xl font-semibold mb-2">{product.title}</h1>
-							<h3 className="text-blue-600 text-2xl font-bold">
+						{/* Title and Price */}
+						<div className="mb-4 sm:mb-6">
+							<h1 className="text-xl sm:text-2xl font-semibold mb-2 break-words">
+								{product.title}
+							</h1>
+							<h3 className="text-blue-600 text-xl sm:text-2xl font-bold">
 								Rs. {product.price}
 							</h3>
 						</div>
 
-						<form>
-
+						{/* Form Section */}
+						<form className="space-y-4 sm:space-y-6">
 							<ColorVariant colorVariant={product.colorVariants} />
 							<SizeVariant sizeVariant={product.sizeVariants} />
 
-
-							<div className="mb-6">
+							{/* Quantity */}
+							<div>
 								<h5 className="font-medium mb-2">QTY</h5>
-
-								<QtyField
-									onChange={setField}
-									name="qty"
-									value={formData.qty}
-								/>
+								<QtyField onChange={setField} name="qty" value={formData.qty} />
 							</div>
 
-							<div className="flex flex-col gap-3 mt-6">
-								<div className="flex flex-col sm:flex-row gap-4">
-									
-									{hasColorVariants && hasSizeVariants ? (
-										<AddToCartButton product={product} formData={formDataCart} />
-									) : (
-										<button
-											disabled
-											className="inline-flex items-center justify-center px-3 py-1.5 text-sm font-medium text-white bg-gray-400 cursor-not-allowed rounded-lg"
-										>
-											Not Available
-										</button>
-									)}
-								</div>
-								<div className="flex items-center gap-4 mt-4">
+							{/* Add to Cart / Disabled */}
+							<div className="flex flex-col sm:flex-row gap-4 mt-4">
+								{hasColorVariants && hasSizeVariants ? (
+									<AddToCartButton product={product} formData={formDataCart} />
+								) : (
 									<button
-										onClick={handleAddToWishlist}
-										className="text-primary hover:bg-blue-900 hover:text-white px-3 py-2 rounded">
-										<FontAwesomeIcon icon={faHeart} /> Add to wishlist
+										disabled
+										className="inline-flex items-center justify-center px-3 py-1.5 text-sm font-medium text-white bg-gray-400 cursor-not-allowed rounded-lg"
+									>
+										Not Available
 									</button>
-									<button
-										onClick={handleShare}
-										className="text-blue-600 hover:bg-blue-900 px-3 py-2 rounded">
-										<FontAwesomeIcon icon={faShareAlt} className="mr-2" />
-										Share
-									</button>
-								</div>
+								)}
+							</div>
+
+							{/* Wishlist & Share */}
+							<div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mt-4">
+								<button
+									onClick={handleAddToWishlist}
+									className="text-primary hover:bg-blue-900 hover:text-white px-3 py-2 rounded transition-colors flex items-center gap-2"
+								>
+									<FontAwesomeIcon icon={faHeart} /> <span>Add to wishlist</span>
+								</button>
+
+								<button
+									onClick={handleShare}
+									className="text-blue-600 hover:bg-blue-900 hover:text-white px-3 py-2 rounded transition-colors flex items-center gap-2"
+								>
+									<FontAwesomeIcon icon={faShareAlt} />
+									<span>Share</span>
+								</button>
 							</div>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
+
 	);
 };
 

@@ -10,7 +10,7 @@ import {
 } from "@/redux/settingsSlice";
 import { getProducts } from "@/redux/productSlice";
 import { toast } from "react-toastify";
-import Loader from "@/components/Loader";
+import Loader from "@/components/ui/Loader";
 import Image from "next/image";
 
 

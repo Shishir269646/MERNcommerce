@@ -2,6 +2,8 @@
 
 MERNcommerce is a modern, feature-rich, and scalable e-commerce platform built with the MERN stack (MongoDB, Express.js, React, Node.js) and powered by Next.js for a high-performance frontend. It features a completely decoupled architecture with a robust Node.js REST API backend and a dynamic, server-rendered React frontend.
 
+![MERNcommerce Screenshot](./screenshot.png)
+
 ## ✨ Key Features
 
 - **Full Product Catalog:** Manage products with complex variations (size, color), multiple images per variation, and detailed specifications.
@@ -72,7 +74,7 @@ touch .env
 # 5. Start the backend server
 npm start
 ```
-The backend server will be running on `http://localhost:5000` (or your configured port).
+The backend server will be running on `http://localhost:4000` (or your configured port).
 
 ### 2. Frontend Setup
 
@@ -113,7 +115,7 @@ AWS_S3_REGION=your_s3_bucket_region
 
 #### Frontend (`frontend/.env.local`)
 ```
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
+NEXT_PUBLIC_API_URL=http://localhost:4000/api
 
 # Stripe
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
@@ -123,6 +125,72 @@ NEXT_PUBLIC_PAYPAL_CLIENT_ID=your_paypal_client_id
 ```
 
 ---
+
+## NPM Packages Used
+
+### Backend Dependencies
+
+| Package                 | Description                                                                      |
+| ----------------------- | -------------------------------------------------------------------------------- |
+| `@aws-sdk/client-s3`    | AWS SDK for JavaScript S3 Client.                                                |
+| `@aws-sdk/lib-storage`  | Provides upload and download functionality for Amazon S3.                        |
+| `bcryptjs`              | A library to help you hash passwords.                                            |
+| `body-parser`           | Node.js body parsing middleware.                                                 |
+| `cors`                  | Node.js CORS middleware.                                                         |
+| `dotenv`                | Loads environment variables from a `.env` file into `process.env`.               |
+| `express`               | Fast, unopinionated, minimalist web framework for Node.js.                       |
+| `jsonwebtoken`          | An implementation of JSON Web Tokens.                                            |
+| `mongoose`              | MongoDB object modeling tool designed to work in an asynchronous environment.    |
+| `multer`                | Node.js middleware for handling `multipart/form-data`.                           |
+| `multer-s3`             | A streaming multer storage engine for AWS S3.                                    |
+| `nodemon`               | A tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected. |
+| `sharp`                 | High performance Node.js image processing, the fastest module to resize JPEG, PNG, WebP and TIFF images. |
+| `uuidv4`                | Creates a version 4 UUID.                                                        |
+
+### Frontend Dependencies
+
+| Package                          | Description                                                                                             |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `@fortawesome/fontawesome-svg-core` | The core library for Font Awesome icons.                                                                |
+| `@fortawesome/free-regular-svg-icons` | The regular style icons for Font Awesome.                                                               |
+| `@fortawesome/free-solid-svg-icons` | The solid style icons for Font Awesome.                                                                 |
+| `@fortawesome/react-fontawesome` | Font Awesome 5 React component.                                                                         |
+| `@paypal/react-paypal-js`        | React components for the PayPal JS SDK.                                                                 |
+| `@radix-ui/react-avatar`         | A React component for displaying an avatar.                                                             |
+| `@reduxjs/toolkit`               | The official, opinionated, batteries-included toolset for efficient Redux development.                  |
+| `@stripe/stripe-js`              | Stripe.js & Elements for React.                                                                         |
+| `autoprefixer`                   | A PostCSS plugin to parse CSS and add vendor prefixes to CSS rules.                                     |
+| `axios`                          | Promise based HTTP client for the browser and node.js.                                                  |
+| `class-variance-authority`       | Create flexible and type-safe UI components with a powerful variant system.                             |
+| `clsx`                           | A tiny (228B) utility for constructing `className` strings conditionally.                               |
+| `date-fns`                       | Modern JavaScript date utility library.                                                                 |
+| `dotenv`                         | Loads environment variables from a `.env` file into `process.env`.                                      |
+| `i18next`                        | An internationalization-framework written in and for JavaScript.                                        |
+| `js-cookie`                      | A simple, lightweight JavaScript API for handling browser cookies.                                      |
+| `next`                           | The React Framework for Production.                                                                     |
+| `next-i18next`                   | The easiest way to translate your Next.js apps.                                                         |
+| `next-images`                    | Import images in your Next.js project.                                                                  |
+| `next-themes`                    | An abstraction for themes in your Next.js app.                                                          |
+| `postcss`                        | A tool for transforming CSS with JavaScript.                                                            |
+| `react`                          | A JavaScript library for building user interfaces.                                                      |
+| `react-dom`                      | Serves as the entry point to the DOM and server renderers for React.                                    |
+| `react-hook-form`                | Performant, flexible and extensible forms with easy-to-use validation.                                  |
+| `react-hot-toast`                | Smoking hot notifications for React.                                                                    |
+| `react-i18next`                  | Internationalization for React done right.                                                              |
+| `react-icons`                    | SVG React icons of popular icon packs.                                                                  |
+| `react-redux`                    | Official React bindings for Redux.                                                                      |
+| `react-toastify`                 | React notification made easy.                                                                           |
+| `redux-persist`                  | Persist and rehydrate a Redux store.                                                                    |
+| `remixicon`                      | A set of open-source neutral-style system symbols for designers and developers.                         |
+| `tailwind-merge`                 | A utility function to merge Tailwind CSS classes in JS without style conflicts.                         |
+
+### Frontend Dev Dependencies
+
+| Package               | Description                                                              |
+| --------------------- | ------------------------------------------------------------------------ |
+| `@tailwindcss/postcss`| A PostCSS plugin for Tailwind CSS.                                         |
+| `daisyui`             | A Tailwind CSS component library.                                        |
+| `tailwindcss`         | A utility-first CSS framework for rapidly building custom user interfaces. |
 
 ## 📄 License
 

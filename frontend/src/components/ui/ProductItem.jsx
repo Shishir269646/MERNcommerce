@@ -1,7 +1,7 @@
 "use client";
 import PropTypes from "prop-types";
 import { MdDeleteForever } from "react-icons/md";
-import QtyField from "@/components/ux/QtyField";
+import QtyField from "@/components/ui/QtyField";
 import Image from "next/image";
 
 const ProductItem = ({ item, index, onChangeQty, onRemove }) => {

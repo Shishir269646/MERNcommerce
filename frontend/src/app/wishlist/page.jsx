@@ -7,7 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
-import Loader from '@/components/Loader';
+import Loader from '@/components/ui/Loader';
 
 const WishlistPage = () => {
     const dispatch = useDispatch();

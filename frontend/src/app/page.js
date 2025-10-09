@@ -2,7 +2,7 @@
 import React from "react";
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ImageSlider from "@/components/ux/ImageSlider";
+import ImageSlider from "@/components/ui/ImageSlider";
 import { fetchCategories } from '@/redux/categorySlice';
 import { getProducts } from "@/redux/productSlice";
 import { fetchSettings } from "@/redux/settingsSlice";
@@ -13,14 +13,14 @@ import {
   faRibbon,
   faShippingFast,
 } from "@fortawesome/free-solid-svg-icons";
-import LargeProductCard from "@/components/ux/LargeProductCard";
+import LargeProductCard from "@/components/ui/LargeProductCard";
 
 
 
 //demo2
-import SlideWithCards from "@/components/ux/SlideWithCards";
-import ProductCard from "@/components/ux/ProductCard";
-import CategoryCard from "@/components/ux/CategoryCard";
+import SlideWithCards from "@/components/ui/SlideWithCards";
+import ProductCard from "@/components/ui/ProductCard";
+import CategoryCard from "@/components/ui/CategoryCard";
 
 
 

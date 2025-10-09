@@ -11,9 +11,9 @@ import { fetchCategories } from "@/redux/categorySlice";
 import { logoutUser } from "@/redux/userSlice";
 import api from "@/utils/api";
 
+
 export default function TopHeader() {
     const [hydrated, setHydrated] = useState(false);
-    const [searchOpen, setSearchOpen] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [cartOpen, setCartOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
@@ -95,6 +95,7 @@ export default function TopHeader() {
 
     if (!hydrated) return null;
 
+    
     const TopLinks = () => (
         <div className="flex flex-col lg:flex-row items-center gap-4 py-2 lg:py-0">
             <HoverDropDown label="My Account" options={accountOptions} />
@@ -160,9 +161,18 @@ export default function TopHeader() {
                             <FaSearch />
                         </button>
                     </form>
-                    <button type="button" onClick={() => setSearchOpen(!searchOpen)} className="lg:hidden text-black pr-2 text-xl">
-                        <FaSearch />
-                    </button>
+                    <form onSubmit={handleSearchSubmit} className="flex items-center overflow-hidden lg:hidden">
+                        <input 
+                            type="text" 
+                            name="q"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            placeholder="Search Product" 
+                            className="px-4 py-2 outline-none text-gray-700 bg-gray-100" />
+                        <button type="submit" className="h-full text-black px-4 py-2">
+                            <FaSearch />
+                        </button>
+                    </form>
                 </div>
 
                 <div className="relative" ref={cartRef}>
@@ -179,23 +189,7 @@ export default function TopHeader() {
                 </div>
             </div>
 
-            {/* Mobile Search Bar */}
-            {searchOpen && (
-                <div className="container mx-auto px-4 pb-4 lg:hidden">
-                    <form onSubmit={handleSearchSubmit} className="flex items-center border rounded-lg overflow-hidden">
-                        <input 
-                            type="text" 
-                            name="q"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            placeholder="Search Product" 
-                            className="px-4 py-2 w-full outline-none text-gray-700 bg-gray-100" />
-                        <button type="submit" className="bg-orange-500 text-white px-4 py-2">
-                            <FaSearch />
-                        </button>
-                    </form>
-                </div>
-            )}
+
         </header>
     );
 }

@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMyOrdersThunk } from '@/redux/orderSlice';
-import Loader from '@/components/Loader';
+import Loader from '@/components/ui/Loader';
 
 
 

@@ -39,7 +39,6 @@ function Navbar() {
     const navLinks = [
         { href: "/", label: "Home" },
         { href: "/products", label: "Products" },
-        { href: "/product", label: "Single Product" },
         { href: "/about", label: "About Us" },
         { href: "/contact", label: "Contact Us" },
         { href: "/cart", label: "Cart'S" },

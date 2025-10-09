@@ -2,8 +2,8 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import CheckoutForm from "@/components/ux/CheckoutForm";
-import Loader from "@/components/Loader";
+import CheckoutForm from "@/components/ui/CheckoutForm";
+import Loader from "@/components/ui/Loader";
 
 
 

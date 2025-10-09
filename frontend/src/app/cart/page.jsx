@@ -7,9 +7,9 @@ import {
     removeFromCart,
     getCartItems,
 } from "@/redux/cartSlice";
-import Loader from "@/components/Loader";
-import ProductItem from "@/components/ux/ProductItem";
-import SideBar from "@/components/ux/SideBar";
+import Loader from "@/components/ui/Loader";
+import ProductItem from "@/components/ui/ProductItem";
+import SideBar from "@/components/ui/SideBar";
 
 const Epcart1 = () => {
     const dispatch = useDispatch();

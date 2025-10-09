@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrderByIdThunk } from '@/redux/orderSlice';
-import ReviewForm from '@/components/ux/ReviewForm';
-import Loader from '@/components/Loader';
+import ReviewForm from '@/components/ui/ReviewForm';
+import Loader from '@/components/ui/Loader';
 
 export default function UserOrderDetail() {
     const dispatch = useDispatch();

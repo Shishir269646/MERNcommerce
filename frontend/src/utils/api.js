@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://merncommerce-u8ss.onrender.com/api',
+  baseURL: "http://localhost:4000/api",
   withCredentials: true,
 });
 
-
+//'https://merncommerce-u8ss.onrender.com/api',
 
 // Automatically add token from localStorage
 api.interceptors.request.use((config) => {

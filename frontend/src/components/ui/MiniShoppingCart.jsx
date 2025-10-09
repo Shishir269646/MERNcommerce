@@ -4,14 +4,14 @@ import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FaShoppingBag } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
-import QtyField from "@/components/ux/QtyField";
+import QtyField from "@/components/ui/QtyField";
 import Link from "next/link";
 import {
     updateCartItemQuantity,
     removeFromCart,
     getCartItems,
 } from "@/redux/cartSlice";
-import Loader from "@/components/Loader";
+import Loader from "@/components/ui/Loader";
 import Image from "next/image";
 
 function MiniShoppingCart({ isVisible, setIsVisible, basketRef }) {

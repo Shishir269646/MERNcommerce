@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { getOrderByIdThunk, updateOrderToPaidThunk, updateOrderToDeliveredThunk } from "@/redux/orderSlice";
-import Loader from "@/components/Loader";
+import Loader from "@/components/ui/Loader";
 
 export default function EditOrderPage() {
     const dispatch = useDispatch();

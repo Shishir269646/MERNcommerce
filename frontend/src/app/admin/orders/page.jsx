@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Link from "next/link";
 import { getAllOrdersThunk } from "@/redux/orderSlice";
-import Loader from "@/components/Loader";
+import Loader from "@/components/ui/Loader";
 
 export default function OrdersPage() {
     const dispatch = useDispatch();
